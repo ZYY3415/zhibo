@@ -15,6 +15,7 @@ use app\portal\model\CourseModel;
 use cmf\controller\HomeBaseController;
 use think\Db;
 use think\Exception;
+use app\portal\model\BgimgModel;
 /**
  * ajax 请求处理类
  **/

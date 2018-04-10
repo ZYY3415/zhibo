@@ -160,7 +160,7 @@ class Tree
     }
 
     /**
-     * @myId parent_id
+     * @myId parent_id    当前角色所属的父级角色ID
      * $flag  是否返回所有的数据  默认否  是则返回同级或者子级的角色id
      * return  array  返回同层
     **/
@@ -174,8 +174,7 @@ class Tree
 
             switch($role)
             {
-                case 1:
-
+                case 1:               //超级管理员
                     foreach($this->arr as $key=>$value)
                     {
                         if($value['parent_id'] == $myId)

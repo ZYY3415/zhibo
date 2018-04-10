@@ -30,8 +30,7 @@ class AdminRoleController extends AdminBaseController
 
         $select = DB::name('protal_role')
             ->alias('r')
-            ->join('__PORTAL_ROLEAUTH__ ra', 'r.id = ra.role_id', $type = 'LEFT')
-            ->join('')
+            ->join('__PROTAL_ROLEAUTH__ ra', 'r.id = ra.role_id', $type = 'LEFT')
             ->order('r.sort desc')
             ->field('r.*,ra.auth_id');
 
@@ -45,20 +44,18 @@ class AdminRoleController extends AdminBaseController
 
         $role = $select->paginate(config('admin_page_size'))->appends($param);
 
+        $new_data = [];
+        $new_data = array_map(function($data){
+            if($data['auth_id'] != null)
+            {
+                $auth_name = DB::name('protal_auth')
+                    ->where('id', 'in', $data['auth_id'])
+                    ->column('auth_name');
+                 $data['auth_name']= implode(',', $auth_name);
 
-
-        /*foreach ($role as $key => $value) {
-            foreach ($value as $k => $v) {
-                $new_data[$key] = $role[$key];
-                if ($k == 'auth_id' and $v != null) {
-
-                    $auth_name = DB::name('protal_auth')
-                        ->where('id', 'in', $v)
-                        ->column('auth_name');
-                    $new_data[$key][$k] = implode(',', $auth_name);
-                }
             }
-        }*/
+                return $data;
+        },$role->all());
 
         $this->assign('role', $new_data);
         $this->assign('page', $role->render());

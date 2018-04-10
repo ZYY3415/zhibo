@@ -104,19 +104,22 @@ class MemberModel extends Model
 
     /**
      * 获取会员列表
-     * @param  
+     * @param  搜索条件 可能为空
+     * @room   当前角色所属的房间数组  可能为空
      * @return array
      */
     public function getNoSpeech($param = '',$room)
     {
         $role  = empty($param['role']) ? '' : $param['role'];
-
         $keyword = empty($param['keyword']) ? '' : $param['keyword'];
         $rid = empty($param['rid']) ? '' : $param['rid'];
+
+        //查询条件的拼接
         $where = array();
 
         $where['a.adminid'] = ['<>',11];
         $where['b.rid'] = ['in',$room];
+
         if (!empty($keyword)) {
             $where['a.nickname'] = ['like', "%$keyword%"];
         }
@@ -131,6 +134,8 @@ class MemberModel extends Model
 
         $startTime = empty($param['start_time']) ? 0 : strtotime($param['start_time']);
         $endTime   = empty($param['end_time']) ? 0 : strtotime($param['end_time']);
+
+
         if (!empty($startTime) && !empty($endTime)) {
             $where['a.reg_time'] = [['>= time', $startTime], ['<= time', $endTime]];
         } else {
@@ -141,18 +146,30 @@ class MemberModel extends Model
                 $where['a.reg_time'] = ['<= time', $endTime];
             }
         }
+
         $join = [
             ["__ROOM_BASIC__ b",'b.rid in (a.rid)','left'],
             ["__PROTAL_ROLE__ c",'a.adminid = c.keyword','left'],
         ];
-        $mid = Db::name('portal_message')->field('distinct mid')->select()->toArray();
+
+        $mid = Db::name('portal_message')
+            ->field('distinct mid')
+            ->select()
+            ->toArray();
+
         $mid = $this->arr2str($mid);
 
-        // dump($mid);die;
         $field = "a.id,a.nickname,b.room,a.phone,a.rid,a.qq,a.tuijianmid,a.reg_time,c.rolename,a.ip,a.login_count,a.money,a.remark,a.status";
 
-        return $this->alias('a')->field($field)->join($join)->where($where)->whereNotIn('a.id',$mid)->paginate(10);
+        $data =$this
+            ->alias('a')
+            ->field($field)
+            ->join($join)
+            ->where($where)
+            ->whereNotIn('a.id',$mid)
+            ->paginate(config('admin_page_size'));
 
+        return $data;
     }
 
     public function arr2str ($arr)

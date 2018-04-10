@@ -16,26 +16,35 @@ class AdminNoSpeechController extends AdminBaseController
 	public function index()
 	{
 		$param = $this->request->param();
-        $room  = cmf_get_current_admin_rid();
-        $rooms = $this->getRooms($room);  
-        
-		$MemberModel = new MemberModel();
-		$member = $MemberModel -> getNoSpeech($param,$room);
+        $room  = is_array(cmf_get_current_admin_rid()) ? cmf_get_current_admin_rid() :'';
+        //获取当前后台角色所属的房间列表
+        $rooms = $this->getRooms($room);
 
-        $data = array_map('switch_rid_ridname',$member->toArray()['data']);
+		$MemberModel = new MemberModel();
+		$member = $MemberModel -> getNoSpeech($param,rooms);
 
 		$role  = $this->getAdminUser();
+        $data = array_map('switch_rid_ridname',$member->toArray()['data']);
         $member->appends($param);
-        // dump($data);exit;
         $this->assign('role', $role);
         $this->assign('rooms', $rooms);
 		$this->assign('members',$data);
-        $this->assign('page', $member->render());
+
+        /**搜索条件
+         * 分页    page
+         * 房间    rid
+         * 角色    roleid
+         * 开始时间 start_time
+         * 结束时间 end_time
+         * 关键字   keyword
+         **/
+        $this->assign('page', empty($memeber) ? '' : $member->render());
         $this->assign('rid', isset($param['rid']) ? $param['rid'] : '');
         $this->assign('roleid', isset($param['roleid']) ? $param['roleid'] : '');
         $this->assign('start_time', isset($param['start_time']) ? $param['start_time'] : '');
         $this->assign('end_time', isset($param['end_time']) ? $param['end_time'] : '');
         $this->assign('keyword', isset($param['keyword']) ? $param['keyword'] : '');
+        /**搜索条件**/
 
 		return view();
 	}
@@ -47,7 +56,10 @@ class AdminNoSpeechController extends AdminBaseController
     private function getRooms($room)
     {
         $roomBasicModel = new RoomBasicModel();
-        return $roomBasicModel->field('rid,room')->whereIn('rid',$room)->select()->toArray();
+
+        $data = $roomBasicModel->field('rid,room')->whereIn('rid',$room)->select()->toArray();
+
+        return $data;
     }
 
     /**
@@ -58,4 +70,9 @@ class AdminNoSpeechController extends AdminBaseController
     {
         return Db::name('protal_role')->field('id,rolename')->select()->toArray();
     }
+
+    /**
+     * 删除未发言用户
+     * 将用户表中
+     **/
 }
