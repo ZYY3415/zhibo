@@ -1,0 +1,17 @@
+/*body .winning-class .layui-layer-title{
+    background:#545454;
+    height:43px;
+    color:white;
+    border:0;
+}
+body .winning-class  .layui-layer-close1{
+    background:url('/static/images/xubox_ico0.png') no-repeat;
+    cursor:pointer;
+    width:18px;
+    height:18px;
+    background-position:-132px -201px;
+}*/
+body .winning-class .layui-layer-title
+{
+	display: none;
+}

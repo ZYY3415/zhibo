@@ -1,0 +1,433 @@
+<include file="public@header" />
+<link rel="stylesheet" href="__STATIC__/js/layer/mobile/need/layui.css"/>
+<style>
+    .switch {
+        width: 106px;
+        height: 30px;
+        border: 1px solid #eee !important;
+        position: relative;
+    }
+
+    .switch span {
+        width: 53px;
+        height: 28px;
+        color: #fefefe;
+        display: block;
+        font-size: 16px !important;
+        font-weight: 300 !important;
+        text-align: center;
+        line-height: 28px;
+        position: relative;
+    }
+
+    .switch span.off {
+        background: #ee5f5b;
+        left: 53px;
+    }
+
+    .switch span.on {
+        background: #62c462;
+    }
+
+    .dat {
+        margin-top: 30px;
+    }
+
+    .rado {
+        line-height: 23px;
+        padding-top: 5px;
+    }
+
+    .centent2 {
+        display: none;
+    }
+
+    .btn {
+        display: block;
+        float: left;
+    }
+
+    .icon {
+        display: inline-block;
+        display: none;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li role="presentation"><a href="{:url('hbindex')}">房间基本信息管理</a></li>
+        <li role="presentation"><a href="{:url('addhouse')}">新增房间</a></li>
+        <li role="presentation" class="active"><a href="javacript:;">编辑房间基本信息</a></li>
+    </ul>
+    <ul class="nav nav-tabs dat" role="tablist">
+        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">房间基本信息</a></li>
+        <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">图片上传</a></li>
+    </ul>
+
+    <form action="{:url('hbasic_edit')}" class="form-horizontal js-ajax-form margin-top-20" method="post" id="form1">
+        <input type="hidden" name="id" value="{$data.id}" />
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="home">
+                <div class="form-group">
+                <label for="rid" class="control-label col-sm-2"><span
+                        class="form-required">*</span>房间号</label>
+
+                <div class="col-md-6 col-sm-10">
+                    <input type="number" name="rid" min="1001" max="1100" placeholder="请输入房间号1001-1100"
+                           class="form-control" pattern="\d{1,4}" id="rid" value="{$data.rid}" readonly>
+                </div>
+            <span class="glyphicon glyphicon-ok col-md-1"
+                  style="height:34px;line-height:24px;color:#18BC9C;display:none;"></span>
+            </div>
+                <div class="form-group">
+                    <label for="password" class="control-label col-sm-2">房间密码</label>
+
+                    <div class="col-md-6 col-sm-10">
+                        <input type="text" class="form-control" name="password" id="password" value="{$data.password}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="room" class="control-label col-sm-2"><span
+                            class="form-required">*</span>房间名称</label>
+
+                    <div class="col-md-6 col-sm-10">
+                        <input type="text" class="form-control" name="room" id="room" value="{$data.room}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="ftitle" class="control-label col-sm-2">房间标题</label>
+
+                    <div class="col-md-6 col-sm-10">
+                        <input type="text" class="form-control" name="ftitle" id="ftitle" value="{$data.ftitle}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="shield_field" class="control-label col-sm-2">屏蔽字段</label>
+
+                    <div class="col-md-6 col-sm-10">
+                        <input type="text" class="form-control" name="shield_field" id="shield_field" value="{$data.shield_field}">
+                    </div>如骗|骂|   词之间,用 | 隔开
+                </div>
+                <div class="form-group">
+                    <label for="speak_intval" class="control-label col-sm-2">游客发言间隔</label>
+
+                    <div class="col-md-6 col-sm-10 input-group">
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-apple"></span></div>
+                        <input type="number" class="form-control" name="speak_intval" id="speak_intval" value="{$data.speak_intval}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="check_speak" class="control-label col-sm-2">发言自动审核</label>
+
+                    <div class="col-md-6 col-sm-10">
+                        <input type="hidden" name="check_speak" id="check_speak" <empty name="$data.check_speak"> value="1"<else/>value="{$data.check_speak}"</empty> />
+
+                        <p class="switch">
+                            <if condition="$data.check_speak eq 1">
+                                <span class="on">ON</span>
+                            <else/>
+                                <span class="off">OFF</span>
+                            </if>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="login_hint" class="control-label col-sm-2">登录提示</label>
+
+                    <div class="col-md-6 col-sm-10">
+                        <input type="hidden" name="login_hint" id="login_hint" <empty name="$data.login_hint"> value="1"<else/>value="{$data.login_hint}"</empty>/>
+
+                        <p class="switch">
+                            <if condition="$data.login_hint eq 1">
+                                <span class="on">ON</span>
+                                <else/>
+                                <span class="off">OFF</span>
+                            </if>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="switch_house" class="control-label col-sm-2">房间开关</label>
+
+                    <div class="col-md-6 col-sm-10">
+                        <input type="hidden" name="switch_house" id="switch_house" <empty name="$data.switch_house"> value="1"<else/>value="{$data.switch_house}"</empty> />
+
+                        <p class="switch">
+                            <if condition="$data.switch_house eq 1">
+                                <span class="on">ON</span>
+                                <else/>
+                                <span class="off">OFF</span>
+                            </if>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="single_login" class="control-label col-sm-2">单点登录</label>
+
+                    <div class="col-md-6 col-sm-10">
+                        <input type="hidden" name="single_login" id="single_login" <empty name="$data.single_login"> value="1"<else/>value="{$data.single_login}"</empty> />
+
+                        <p class="switch">
+                            <if condition="$data.single_login eq 1">
+                                <span class="on">ON</span>
+                                <else/>
+                                <span class="off">OFF</span>
+                            </if>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="sightseer_login" class="control-label col-sm-2">游客进入</label>
+
+                    <div class="col-md-6 col-sm-10">
+                        <input type="hidden" name="sightseer_login" id="sightseer_login" <empty name="$data.sightseer_login"> value="1"<else/>value="{$data.sightseer_login}"</empty>/>
+
+                        <p class="switch">
+                            <if condition="$data.sightseer_login eq 1">
+                                <span class="on">ON</span>
+                                <else/>
+                                <span class="off">OFF</span>
+                            </if>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="img_carousel" class="control-label col-sm-2">是否开启轮播</label>
+
+                    <div class="col-md-6 col-sm-10">
+                        <input type="hidden" name="img_carousel" id="img_carousel" <empty name="$data.img_carousel"> value="1"<else/>value="{$data.img_carousel}"</empty>/>
+
+                        <p class="switch">
+                            <if condition="$data.img_carousel eq 1">
+                                <span class="on">ON</span>
+                                <else/>
+                                <span class="off">OFF</span>
+                            </if>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="astrict_sightseer" class="control-label col-sm-2">游客观看限制</label>
+
+                    <div class="col-md-6 col-sm-10">
+                        <input type="hidden" name="astrict_sightseer" id="astrict_sightseer" <empty name="$data.astrict_sightseer"> value="0"<else/>value="{$data.astrict_sightseer}"</empty>/>
+
+                        <p class="switch">
+                            <if condition="$data.astrict_sightseer eq 1">
+                                <span class="on">ON</span>
+                                <else/>
+                                <span class="off">OFF</span>
+                            </if>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="iscall" class="control-label col-sm-2">开启招呼</label>
+
+                    <div class="col-md-6 col-sm-10">
+                        <input type="hidden" name="iscall" id="iscall" <empty name="$data.iscall"> value="0"<else/>value="{$data.iscall}"</empty>/>
+
+                        <p class="switch">
+                            <if condition="$data.iscall eq 1">
+                                <span class="on">ON</span>
+                                <else/>
+                                <span class="off">OFF</span>
+                            </if>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-info next-button" index="1">下一页设置</button>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="messages">
+                <div class="form-group">
+                    <label class="control-label col-sm-2">LOGO上传</label>
+                    <input type="hidden" name="room_log" value="{$data.room_log}"/>
+
+                    <div class="col-md-2 col-sm-3">
+                        <button type="button" class="layui-btn" id="input-icon1">
+                            <i class="layui-icon"></i>上传图片
+                        </button>
+                    </div>
+                    <div class="icon" <empty name="$data.room_log"><else/>style="display:block;"</empty> >
+                        <empty name="$data.room_log">
+                            <else/>
+                            <img src="{$data.room_log}" width="100" alt="">
+                        </empty>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2">小LOGO上传</label>
+                    <input type="hidden" name="room_small_log"  value="{$data.room_small_log}"/>
+
+                    <div class="col-md-2 col-sm-3">
+                        <button type="button" class="layui-btn" id="input-icon2">
+                            <i class="layui-icon"></i>上传图片
+                        </button>
+                    </div>
+                    <div class="icon" <notempty name="$data.room_small_log">style="display:block;"</notempty> >
+                        <notempty name="$data.room_small_log">
+                            <img src="{$data.room_small_log}" width="100" alt="">
+                        </notempty>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2">二维码上传</label>
+                    <input type="hidden" name="room_QR_code"  value="{$data.room_QR_code}"/>
+
+                    <div class="col-md-2 col-sm-3">
+                        <button type="button" class="layui-btn"  id="input-icon3">
+                            <i class="layui-icon"></i>上传图片
+                        </button>
+                    </div>
+                    <div class="icon" <empty name="$data.room_QR_code"><else/>style="display:block;"</empty> >
+                        <empty name="$data.room_QR_code">
+                            <else/>
+                            <img src="{$data.room_QR_code}" width="100" alt="">
+                        </empty>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2">封面上传</label>
+                    <input type="hidden" name="room_cover"  value="{$data.room_cover}"/>
+
+                    <div class="col-md-2 col-sm-3">
+                        <button type="button" class="layui-btn" id="input-icon4">
+                            <i class="layui-icon"></i>上传图片
+                        </button>
+                    </div>
+                    <div class="icon" <empty name="$data.room_cover"><else/>style="display:block;"</empty> >
+                    <empty name="$data.room_cover">
+                        <else/>
+                        <img src="{$data.room_cover}" width="100" alt="">
+                    </empty>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2">背景上传</label>
+                    <input type="hidden" name="room_bg_img"  value="{$data.room_bg_img}"/>
+
+                    <div class="col-md-2 col-sm-3">
+                        <button type="button" class="layui-btn" id="input-icon5">
+                            <i class="layui-icon"></i>上传图片
+                        </button>
+                    </div>
+                    <div class="icon" <empty name="$data.room_bg_img"><else/>style="display:block;"</empty> >
+                    <empty name="$data.room_bg_img">
+                        <else/>
+                        <img src="{$data.room_bg_img}" width="100" alt="">
+                    </empty>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top:100px;">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit" style="width:100px;" form="form1">
+                            编辑
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/layer.js"></script>
+<script src="__STATIC__/js/layer/layui.js"></script>
+<script>
+    //验证房间号
+    /*$('#rid').blur(function () {
+        var room_code = $(this).val();
+        if (room_code == "" || parseInt(room_code) < 1001 || parseInt(room_code) > 1100) {
+            layer.msg("房间号格式不正确！", {
+                time: 1000,
+                icon: 2
+            });
+        } else {
+            $.post("{:url('check_roomid')}", {rid: room_code}, function (msg) {
+                var obj = eval('(' + msg + ')');
+                if (obj.code != 0) {
+                    layer.msg(obj.msg, {
+                        time: 1000,
+                        icon: 2
+                    });
+                } else {
+                    $('.glyphicon-ok').show();
+                    setTimeout(function () {
+                        $('.glyphicon-ok').hide();
+                    }, 1000);
+                }
+            }, 'json');
+        }
+    });*/
+
+    //滑动
+    $('.switch').click(function () {
+        var obj = $(this).find('span');
+        if (obj.attr('class') == 'on') {
+            obj.animate({
+                left: '53px'
+            }, 'fast', function () {
+                obj.removeClass('on');
+                obj.addClass('off');
+
+                obj.html('OFF');
+
+                obj.parents('p').siblings('input[type="hidden"]').val(0);
+            });
+        } else {
+            obj.animate({
+                left: '0px'
+            }, 'fast', function () {
+                obj.removeClass('off');
+                obj.addClass('on');
+
+                obj.html('ON');
+                obj.parents('p').siblings('input[type="hidden"]').val(1);
+            });
+        }
+    });
+
+
+    //图片上传
+    layui.use('upload', function () {
+        var upload = layui.upload;
+        upload.render({
+            elem: $('.layui-btn')
+            , url: '{:url("image_upload")}'
+            , done: function (res, index, upload) { //上传后的回调
+
+                if (res.code == 0) {
+                    var str = '<img src="' + res.data + '" width="100"/>';
+                    var icon = this.item.parents('.col-md-2').siblings('.icon');
+                    icon.html('');
+                    icon.show().append(str);
+
+                    icon.siblings('input[type="hidden"]').val(res.data);
+                }
+            }
+            , error: function (error) {                  //上传异常回调
+                console.log(error);
+            }
+            , accept: 'images'                  //允许上传的类型
+            , exts: 'jpg|jpeg|png|gif'          //允许上次的图片的类型
+            , size: 100                         //最大允许上传的文件大小
+            , drag: false                       //是否允许拖拽
+        });
+    });
+
+    $('.next-button').click(function(){
+        var index = $(this).attr('index');
+
+        $('.dat li').attr('class','');
+        $('.dat li').eq(index).attr('class','active');
+
+        $('.tab-content').find('.tab-pane').attr('class','tab-pane');
+        $('.tab-content').find('.tab-pane').eq(index).attr('class','tab-pane active');
+
+    });
+
+</script>
+</html>

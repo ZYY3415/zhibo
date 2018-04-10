@@ -1,0 +1,680 @@
+
+/*reset css begin*/
+html {
+    font-family: sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+body {
+    margin: 0;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+    display: block;
+}
+audio, canvas, progress, video {
+    display: inline-block;
+    vertical-align: baseline;
+}
+audio:not([controls]) {
+    display: none;
+    height: 0;
+}
+[hidden], template {
+    display: none;
+}
+a {
+    background-color: transparent;
+}
+a:active, a:hover {
+    outline: 0;
+}
+abbr[title] {
+    border-bottom: 1px dotted;
+}
+b, strong {
+    font-weight: bold;
+}
+dfn {
+    font-style: italic;
+}
+h1 {
+    margin: .67em 0;
+    font-size: 2em;
+}
+mark {
+    color: #000;
+    background: #ff0;
+}
+small {
+    font-size: 80%;
+}
+sub, sup {
+    position: relative;
+    font-size: 75%;
+    line-height: 0;
+    vertical-align: baseline;
+}
+sup {
+    top: -.5em;
+}
+sub {
+    bottom: -.25em;
+}
+img {
+    border: 0;
+}
+svg:not(:root) {
+    overflow: hidden;
+}
+figure {
+    margin: 1em 40px;
+}
+hr {
+    height: 0;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+pre {
+    overflow: auto;
+}
+code, kbd, pre, samp {
+    font-family: monospace, monospace;
+    font-size: 1em;
+}
+button, input, optgroup, select, textarea {
+    margin: 0;
+    font: inherit;
+    color: inherit;
+}
+button {
+    overflow: visible;
+}
+button, select {
+    text-transform: none;
+}
+button, html input[type="button"], input[type="reset"], input[type="submit"] {
+    -webkit-appearance: button;
+    cursor: pointer;
+}
+button[disabled], html input[disabled] {
+    cursor: default;
+}
+button::-moz-focus-inner, input::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}
+input {
+    line-height: normal;
+}
+input[type="checkbox"], input[type="radio"] {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0;
+}
+input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button {
+    height: auto;
+}
+input[type="search"] {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    -webkit-appearance: textfield;
+}
+input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+fieldset {
+    padding: .35em .625em .75em;
+    margin: 0 2px;
+    border: 1px solid #c0c0c0;
+}
+legend {
+    padding: 0;
+    border: 0;
+}
+textarea {
+    overflow: auto;
+}
+optgroup {
+    font-weight: bold;
+}
+table {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+td, th {
+    padding: 0;
+}
+/*reset css end*/
+
+
+/*used css begin*/
+.clearfix:before, .clearfix:after {
+    display: table;
+    content: " ";
+}
+.clearfix:after {
+    clear: both;
+}
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    list-style: none;
+}
+/*used css end*/
+
+
+/*body css begin*/
+body,html {
+    font-family: "Microsoft YaHei";
+    background-color: #F7F8FA;
+    font-size: 12px;
+}
+
+
+nav {
+    height:80px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    line-height: 7rem;
+    background-color: #fff;
+    box-shadow: 0px 2px 20px 0px rgba(0,0,0,0.05);
+}
+.logo {
+    width: 122px;
+    height: 48px;
+    float: left;
+    margin-left: 40px;
+    line-height: 80px;
+}
+.logo img {
+    width: 122px;
+    height: 48px;
+}
+.loginInfor {
+    float: right;
+    margin-right: 40px;
+    font-size: 14px;
+}
+.loginInfor > li {
+    display: inline-block;
+    cursor: pointer;
+    margin-left: 30px;
+}
+.loginInfor > li > a {
+    color: #F1BD55;
+    text-decoration: none;
+}
+.loginInfor li i:nth-child(1) {
+    display: inline-block;
+    border-radius: 50% 50%;
+    position: relative;
+    top: 0;
+}
+.loginInfor li i:nth-child(1) img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50% 50%;
+    margin-right: 10px;
+}
+.loginInfor li i:nth-child(2) {
+    width: 14px;
+    height: 10px;
+    display: inline-block;
+    background: url("../images/Rectangle2.png") 4px 4px no-repeat;
+}
+.loginInfor li .navList {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    text-align: center;
+    width: 112px;
+    height: auto;
+    top: 81px;
+}
+.loginInfor li .navList li {
+    width: 100%;
+    height: 36px;
+    line-height: 36px;
+    box-shadow: 0px 2px 20px 0px rgba(0,0,0,0.05);
+}
+.loginInfor li .navList li a {
+    color: #666;
+    text-decoration: none;
+}
+.loginInfor li .navList li a:hover {
+    color: #444;
+}
+
+
+.contentBox {
+    width: 1000px;
+    margin: 100px auto 0 auto;
+}
+.contentBox .leftMenu {
+    width: 200px;
+    height: 800px;
+    background-color: #EEEEEE;
+    float: left;
+}
+.contentBox .rightContent {
+    width: 800px;
+    height: 800px;
+    background-color: #fff;
+    float: right;
+}
+
+
+.leftMenu .avatar {
+    width: 100%;
+    text-align: center;
+    height: 180px;
+}
+.leftMenu .avatar img {
+    width: 96px;
+    height: 96px;
+    border-radius: 50% 50%;
+    margin-top: 44px;
+}
+.leftMenu .avatar p {
+    margin-top: 10px;
+}
+.leftMenu .listInfor {
+    width: 100%;
+    margin-top: 20px;
+}
+.leftMenu .listInfor li {
+    height: 50px;
+    display: block;
+    border-left: solid 4px #EEEEEE;
+    border-bottom: solid 1px #DFDFDF;
+    padding-left: 40px;
+}
+.leftMenu .listInfor li a {
+    color: #999;
+    font-size: 16px;
+    line-height: 50px;
+    text-decoration: none;
+}
+.leftMenu .listInfor li:hover {
+    background-color: rgba(0,0,0,0.04);
+    border-left: none;
+    padding-left: 46px;
+}
+.leftMenu .listInfor li.active {
+    background-color: #fff;
+    border-left: solid 4px #F1BD55;
+    border-bottom: none;
+}
+.leftMenu .listInfor li.active a {
+    color: #F1BD55;
+}
+.leftMenu .listInfor li a i {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-right: 10px;
+    position: relative;
+    top: 4px;
+}
+.leftMenu .listInfor li:nth-child(1) a i {
+    background: url("../images/myProfile.png") center no-repeat;
+    background-size: auto;
+}
+.leftMenu .listInfor li:nth-child(2) a i {
+    background: url("../images/password.png") center no-repeat;
+    background-size: contain;
+}
+.leftMenu .listInfor li:nth-child(3) a i {
+    background: url("../images/consumption.png") center no-repeat;
+    background-size: contain;
+}
+.leftMenu .listInfor li:nth-child(4) a i {
+    background: url("../images/withdraw.png") center no-repeat;
+    background-size: contain;
+}
+.leftMenu .listInfor li.active:nth-child(1) a i {
+    background: url("../images/myProfile-yellow.png") center no-repeat;
+    background-size: auto;
+}
+.leftMenu .listInfor li.active:nth-child(2) a i {
+    background: url("../images/password-yellow.png") center no-repeat;
+    background-size: contain;
+}
+.leftMenu .listInfor li.active:nth-child(3) a i {
+    background: url("../images/consumption-yellow.png") center no-repeat;
+    background-size: contain;
+}
+.leftMenu .listInfor li.active:nth-child(4) a i {
+    background: url("../images/withdraw-yellow.png") center no-repeat;
+    background-size: contain;
+}
+
+
+.rightContent section {
+    width: 94%;
+    margin: 10px auto;
+}
+.rightContent .secTitle {
+    height: 40px;
+    width: 100%;
+    border-bottom: solid 1px #ededed;
+    line-height: 40px;
+    color: #666;
+}
+.rightContent .secTitle i {
+    width: 2px;
+    height: 14px;
+    background-color: #F1BD55;
+    display: inline-block;
+    position: relative;
+    top: 3px;
+    margin-right: 10px;
+}
+
+/*我的资料开始*/
+.rightContent .changeAvatar {
+    width: 100%;
+    padding: 30px 0;
+    border-bottom: solid 1px #ededed;
+}
+.rightContent .changeAvatar dt {
+    margin-right: 24px;
+    float: left;
+    width: 150px;
+    height: 150px;
+}
+.rightContent .changeAvatar dt img {
+    width: 100%;
+    height: 100%;
+}
+.rightContent .changeAvatar dd {
+    float: left;
+    width: 500px;
+    display: block;
+}
+.rightContent .changeAvatar dd:nth-child(2) {
+    color: #999;
+}
+.rightContent .changeAvatar dd:nth-child(3) {
+    margin-top: 30px;
+}
+.rightContent .changeAvatar dl input {
+    width: 120px;
+    height: 40px;
+    background-color: #F1BD55;
+    border-radius: 20px;
+    border: none;
+    color: #fff;
+}
+.rightContent .changeAvatar dl input:hover {
+    background-color: RGBA(241, 189, 85, 0.8);
+}
+/*上传文件美化*/
+.file {
+    width: 120px;
+    position: relative;
+    display: inline-block;
+    background: #F1BD55;
+    border-radius: 20px;
+    overflow: hidden;
+    color: #999;
+    text-align: center;
+    text-decoration: none;
+    line-height: 40px;
+    height: 40px;
+    margin: 10px 0;
+    color: #fff;
+}
+.file input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    width: 100%;
+}
+.file:hover {
+    background-color: RGBA(241, 189, 85, 0.8);
+    text-decoration: none;
+}
+.rightContent .memberInforList {
+    width: 100%;
+    padding: 30px 0;
+}
+.rightContent .memberInforList li {
+    width: 49%;
+    display: inline-block;
+}
+.rightContent .memberInforList li label {
+    display: block;
+    font-size: 14px;
+}
+.rightContent .memberInforList li input[type="text"] {
+    width: 80%;
+    height: 40px;
+    border-radius: 4px;
+    border: solid 1px #DFDFDF;
+    text-indent: 10px;
+    margin: 8px 0 20px 0;
+}
+.rightContent .memberInforList li input[type="submit"] {
+    width: 120px;
+    height: 40px;
+    background-color: #F1BD55;
+    border-radius: 20px;
+    border: none;
+    color: #fff;
+}
+.rightContent .memberInforList li input[type="submit"]:hover {
+    background-color: RGBA(241, 189, 85, 0.8);
+}
+.rightContent .memberInforList li .promotionInfor {
+    display: inline-block;
+    width: 30px;
+    height: 18px;
+    border: solid 1px #758DB0;
+    color: #758DB0;
+    border-radius: 9px;
+    text-decoration: none;
+    text-align: center;
+    margin-left: 4px;
+}
+/*我的资料结束*/
+
+
+/*我的推广开始*/
+.promotionSearch {
+    width: 100%;
+    padding: 30px 0 20px 0;
+}
+
+.promotionSearch input[type="text"] {
+    width: 140px;
+    height: 30px;
+    border-radius: 4px 0 0 4px;
+    border: solid 1px #DFDFDF;
+    border-right: none;
+    text-indent: 10px;
+    margin-left: 10px;
+}
+.promotionSearch input[type="button"] {
+    width: 70px;
+    height: 32px;
+    background-color: #F1BD55;
+    border-radius: 0 4px 4px 0;
+    border: solid 1px #F1BD55;
+    color: #fff;
+}
+.promotionSearch input[type="button"]:hover {
+    background-color: RGBA(241, 189, 85, 0.8);
+}
+
+.promotionTable {
+    width: 100%;
+    margin-top: 10px;
+}
+.promotionTable thead {
+    background-color: #F4F4F4;
+    color: #666;
+}
+.promotionTable tr {
+    border: solid 1px #F4F4F4;
+    height: 40px;
+}
+.promotionTable tr:nth-child(2n) {
+    background-color: #FBFCFD;
+}
+.promotionTable tr td {
+    text-align: center;
+    color: #333;
+}
+.prompt {
+    color: #999;
+    margin: 10px 0;
+    text-align: right;
+}
+.prompt span {
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+    border: solid 1px #ededed;
+    text-align: center;
+    line-height: 24px;
+    border-radius: 4px;
+    margin: 0 6px;
+    color: #666;
+    cursor: pointer;
+}
+.prompt span:hover {
+    background-color: #F1BD55;
+    border: solid 1px #F1BD55;
+    color: #fff;
+}
+.prompt span.active {
+    background-color: #F1BD55;
+    color: #fff;
+}
+.prompt i {
+    margin: 0 8px;
+    font-style: normal;
+    display: inline-block;
+}
+/*我的推广结束*/
+
+
+/*修改密码开始*/
+.passwordInfor {
+    width: 40%;
+    margin: 30px auto;
+    text-align: left;
+}
+.passwordInfor li {
+    margin-bottom: 20px;
+}
+.passwordInfor label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+.passwordInfor input[type="text"] {
+    height: 40px;
+    width: 300px;
+    border-radius: 4px;
+    border: solid 1px #DFDFDF;
+    text-indent: 10px;
+}
+.passwordInfor input[type="submit"] {
+    width: 120px;
+    height: 40px;
+    background-color: #F1BD55;
+    color: #fff;
+    border-radius: 20px;
+    border: none;
+    font-size: 14px;
+}
+.passwordInfor input[type="submit"]:hover {
+    background-color: RGBA(241, 189, 85, 0.8);
+}
+/*修改密码结束*/
+
+.nothing {
+    width: 100%;
+    text-align: center;
+    margin: 80px 0;
+    display: none;
+}
+
+
+img {
+    vertical-align: middle;
+}
+
+.passwordInfor li div {
+    display: flex;
+}
+
+.tips-null{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid red;
+    border-radius: 50%;
+    color: red;
+    text-align: center;
+    line-height: 20px;
+    margin-left: 4px;
+    margin-top: 10px;
+    vertical-align: middle;
+}
+
+/*提示层*/
+.cover{
+    display: none;
+    background: rgba(0,0,0,0.4);
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 999;
+}
+.tips{
+    min-width: 286px;
+    background: #fff;
+    position: fixed;
+    border-radius: 10px;
+    height: 90px;
+    line-height: 90px;
+    z-index: 90;
+    box-shadow: 0 0 30px 0 #666;
+    text-align: center;
+}
+.status-images{
+    margin-left: 20px;
+}
+.status{
+    margin-left: 20px;
+    margin-right: 20px;
+    color: #08C2F0;
+}
+
+/*body css end*/
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,153 @@
+<include file="public@header" />
+<style>
+    table
+    {
+        margin-top:20px;
+    }
+    .dat
+    {
+        margin-top:30px;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('hvindex')}">房间视频信息管理</a></li>
+        <li class="active"><a href="javacript:;">新增房间视频信息</a></li>
+    </ul>
+    <form action="{:url('addHvinfo')}" class="form-horizontal js-ajax-form margin-top-20" method="post" id="form1">
+        <div class="form-group">
+            <label for="room" class="col-sm-2 control-label">房间<span class="form-required">*</span></label>
+            <div class="col-md-6 col-sm-10">
+                <input type="text" name="room" id="room" readonly class="form-control" index="{:url('portal/admin_house/selectOne')}" />
+                <input type="hidden" name="rid" id="rid" />
+        </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2"><span class="form-required">*</span>视频来源</label>
+
+            <div class="col-md-6 col-sm-10 rado">
+                <input type="radio" class="" name="play_source" checked value="1">虎牙直播&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" class="" name="play_source" value="2">阿里云直播
+            </div>
+        </div>
+        <div class="centent1">
+            <div class="form-group">
+                <label for="YYfcode" class="control-label col-sm-2"><span
+                        class="form-required">*</span>YY房间号</label>
+
+                <div class="col-md-6 col-sm-10">
+                    <input type="number" class="form-control" name="YYfcode" id="YYfcode">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="YYcode" class="control-label col-sm-2"><span
+                        class="form-required">*</span>YY账号</label>
+
+                <div class="col-md-6 col-sm-10">
+                    <input type="number" class="form-control" name="YYcode" id="YYcode">
+                </div>
+            </div>
+        </div>
+        <div class="centent2" style="display:none;">
+            <div class="form-group">
+                <input type="hidden" name="pc_play_site" value="{$data.pc_play_site}"/>
+                <input type="hidden" name="m_play_site" value="{$data.m_play_site}"/>
+                <input type="hidden" name="pull_video_indate" value="{$data.time}"/>
+                <input type="hidden" name="m_play_indate" value="{$data.time}"/>
+                <input type="hidden" name="pc_play_indate" value="{$data.time}"/>
+                <label for="pull_video_site" class="control-label col-sm-2"><span class="form-required">*</span>推流地址</label>
+
+                <div class="col-md-6 col-sm-10">
+                    <input type="text" class="form-control" name="pull_video_site" id="pull_video_site"
+                           value="{$data.c_pull_site}" readonly>
+                </div>
+                <button class="btn btn-info btncopy">复制URL</button>
+            </div>
+            <div class="form-group">
+                <label for="pull_video_token" class="control-label col-sm-2"><span
+                        class="form-required">*</span>播放路径/串流码</label>
+
+                <div class="col-md-6 col-sm-10">
+                    <input type="text" class="form-control" name="pull_video_token" id="pull_video_token"
+                           value="{$data.token}" readonly>
+                </div>
+                <button class="btn btn-info btncopy">复制串流码</button>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary js-ajax-submit">添加</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    //切换视频源
+    $('.rado').change(function () {
+        var socule = $(this).find('input:checked').val();
+
+        if (socule == 0) {
+            $('.centent1').show();
+            $('.centent2').hide();
+        } else {
+            $('.centent2').show();
+            $('.centent1').hide();
+        }
+    });
+
+    //复制内容
+    $('.btncopy').click(function () {
+        var Url2 = $(this).siblings('.col-md-6').find('input').get(0);
+        var that = this;
+        Url2.select();               // 选择对象
+        document.execCommand("Copy"); // 执行浏览器复制命令
+        layer.tips("复制成功！", that, {
+            tips: [1, 'green'],
+            time: 1000
+        });
+        return false;
+    });
+
+    $('#room').click(function(){
+        var url = $(this).attr('index');
+        var ids = $('#rid').val();
+        url = url+'?ids='+ids;
+        openIframeLayer(url, '请选择房间', {
+            area: ['1000px', '600px'],
+            btn: ['确定', '取消'],
+            yes: function (index, layero) {
+                //do something
+
+                var iframeWin          = window[layero.find('iframe')[0]['name']];
+                var selectedCategories = iframeWin.confirm();
+
+                if (selectedCategories.selectedCategoriesId.length == 0) {
+                    layer.msg('请选择分类');
+                    return;
+                }
+
+                $('#rid').val(selectedCategories.selectedCategoriesId[0]);
+                $('#room').val(selectedCategories.selectedCategoriesName[0]);
+
+                //console.log(layer.getFrameIndex(index));
+                layer.close(index); //如果设定了yes回调，需进行手工关闭
+            }
+        });
+    });
+
+    //切换视频源
+    $('.rado').change(function () {
+        var socule = $(this).find('input:checked').val();
+
+        if (socule == 1) {
+            $('.centent1').show();
+            $('.centent2').hide();
+        } else {
+            $('.centent2').show();
+            $('.centent1').hide();
+        }
+    });
+</script>

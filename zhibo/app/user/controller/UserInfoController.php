@@ -1,0 +1,25 @@
+<?php
+// +----------------------------------------------------------------------
+// | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2013-2018 http://www.thinkcmf.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
+// +----------------------------------------------------------------------
+// | Author: 郑于洋 < 12345678@qq.com>
+// +----------------------------------------------------------------------
+namespace app\user\controller;
+
+use think\Db;
+use cmf\controller\AdminBaseController;
+
+class UserInfoController extends AdminBaseController
+{
+    function index(){
+        return $this->fetch();
+    }
+
+
+
+
+}

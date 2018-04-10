@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>网页支付</title>
+    <link rel="stylesheet" type="text/css" href="__TMPL__/public/assets/css/pay.css"/>
+</head>
+<body>
+<div class="header_wrap"><span></span></div>
+<div class="tb_style">
+    <h3 class="title_h3">选择支付方式</h3>
+</div>
+<table id="table1" style="line-height: 30px;" border="0" cellpadding="0" cellspacing="0">
+    <tr id="paytype">
+        <td>
+            <div class="">阿里支付：</div>
+            <div class="">微信支付：</div>
+            <div class="">银联支付：</div>
+        </td>
+        <td>
+            <div class="alipay">
+                <span class="">
+                    <input type="radio" name="paytype" value="alipay" id="alipay" >
+                    <label for="alipay"></label>
+                    <strong>支付宝</strong>
+                </span>
+                <span class="erweima">
+                    <input type="radio" name="paytype" value="alipayQrCode" id="alipayQrCode" >
+                    <label for="alipayQrCode"></label>
+                    <strong>支付宝二维码</strong>
+                </span>
+            </div>
+            <div class="weixin">
+                <span class="">
+                    <input type="radio" name="paytype" value="weixin" id="weixin" >
+                    <label for="weixin" ></label>
+                    <strong>微信</strong>
+                </span>
+                <span class="erweima">
+                    <input type="radio" name="paytype" value="weixinQrCode" id="weixinQrCode" >
+                    <label for="weixinQrCode"></label>
+                    <strong>微信二维码</strong>
+                </span>
+            </div>
+            <div class="yinlian">
+                <volist name="bank" id="vo" key="k">
+                    <if condition="$k==1">
+                        <span class="checked">
+                    <else />
+                        <span>
+                    </if>
+                    <input type="radio" name="paytype" value="{$vo.code}" id="{$vo.code}" >
+                    <label for="{$vo.code}" style="background-position-y: {$vo.position_y}px;"></label>
+                    </span>
+                </volist>
+            </div>
+        </td>
+        <td></td>
+    </tr>
+
+    <input type="hidden" id="type" value="1">
+    <input type="hidden" id="order_remark" value="商户充值">
+    <tr>
+        <td>商品名称 : </td>
+        <td>
+            <input type="text" name="subject" id="subject" value="充值" disabled>
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>金 额 : </td>
+        <td>
+            <input type="text" name="total_fee" id="total_fee" value="">
+        </td>
+        <td></td>
+    </tr>
+    <tr style="height:85px">
+        <td> </td>
+        <td><input type="submit" value="提交" id="payin" data-href="{:url('user/pay/payin')}"></td>
+        <td></td>
+    </tr>
+</table>
+</div>
+<script src="__TMPL__/public/assets/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+    $("#table1 tr td div>span").click(function() {
+        $(this).children('input[type=radio]').prop('checked',true);
+        $("#table1 tr td div>span").removeClass("checked");
+        $(this).addClass("checked");
+    });
+    var inputChecked=$('input[type=radio]');
+    inputChecked.click(function(){
+        $('input[type=radio]').parent().removeClass("checked");
+        $(this).parent().addClass("checked");
+    });
+
+    $("#payin").click(function() {
+        var paytype = $("input[name='paytype']:checked").val();
+        var total_fee = $("#total_fee").val();
+        var subject = $("#subject").val();
+        var type = $("#type").val();
+        var order_remark = $("#order_remark").val();
+        var url = $(this).attr('data-href');
+        $.ajax({
+            type: "post",
+            url: url,
+            async: false,
+            data: {
+                'total_fee': total_fee,
+                'type': type,
+                'subject': subject,
+                'paytype': paytype,
+                'order_remark': order_remark
+            },
+            success: function (data) {
+                if (data.msg == 'success') {
+                    window.location.href = data.url;
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

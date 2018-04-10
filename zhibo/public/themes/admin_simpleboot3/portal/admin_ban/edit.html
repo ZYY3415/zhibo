@@ -1,0 +1,156 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('AdminBan/banUser')}">黑名单用户列表</a></li>
+        <li class="active"><a href="javascript:;">修改资料</a></li>
+    </ul>
+    <form action="{:url('AdminBan/editPost')}" method="post" class="form-horizontal js-ajax-form margin-top-20">
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table table-bordered">
+                    <tr>
+                        <th width="80">昵称:<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="nickname" id="nickname" value="{$members.nickname}"
+                                   placeholder="请输入昵称">
+                            <input type="hidden" value="{$members.id}"" name="id">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>QQ:</th>
+                        <td>
+                            <input class="form-control" type="text" name="qq" id="qq" value="{$members.qq}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>E-mail:</th>
+                        <td>
+                            <input class="form-control" type="email" name="email" id="email" value="{$members.email}" placeholder="如:love@163.com">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>手机:<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="phone" id="phone" value="{$members.phone}"
+                                   placeholder="请输入手机">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>余额:<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="text" name="money" id="money" value="{$members.money}"
+                                   placeholder="请输入昵称">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>用户组:</th>
+                        <td>
+                            <select name="adminid" id="adminid" class="form-control" style="width: 150px;">
+                            <option value="{$members.roleid}">{$members.rolename}</option>
+                            <volist name="role" id="vo"> 
+                                <option value="{$vo.id}">{$vo.rolename}</option>
+                            </volist>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>推荐人:</th>
+                        <td>
+                            <select name="tuijianmid" id="tuijianmid" class="form-control" style="width: 150px;">
+                                <if condition="$members.tuijianmid == '0'">
+                                    <option value="{$members.tuijianmid}">请选择推荐人...</option>
+                                <else/>
+                                    <option value="{$members.tuijianmid}">{$members.tuijianmid}</option>
+                                </if>
+                                <volist name="member" id="vo">
+                                    <option value="{$vo.nickname}">{$vo.nickname}</option>
+                                </volist>
+                                <volist name="teacher" id="vo">
+                                    <option value="{$vo.jname}">{$vo.jname}</option>
+                                </volist>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>房间:<span class="form-required">*</span></th>
+                        <td>
+                            <select name="rid" id="rid" class="form-control" style="width: 150px;">
+                            <option value="{$members.rid}">{$members.room}</option>
+                            <volist name="rooms" id="room">
+                                <option value="{$room.rid}">{$room.room}</option>
+                            </volist>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>备注:</th>
+                        <td>
+                            <input class="form-control" type="text" name="remark" id="remark" value="">
+                        </td>
+                    </tr>
+                </table>
+                <div class="form-group">
+                    <div class="col-sm-offset-1 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                        <a class="btn btn-default" href="{:url('AdminBan/banUser')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script type="text/javascript">
+    //编辑器路径定义
+    var editorURL = GV.WEB_ROOT;
+</script>
+<script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        editorcontent = new baidu.editor.ui.Editor();
+        editorcontent.render('content');
+        try {
+            editorcontent.sync();
+        } catch (err) {
+        }
+
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#thumbnail-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#thumbnail').val('');
+        });
+
+    });
+
+    function doSelectCategory() {
+        var selectedCategoriesId = $('#js-categories-id-input').val();
+        openIframeLayer("{:url('AdminCategory/select')}?ids=" + selectedCategoriesId, '请选择分类', {
+            area: ['700px', '400px'],
+            btn: ['确定', '取消'],
+            yes: function (index, layero) {
+                //do something
+
+                var iframeWin          = window[layero.find('iframe')[0]['name']];
+                var selectedCategories = iframeWin.confirm();
+                if (selectedCategories.selectedCategoriesId.length == 0) {
+                    layer.msg('请选择分类');
+                    return;
+                }
+                $('#js-categories-id-input').val(selectedCategories.selectedCategoriesId.join(','));
+                $('#js-categories-name-input').val(selectedCategories.selectedCategoriesName.join(' '));
+                //console.log(layer.getFrameIndex(index));
+                layer.close(index); //如果设定了yes回调，需进行手工关闭
+            }
+        });
+    }
+</script>
+</body>
+</html>

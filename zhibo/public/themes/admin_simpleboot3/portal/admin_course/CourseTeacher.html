@@ -1,0 +1,99 @@
+<include file="public@header"/>
+<style>
+    table {
+        text-align: center;
+    }
+
+    th {
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">教师列表</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20 js-ajax-form" method="post" action="">
+        教师名称:<span class="form-required">*</span>
+        <input type="hidden" name="jid" id="jid" value="{$teachers.jid|default=''}"/>
+        <input type="text" name="jname" id="jname" class="form-control" value="{$teachers.jname|default=''}"/><br/><br/>
+        &emsp;房&emsp;间:<span class="form-required">*</span>
+        <select name="rid" id="rid" class="form-control" style="width: 165px;">
+            <option value="">请选择房间</option>
+            <volist name="rooms" id="room">
+                <if condition="$teachers.rid==$key">
+                    <option value="{$key}" selected>{$room}</option>
+                    <else/>
+                    <option value="{$key}">{$room}</option>
+                </if>
+            </volist>
+        </select><br/><br/>
+        <button class="btn btn-primary js-ajax-submit" type="submit"
+                data-action="{:url('AdminCourse/TeacherAddPost')}" style="margin-left: 70px;font-size: 14px;"/>
+        {:lang('SAVE')}
+        </button>
+        <a class="btn btn-danger" href="{:url('AdminCourse/CourseTeacher')}">清空</a>
+    </form>
+    <form class="js-ajax-form" action="" method="post">
+        <div class="table-actions">
+            <button class="btn btn-danger btn-sm js-ajax-submit" type="submit"
+                    data-action="{:url('AdminCourse/TeacherDelete')}" data-subcheck="true" data-msg="您确定删除吗？">
+                {:lang('DELETE')}
+            </button>
+        </div>
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="15">
+                    <label>
+                        <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                    </label>
+                </th>
+                <th width="80">ID</th>
+                <th width="500">教师名称</th>
+                <th>房间</th>
+                <th width="160">操作</th>
+            </tr>
+            </thead>
+            <volist name="teacher" id="vo">
+                <tr>
+                    <td>
+                        <input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
+                               value="{$vo.jid}" title="ID:{$vo.jid}">
+                    </td>
+                    <td>{$vo.jid}</td>
+                    <td>{$vo.jname}</td>
+                    <td>{$vo.room}</td>
+                    <td>
+                        <a href="{:url('AdminCourse/CourseTeacher',['jid'=>$vo.jid])}">{:lang('EDIT')}</a>
+                        <a href="{:url('AdminCourse/TeacherDelete',['jid'=>$vo.jid])}" class="js-ajax-delete">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </volist>
+            <tfoot>
+            <tr>
+                <th width="15">
+                    <label>
+                        <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                    </label>
+                </th>
+                <th width="80">ID</th>
+                <th width="500">教师名称</th>
+                <th>房间</th>
+                <th width="160">操作</th>
+            </tr>
+            </tfoot>
+        </table>
+        <div class="table-actions">
+            <button class="btn btn-sm btn-danger js-ajax-submit" type="submit"
+                    data-action="{:url('AdminCourse/TeacherDelete')}" data-subcheck="true" data-msg="您确定删除吗？">
+                {:lang('DELETE')}
+            </button>
+        </div>
+        <ul class="pagination">{$page|default=''}</ul>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

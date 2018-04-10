@@ -1,0 +1,112 @@
+<include file="public@header" />
+<style>
+    .dat
+    {
+        margin-top:30px;
+    }
+    .centent2
+    {
+        display:none;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <form action="{:url('hv_edit')}" class="form-horizontal js-ajax-form margin-top-20" method="post" id="form1">
+        <input type="hidden" name="id" value="{$data.id}">
+    <ul class="nav nav-tabs">
+        <li role="presentation"><a href="{:url('hvindex')}">房间视频信息管理</a></li>
+        <li role="presentation" class="active"><a href="javacript:;">编辑房间视频信息</a></li>
+    </ul>
+    <div class="form-group" style="margin-top:30px;">
+        <label class="control-label col-sm-2"><span class="form-required">*</span>视频来源</label>
+
+        <div class="col-md-6 col-sm-10 rado">
+            <input type="radio" class="" name="play_source" <eq name="$data.play_source" value="1">checked</eq> value="1">虎牙直播&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" class="" name="play_source" <eq name="$data.play_source" value="2">checked</eq> value="2">阿里云直播
+        </div>
+    </div>
+    <div class="centent1"  <eq name="$data.play_source" value="1">style="display:block;"<else/>style="display:none;"</eq> >
+        <div class="form-group">
+            <label for="YYfcode" class="control-label col-sm-2"><span
+                    class="form-required">*</span>YY房间号</label>
+
+            <div class="col-md-6 col-sm-10">
+                <input type="number" class="form-control" name="YYfcode" id="YYfcode"  <eq name="$data.play_source" value="1">value="{$data.YYfcode}"</eq>  >
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="YYcode" class="control-label col-sm-2"><span
+                    class="form-required">*</span>YY账号</label>
+
+            <div class="col-md-6 col-sm-10">
+                <input type="number" class="form-control" name="YYcode" id="YYcode" <eq name="$data.play_source" value="1">value="{$data.YYcode}"</eq> >
+            </div>
+        </div>
+    </div>
+    <div class="centent2" <eq name="$data.play_source" value="2">style="display:block;"</eq> >
+        <div class="form-group">
+            <input type="hidden" name="pc_play_site" value="{$data.pc_play_site}"/>
+            <input type="hidden" name="m_play_site" value="{$data.m_play_site}"/>
+            <input type="hidden" name="pull_video_indate" value="{$data.pull_video_indate}"/>
+            <input type="hidden" name="m_play_indate" value="{$data.m_play_indate}"/>
+            <input type="hidden" name="pc_play_indate" value="{$data.pc_play_indate}"/>
+            <label for="pull_video_site" class="control-label col-sm-2"><span class="form-required">*</span>推流地址</label>
+
+            <div class="col-md-6 col-sm-10">
+                <input type="text" class="form-control" name="pull_video_site" id="pull_video_site"
+                value="{$data.pull_video_site}" readonly>
+            </div>
+            <button class="btn btn-info btncopy">复制URL</button>
+        </div>
+        <div class="form-group">
+            <label for="pull_video_token" class="control-label col-sm-2"><span
+                    class="form-required">*</span>播放路径/串流码</label>
+
+            <div class="col-md-6 col-sm-10">
+                <input type="text" class="form-control" name="pull_video_token" id="pull_video_token"
+                       value="{$data.pull_video_token}" readonly>
+            </div>
+            <button class="btn btn-info btncopy">复制串流码</button>
+        </div>
+    </div>
+    <div class="form-group" style="margin-top:40px;">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary js-ajax-submit" style="width:100px;" form="form1">
+                保存
+            </button>
+        </div>
+    </div>
+    </form>
+</div>
+</body>
+</html>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/layer.js"></script>
+<script>
+    //切换视频源
+    $('.rado').change(function () {
+        var socule = $(this).find('input:checked').val();
+
+        if (socule == 1) {
+            $('.centent1').show();
+            $('.centent2').hide();
+        } else {
+            $('.centent2').show();
+            $('.centent1').hide();
+        }
+    });
+
+    //复制内容
+    $('.btncopy').click(function (){
+        var Url2 = $(this).siblings('.col-md-6').find('input').get(0);
+        var that = this;
+        Url2.select();               // 选择对象
+        document.execCommand("Copy"); // 执行浏览器复制命令
+        layer.tips("复制成功！", that, {
+            tips: [1, 'green'],
+            time: 1000
+        });
+        return false;
+    });
+</script>

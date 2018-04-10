@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>直播间</title>
+    <link rel="stylesheet" href="__TMPL__/portal/mobile/css/reset.css">
+    <link rel="stylesheet" href="__TMPL__/portal/mobile/css/loginandregister.css">
+    <script type="text/javascript">
+        //全局变量
+        var GV = {
+            ROOT: "__ROOT__/",
+            WEB_ROOT: "__WEB_ROOT__/",
+            JS_ROOT: "static/js/"
+        };
+    </script>
+    <script src="__TMPL__/portal/mobile/js/rem.min.js"></script>
+    <script src="__TMPL__/public/assets/js/jquery-1.10.2.min.js"></script>
+    <script src="__TMPL__/public/assets/js/jquery-migrate-1.2.1.js"></script>
+    <script src="__STATIC__/js/wind.js"></script>
+</head>
+<body>
+    <header class="myHeader">
+        <div class="backPrev"></div>登录
+    </header>
+    <div class="room-logo"></div>
+    <section class="login-container">
+        <form action="{$url}" method="post" class="form-horizontal js-ajax-form margin-top-20 login-box">
+            <input type="hidden" name="rid" value="{$rid}" />
+            <div class="operate-active">
+                用户登录
+                <span class="aside-marks">(没有账户？<a class="register-now" href="javascript:void(0);">立即登录</a>)</span>
+            </div>
+            <ul>
+                <li class="login-item">
+                    <span class="item-title">手机号：</span>
+                    <input id="userName" name="username" class="input-text user-name" type="text" placeholder="请输入手机号"/>
+                </li>
+                <li class="login-item">
+                    <span class="item-title">密&nbsp;&nbsp;&nbsp;码：</span>
+                    <input id="userPwd" name="password" class="input-text" type="password" placeholder="请输入密码"/>
+                    <span class="show-pwd"></span>
+                </li>
+                <!--<li class="login-item">-->
+                    <!--<input id="remerber" class="input-checkbox" type="checkbox">-->
+                    <!--<label for="remerber">自动登录</label>-->
+                <!--</li>-->
+                <li class="login-item btn-box">
+                    <button class="input-submit btn btn-primary btn-block js-ajax-submit" type="submit">立即登录</button>
+                </li>
+            </ul>
+        </form>
+    </section>
+    <script src="__STATIC__/js/layer/layer.js"></script>
+    <include file="public@scripts"/>
+    <script>
+        //返回
+        $(".backPrev").click(function(){
+            console.log("返回");
+            history.go(-1);
+        });
+        //显示密码
+        $(".show-pwd").click(function(e){
+            var $tar = $(e.target);
+            if(!$tar.hasClass("hide-pwd")){
+                $tar.addClass("hide-pwd");
+                $tar.prev().prop("type","text");
+            }else{
+                $tar.removeClass("hide-pwd");
+                $tar.prev().prop("type","password");
+            }
+        });
+        //禁止登录输入框为空
+      /*  $(".input-submit").click(function(){
+            var $userName = $("#userName");
+            var $userPwd = $("#userPwd");
+            if($userName.val() == ""){
+                $userName.focus();
+                return false;
+            }
+            if($userPwd.val() == ""){
+                $userPwd.focus();
+                return false;
+            }
+        });*/
+    </script>
+</body>
+</html>

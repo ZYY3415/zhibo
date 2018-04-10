@@ -1,0 +1,239 @@
+<include file="public@header"/>
+<style>
+    .bat {
+        margin-top: 30px;
+    }
+</style>
+<link rel="stylesheet" href="__STATIC__/js/layer/css/modules/laydate/default/laydate.css" />
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('index')}">假人管理</a></li>
+        <li class="active"><a href="{:url('addrobot')}">添加假人</a></li>
+    </ul>
+    <ul class="nav nav-tabs bat" role="tablist">
+        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">批量新增faker机器人</a>
+        </li>
+        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">新增机器人</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="home">
+            <form class="form-horizontal js-ajax-form margin-top-20" action="{:url('fkaddrobot')}" method="post">
+                <div class="form-group">
+                    <label for="fkrid" class="col-sm-2 control-label">房间</label>
+                    <div class="col-md-6 col-sm-10">
+                        <select name="rid" id="fkrid" class="form-control">
+                            <option value="0">随机</option>
+                            <volist name="room" id="v">
+                                <option value="{$key}">{$v}
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="fkaid" class="col-sm-2 control-label">用户组</label>
+                    <div class="col-md-6 col-sm-10">
+                        <select name="aid" id="fkaid" class="form-control">
+                            <option value="0">随机</option>
+                            <volist name="aid" id="vo">
+                                <option value="{$vo.id}">{$vo.rolename}
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="week" class="col-sm-2 control-label">日期</label>
+                    <div class="col-md-6 col-sm-10">
+                        <label class="radio-inline">
+                            <input type="checkbox" name="week[1]" value="1" checked class="">星期一
+                        </label>
+                        <label class="radio-inline">
+                            <input type="checkbox" name="week[2]" value="1" checked>星期二
+                        </label>
+                        <label class="radio-inline">
+                            <input type="checkbox" name="week[3]" value="1" checked>星期三
+                        </label>
+                        <label class="radio-inline">
+                            <input type="checkbox" name="week[4]" value="1" checked>星期四
+                        </label>
+                        <label class="radio-inline">
+                            <input type="checkbox" name="week[5]" value="1" checked>星期五
+                        </label>
+                        <label class="radio-inline">
+                            <input type="checkbox" name="week[6]" value="0">星期六
+                        </label>
+                        <label class="radio-inline">
+                            <input type="checkbox" name="week[7]" value="0">星期日
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="fkstime_str" class="col-sm-2 control-label">上线时间</label>
+                    <div class="col-md-6 col-sm-10">
+                        <input type="text" id="fkstime_str" name="stime_str" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="fketime_str" class="col-sm-2 control-label">下线时间</label>
+                    <div class="col-md-6 col-sm-10">
+                        <input type="text" id="fketime_str" name="etime_str" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="fknumber" class="col-sm-2 control-label"><span class="form-required">*</span>数量</label>
+                    <div class="col-md-6 col-sm-10">
+                        <input type="number" id="fknumber" name="number" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">添加</button>
+                    </div>
+                </div>
+             </form>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="profile">
+            <form class="form-horizontal js-ajax-form margin-top-20" action="{:url('addrobot')}" method="post">
+                <div class="form-group">
+                    <label for="username" class="col-sm-2 control-label"><span class="form-required">*</span>用户名</label>
+
+                    <div class="col-md-6 col-sm-10">
+                        <input type="text" class="form-control" id="username" name="username">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="aid" class="col-sm-2 control-label"><span class="form-required">*</span>用户组</label>
+                    <div class="col-md-6 col-sm-10">
+                        <select name="aid" id="aid" class="form-control">
+                            <volist name="aid" id="vo">
+                                <option value="{$vo.id}">{$vo.rolename}
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="rid" class="col-sm-2 control-label"><span class="form-required">*</span>房间</label>
+
+                    <div class="col-md-6 col-sm-10">
+                        <select name="rid" id="rid" class="form-control">
+                            <volist name="room" id="v">
+                                <option value="{$key}">{$v}
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="week" class="col-sm-2 control-label"><span class="form-required">*</span>日期</label>
+                    <div class="col-md-6 col-sm-10">
+                        <label class="radio-inline">
+                            <input type="checkbox" name="week[1]" value="1" checked class="">星期一
+                        </label>
+                        <label class="radio-inline">
+                            <input type="checkbox" name="week[2]" value="1" checked>星期二
+                        </label>
+                        <label class="radio-inline">
+                            <input type="checkbox" name="week[3]" value="1" checked>星期三
+                        </label>
+                        <label class="radio-inline">
+                            <input type="checkbox" name="week[4]" value="1" checked>星期四
+                        </label>
+                        <label class="radio-inline">
+                            <input type="checkbox" name="week[5]" value="1" checked>星期五
+                        </label>
+                        <label class="radio-inline">
+                            <input type="checkbox" name="week[6]" value="1">星期六
+                        </label>
+                        <label class="radio-inline">
+                            <input type="checkbox" name="week[7]" value="1">星期日
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="stime_str" class="col-sm-2 control-label"><span class="form-required">*</span>上线时间</label>
+                    <div class="col-md-6 col-sm-10">
+                        <input type="text" id="stime_str" name="stime_str" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="etime_str" class="col-sm-2 control-label"><span class="form-required">*</span>下线时间</label>
+                    <div class="col-md-6 col-sm-10">
+                        <input type="text" id="etime_str" name="etime_str" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">添加</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/css/modules/laydate/laydate.js"></script>
+<script>
+    var etime = '';
+    var stime = '';
+    var wst = '';
+    var wet = '';
+
+   var svalue='00:00:00';
+
+   var evalue='23:59:59';
+
+
+    laydate.render({
+        elem: '#stime_str', //指定元素
+        type:'time',
+        theme:'#ff5722',
+        value:svalue,
+        done: function(value,date){
+            stime = value; //得到日期生成的值，如：2017-08-18
+            wst = new Date().getFullYear()+'-'+new Date().getMonth()+'-'+new Date().getDate()+' '+stime;
+        }
+    });
+    laydate.render({
+        elem: '#fkstime_str', //指定元素
+        type:'time',
+        theme:'#ff5722',
+        value:svalue,
+        done: function(value,date){
+            stime = value; //得到日期生成的值，如：2017-08-18
+            wst = new Date().getFullYear()+'-'+new Date().getMonth()+'-'+new Date().getDate()+' '+stime;
+        }
+    });
+
+    laydate.render({
+        elem: '#etime_str', //指定元素
+        type:'time',
+        theme:'#ff5722',
+        value:evalue,
+        done: function(value,date){
+            etime =value; //得到日期生成的值，如：2017-08-18
+            wet = new Date().getFullYear()+'-'+new Date().getMonth()+'-'+new Date().getDate()+' '+etime;
+            if(wst > wet){
+                layer.alert("结束时间不能大于开始时间");
+            }
+        }
+    });
+
+    laydate.render({
+        elem: '#fketime_str', //指定元素
+        type:'time',
+        theme:'#ff5722',
+        value:evalue,
+        done: function(value,date){
+            etime =value; //得到日期生成的值，如：2017-08-18
+            wet = new Date().getFullYear()+'-'+new Date().getMonth()+'-'+new Date().getDate()+' '+etime;
+            if(wst > wet){
+                layer.alert("结束时间不能大于开始时间");
+            }
+        }
+    });
+</script>

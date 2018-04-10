@@ -1,0 +1,95 @@
+<include file="public@profile_header"/>
+<div class="rightContent">
+    <section>
+        <div class="secTitle"><i></i>我的消费</div>
+
+        <table class="promotionTable">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>对象</th>
+                <th>数量</th>
+                <th>消费时间</th>
+                <th>备注</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <div class="prompt"><span>上一页</span><span>下一页</span>当前第<i class="pegeNo"></i>页  共<i class="pegeTotle"></i>页</div>
+        <div class="nothing"><img src="__TMPL__/public/assets/images/recording.png"/></div>
+
+    </section>
+</div>
+<include file="public@profile_footer"/>
+<script type="text/javascript">
+    var pageNo = 1,
+        pageSize = 10,
+        pageTotle = 1;
+
+    $(document).ready(function () {
+
+        $(".listInfor li").eq(2).addClass('active');
+
+        pageData(1,10);
+
+        //分页
+        $(".prompt span").on("click",function () {
+            if( $(this).index() == 0 ) {
+                if( pageNo != 1) {
+                    pageNo--;
+                    pageData(pageNo,pageSize);
+                }
+            }
+            if( $(this).index() == 1 ) {
+                if( pageNo != pageTotle ) {
+                    pageNo++;
+                    pageData(pageNo,pageSize);
+                }
+            }
+        });
+
+        function pageData(pageNo,pageSize) {
+            $.ajax({
+                type:"post",
+                url:"{:cmf_url('user/profile/consumeList')}",
+                async:true,
+                data:{'pageNo':pageNo,'pageSize':pageSize},
+                timeout: 10000,
+                success:function(data){
+                    var borInfor;
+                    for(var i in data.data.rows) {
+                        borInfor += '<tr><td>' +data.data.rows[i].id+ '' + '</td><td>' + data.data.rows[i].nickname + '</td><td>' + data.data.rows[i].count + '</td><td>' + data.data.rows[i].time + '</td><td>' + data.data.rows[i].remark + '</td></tr>'
+                    }
+
+                    var promotionTableTbody = $(".promotionTable tbody");
+                    promotionTableTbody.empty();
+                    promotionTableTbody.append(borInfor);
+
+                    //总页数
+                    pageTotle = Math.ceil(data.data.total / pageSize);
+
+                    var prompt = $(".prompt");
+                    $(".pegeTotle").html(pageTotle);
+                    $(".pegeNo").html(pageNo);
+
+                    //页面无信息时显示图像
+                    if($(".promotionTable tr").length ==1 ) {
+                        prompt.hide();
+                        $(".nothing").show();
+                    }
+                    else {
+                        prompt.show();
+                        $(".nothing").hide();
+                    }
+                },
+                error:function (XMLHttpRequest,textStatus,errorThrown) {
+                    alert( textStatus+ "：错误码" + XMLHttpRequest.status + " 状态码：" + XMLHttpRequest.readyState);
+                }
+            })
+        }
+
+
+    });
+</script>

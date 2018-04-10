@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>财经日历</title>
+		<style type="text/css">
+			*{
+				margin:0;
+				padding:0;
+			}
+			.caijing_title{
+				height:30px;
+				margin: 30px 0;
+			}
+			.caijing_title label{
+				display: inline-block;
+				vertical-align: middle;
+				font-size: 24px;
+				color:#33353A;
+			}
+			.caijing_title strong{
+				display: inline-block;
+				vertical-align: middle;
+				font-family:PingFangSC-Light;
+				font-size: 20px;
+				color:#33353A;
+				margin-left:10px;
+			}
+			.caijing_title span{
+				display: inline-block;
+				vertical-align: middle;
+				overflow: hidden;
+				font-size: 12px;
+				color:#979797;
+				margin-left:20px;
+			}
+			.caijing_title span a{
+				float:left ;
+				width:72px;
+				height:24px;
+				line-height: 24px;
+				text-align: center;
+				background:rgba(255,255,255,1);
+				border-radius: 100px ;
+				border:1px solid #979797;
+				margin-left: 10px;;
+			}
+			.caijing_title span a:hover{
+				border:1px solid #F0BC55;
+				color:#F0BC55;
+			}
+			.caijing_title span .odisabled{
+				border:1px solid #D4D3D3;
+				color:#D4D3D3;
+			}
+			.caijingBox {
+				width: 800px;
+				height: 425px;
+				margin: 0 auto;
+				
+			}
+			.caijing-top{
+				width:100%;
+			
+			}
+			
+			.caijing-top ul li {
+				float:left;
+				width:114px;
+				height:60px;
+				color:#979797;
+				list-style:none;
+			}
+			.caijing-top ul li.cur {
+				background:#F0BC55;
+				color:#FFFFFF;
+			}
+			.caijing-top ul li:hover{
+				color:#F0BC55;
+			}
+			
+			.caijing-top ul li span{
+				display: block;
+				height:40px;
+				line-height: 45px;;
+				text-align: center;
+			}
+			.caijing-top ul li strong{
+				display: block;
+				font-size: 12px;
+				color:#FFFFFF;
+				text-align: center;
+			}
+			.caijing-top ul li span a.oday{
+				font-size: 24px;			
+			}
+			.caijing-top ul li span a.oweek{
+				font-size: 12px;
+			}
+			.caijing-bottom table{
+				width:100%;
+				border-collapse:collapse;
+			}
+			.caijing-bottom table tr{
+				border:1px solid #f4f4f4;
+			}
+			.caijing-bottom table tr th{
+				height:40px;
+				background:rgba(239,240,241,1);
+				font-size: 14px;
+				color:#7F7F85;
+				text-align: center;
+			}
+			.caijing-bottom table tr td{
+				height:50px;
+				background:#ffffff;
+				font-size: 14px;
+				color:#7F7F85;
+				text-align: center;
+			}
+		</style>
+		</style>
+	</head>
+
+	<body>
+		<div class="caijingBox">
+			<div class="caijing_title">
+				<label>财经日历</label><strong>2018年12月</strong>
+				<span id="weekbtn">
+					<a>上一周</a><a class="odisabled">下一周</a>
+				</span>
+			</div>
+			<div class="caijing-top">
+				<ul>
+					<li class="cur" index="0">
+						<span><a class="oweek">周一</a><a class="oday">01</a></span>
+						<strong>今天</strong>
+					</li>
+					<li class="" index="1">
+						<span><a class="oweek">周二</a><a class="oday">02</a></span>
+					</li>
+					<li class="" index="2">
+						<span><a class="oweek">周三</a><a class="oday">03</a></span>
+					</li>
+					<li class="" index="3">
+						<span><a class="oweek">周四</a><a class="oday">04</a></span>
+					</li>
+					<li class="" index="4">
+						<span><a class="oweek">周五</a><a class="oday">05</a></span>
+					</li>
+					<li class="" index="5">
+						<span><a class="oweek">周六</a><a class="oday">06</a></span>
+					</li>
+					<li class="" index="6">
+						<span><a class="oweek">周七</a><a class="oday">07</a></span>
+					</li>
+
+				</ul>
+			</div>
+			<div class="caijing-bottom">
+				<table border="0" cellspacing="" cellpadding="">
+					<tr><th>时间</th><th>国家</th><th>指标名称</th><th>重要性</th><th>前值</th><th>预测值</th><th>公布值</th><th>详情</th></tr>
+					<tr><td>09:30</td><td><img src="__TMPL__/public/assets/images/shouye/qiji.png"/></td><td>日本三月制造业PM初值</td><td><img src="__TMPL__/public/assets/images/shouye/start2.png"/></td><td>59.7%</td><td>68.0%</td><td>49.0%</td><td></td></tr>
+					<tr><td>09:30</td><td><img src="__TMPL__/public/assets/images/shouye/qiji.png"/></td><td>日本三月制造业PM初值</td><td><img src="__TMPL__/public/assets/images/shouye/start3.png"/></td><td>59.7%</td><td>68.0%</td><td>49.0%</td><td></td></tr>
+					<tr><td>09:30</td><td><img src="__TMPL__/public/assets/images/shouye/qiji.png"/></td><td>日本三月制造业PM初值</td><td><img src="__TMPL__/public/assets/images/shouye/start1.png"/></td><td>59.7%</td><td>68.0%</td><td>49.0%</td><td></td></tr>
+					<tr><td>09:30</td><td><img src="__TMPL__/public/assets/images/shouye/qiji.png"/></td><td>日本三月制造业PM初值</td><td><img src="__TMPL__/public/assets/images/shouye/start5.png"/></td><td>59.7%</td><td>68.0%</td><td>49.0%</td><td></td></tr>
+					<tr><td>09:30</td><td><img src="__TMPL__/public/assets/images/shouye/qiji.png"/></td><td>日本三月制造业PM初值</td><td><img src="__TMPL__/public/assets/images/shouye/start4.png"/></td><td>59.7%</td><td>68.0%</td><td>49.0%</td><td></td></tr>
+					<tr><td>09:30</td><td><img src="__TMPL__/public/assets/images/shouye/qiji.png"/></td><td>日本三月制造业PM初值</td><td><img src="__TMPL__/public/assets/images/shouye/start2.png"/></td><td>59.7%</td><td>68.0%</td><td>49.0%</td><td></td></tr>
+				</table>		
+			</div>
+		</div>
+	</body>
+	<script src="__TMPL__/public /assets/js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript">
+		$('.caijing-top ul').on('click','li',function(){
+		$(this).addClass('cur');
+		$(this).siblings().removeClass('cur');
+	})
+	</script>
+
+</html>

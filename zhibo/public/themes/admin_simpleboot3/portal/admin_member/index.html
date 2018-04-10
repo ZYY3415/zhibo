@@ -1,0 +1,176 @@
+<include file="public@header"/>
+<style>
+    table{
+        text-align: center;
+    }
+    th{
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">会员列表</a></li>
+        <li><a href="{:url('AdminMember/addmember')}">添加会员</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('AdminMember/Index')}">
+        当前房间:
+        <select id="rname" class="form-control" name="rid" style="width: 140px;">
+            <option value="" selected>全部</option>
+            <foreach name="rooms" item="vo">
+                <if condition="$vo.rid==$rid">
+                    <option value="{$vo.rid}" selected>{$vo.room}</option>
+                    <else/>
+                    <option value="{$vo.rid}">{$vo.room}</option>
+                </if>
+            </foreach>
+        </select> &nbsp;&nbsp;
+        用户组:
+        <select class="form-control" name="roleid" style="width: 140px;">
+            <option value="" selected>全部</option>
+            <foreach name="role" item="role">
+                <if condition="$role.keyword==$roleid">
+                    <option value="{$role.keyword}" selected>{$role.rolename}</option>
+                    <else/>
+                    <option value="{$role.keyword}">{$role.rolename}</option>
+                </if>
+            </foreach>
+        </select> &nbsp;&nbsp;
+        注册时间:
+        <input type="text" class="form-control js-bootstrap-datetime" name="start_time"
+               value="{$start_time|default=''}" placeholder="请选择起始时间..."
+               style="width: 140px;" autocomplete="off">—
+        <input type="text" class="form-control js-bootstrap-datetime" name="end_time"
+               value="{$end_time|default=''}" placeholder="请选择结束时间..."
+               style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+        关键字:
+        <input type="text" class="form-control" name="keyword" style="width: 200px;"
+               value="{$keyword|default=''}" placeholder="支持昵称搜索...">
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+        <a class="btn btn-danger" href="{:url('AdminMember/index')}">清空</a>
+        <a class="btn btn-danger" href="{:url('AdminMember/export')}">导出用户信息</a>
+    </form>
+    <form class="js-ajax-form" action="" method="post">
+        <div class="table-actions">
+            <button class="btn btn-danger btn-sm js-ajax-submit" type="submit"
+                    data-action="{:url('AdminMember/delete')}" data-subcheck="true" data-msg="您确定删除吗？">
+                {:lang('DELETE')}
+            </button>
+            <button class="btn btn-primary btn-sm js-ajax-submit" type="submit"
+                    data-action="{:url('AdminMember/activate')}" data-subcheck="true">
+                激活
+            </button>
+            <button class="btn btn-primary btn-sm js-ajax-submit" type="submit"
+                    data-action="{:url('AdminMember/ImportRoom')}" data-subcheck="true">
+                批量导入房间
+            </button>
+        </div>
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="15">
+                    <label>
+                        <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                    </label>
+                </th>
+                <th width="50">ID</th>
+                <th width="150">昵称</th>
+                <th width="150">房间</th>
+                <th width="150">手机号</th>
+                <th width="150">QQ号</th>
+                <th width="150">推荐人</th>
+                <th width="150">注册时间</th>
+                <th width="120">用户组</th>
+                <th width="120">最后登录IP</th>
+                <th width="120">登录次数</th>
+                <th width="120">余额</th>
+                <th width="120">备注</th>
+                <th width="80">状态</th>
+                <th width="210">功能</th>
+            </tr>
+            </thead>
+            <volist name="members" id="member">
+                <tr>    
+                    <td>
+                        <input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
+                               value="{$member.id}" title="ID:{$member.id}">
+                    </td>
+                    <td>{$member.id}</td>
+                    <td>{$member.nickname}</td>
+                    <td>{$member.ridname}</td>
+                    <td>{$member.phone}</td> 
+                    <td>{$member.qq}</td>
+                    <if condition="$member.tuijianmid.TJname == ''">
+                        <td>无上线</td>
+                    <else/>
+                        <td>{$member.tuijianmid.TJname}</td>
+                    </if>
+                    <td>{$member.reg_time}</td>
+                    <td>{$member.rolename}</td> 
+                    <td>{$member.ip}</td> 
+                    <td>{$member.login_count}</td> 
+                    <td>{$member.money}</td> 
+                    <td>{$member.remark}</td> 
+                    <td>{$member.status}</td>
+                    <td>
+                        <a href="{:url('AdminMember/edit',['id'=>$member.id])}">修改资料</a>
+                        <a href="{:url('AdminMember/ModifyPassword',['id'=>$member.id])}">修改密码</a>
+                        <a href="{:url('AdminMember/delete',['id'=>$member.id])}" class="js-ajax-delete">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+                </volist>
+            <tfoot>
+            <tr>
+                <th width="15">
+                    <label>
+                        <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                    </label>
+                </th>
+                <th width="50">ID</th>
+                <th width="150">昵称</th>
+                <th width="150">房间</th>
+                <th width="150">手机号</th>
+                <th width="150">QQ号</th>
+                <th width="150">推荐人</th>
+                <th width="150">注册时间</th>
+                <th width="120">用户组</th>
+                <th width="120">最后登录IP</th>
+                <th width="120">登录次数</th>
+                <th width="120">余额</th>
+                <th width="120">备注</th>
+                <th width="80">状态</th>
+                <th width="210">功能</th>
+            </tr>
+            </tfoot>
+        </table>
+        <div class="table-actions">
+            <button class="btn btn-danger btn-sm js-ajax-submit" type="submit"
+                    data-action="{:url('AdminMember/delete')}" data-subcheck="true" data-msg="您确定删除吗？">
+                {:lang('DELETE')}
+            </button>
+            <button class="btn btn-primary btn-sm js-ajax-submit" type="submit"
+                    data-action="{:url('AdminMember/activate')}" data-subcheck="true">
+                激活
+            </button>
+            <button class="btn btn-primary btn-sm js-ajax-submit" type="submit"
+                    data-action="{:url('AdminMember/ImportRoom')}" data-subcheck="true">
+                批量导入房间
+            </button></br>&nbsp;
+            <select id="ridname" class="form-control" name="ridname" style="width: 140px;">
+                <foreach name="rooms" item="vo">
+                    <if condition="$vo.rid==$rid">
+                        <option value="{$vo.rid}" selected>{$vo.room}</option>
+                        <else/>
+                        <option value="{$vo.rid}">{$vo.room}</option>
+                    </if>
+                </foreach>
+            </select>
+        </div>
+        <ul class="pagination">{$page|default=''}</ul>
+    </form>
+
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

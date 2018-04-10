@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>课程安排</title>
+		<style type="text/css">
+			.courseBox {
+				width: 800px;
+				height: 425px;
+				margin: 0 auto;
+				background: url("__TMPL__/public/assets/images/coursebj.jpg") no-repeat center;
+				background-size: 800px 425px;
+			}
+			
+			.course-top {
+				width: 700px;
+				58px;
+				padding: 40px 50px 0 50px;
+				overflow: hidden;
+			}
+			
+			.course-top ul {
+				width: 100%;
+				height: 58px;
+				padding: 0;
+				overflow: hidden;
+			}
+			
+			.course-top ul li {
+				list-style: none;
+				float: left;
+				width: 100px;
+				text-align: center;
+				height: 50px;
+				background: #383838;
+				position: relative;
+				float: left;
+				border-left: 1px solid #232323;
+				margin-left: -1px;
+			}
+			
+			.course-top ul li a {
+				display: block;
+				height: 50px;
+				line-height: 50px;
+				font-size: 16px;
+				color: #fff;
+				width: 100%;
+				text-align: center;
+			}
+			
+			.course-top li .cur,
+			.course-top li a:hover {
+				position: absolute;
+				border-bottom: 8px solid #0072ae;
+				background: #008dd8;
+			}
+			
+			.course-bottom {
+				width: 700px;
+				padding-top: 19px;
+				height: 260px;
+				text-align: center;
+				padding: 0px 50px 0 50px;
+				margin-top:20px;
+			}
+			
+			.course-bottom > div {
+				height: 260px;
+			}
+			
+			.course-bottom ul {
+				display: table;
+				border-left: 1px solid #e4e4e4;
+				border-top: 1px solid #e4e4e4;
+				padding:0;
+			}
+			
+			.course-bottom li {
+				list-style: none;
+				border-right: 1px solid #e4e4e4;
+				border-bottom: 1px solid #e4e4e4;
+				height: 85px;
+				font-size: 13px;
+				line-height: 26px;
+				float: left;
+				width: 138px;
+			}
+			
+			.course-bottom .time {
+				height: 36px;
+				line-height: 36px;
+				font-weight: 400;
+				background: #f1f1f1;
+				margin-bottom: 11px;
+				font-size: 16px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="courseBox">
+			<div class="course-top">
+				<ul>
+					<li class="weekDay1" index="0">
+						<a class="">星期一</a>
+					</li>
+					<li class="weekDay2" index="1">
+						<a class="">星期二</a>
+					</li>
+					<li class="weekDay3" index="2">
+						<a class="">星期三</a>
+					</li>
+					<li class="weekDay4" index="3">
+						<a class="">星期四</a>
+					</li>
+					<li class="weekDay5" index="4">
+						<a class="cur">星期五</a>
+					</li>
+					<li class="weekDay6" index="5">
+						<a class="">星期六</a>
+					</li>
+					<li class="weekDay7" index="6">
+						<a class="">星期日</a>
+					</li>
+
+				</ul>
+			</div>
+			<div class="course-bottom">
+
+				<div class="cBox0" style="display: none;">
+					<ul>
+						<if condition="!empty($course.monday)">
+						<volist name="$course.monday" id="vo">
+							<li>
+								<div class="time">{$vo.starttime}--{$vo.endtime}</div>
+								<div>{$vo.teacher}</div>
+							</li>
+						</volist>
+						</if>
+						<!--周一-->
+					</ul>
+				</div>
+				<div class="cBox1" style="display: none;">
+					<ul>
+						<!--周二-->
+						<if condition="!empty($course.tuesday)">
+						<volist name="$course.tuesday" id="vo">
+							<li>
+								<div class="time">{$vo.starttime}--{$vo.endtime}</div>
+								<div>{$vo.teacher}</div>
+							</li>
+						</volist>
+						</if>
+					</ul>
+				</div>
+				<div class="cBox2" style="display: none;">
+					<ul>
+						<!--周三-->
+						<if condition="!empty($course.wednesday)">
+						<volist name="$course.wednesday" id="vo">
+							<li>
+								<div class="time">{$vo.starttime}--{$vo.endtime}</div>
+								<div>{$vo.teacher}</div>
+							</li>
+						</volist>
+						</if>
+					</ul>
+				</div>
+				<div class="cBox3" style="display: none;">
+					<ul>
+						<!--周四-->
+						<if condition="!empty($course.thursday)">
+						<volist name="$course.thursday" id="vo">
+							<li>
+								<div class="time">{$vo.starttime}--{$vo.endtime}</div>
+								<div>{$vo.teacher}</div>
+							</li>
+						</volist>
+						</if>
+					</ul>
+				</div>
+				<div class="cBox4">
+					<ul>
+						<if condition="!empty($course.friday)">
+						<!--周五-->
+						<volist name="$course.friday" id="vo">
+							<li>
+								<div class="time">{$vo.starttime}--{$vo.endtime}</div>
+								<div>{$vo.teacher}</div>
+							</li>
+						</volist>
+						</if>
+					</ul>
+				</div>
+				<div class="cBox5" style="display: none;">
+					<ul>
+						<!--周六-->
+						<if condition="!empty($course.saturday)">
+						<volist name="$course.saturday" id="vo">
+							<li>
+								<div class="time">{$vo.starttime}--{$vo.endtime}</div>
+								<div>{$vo.teacher}</div>
+							</li>
+						</volist>
+						</if>
+				</div>
+				<div class="cBox6" style="display: none;">
+					<ul>
+						<!--周日-->
+						<li>
+							<div class="time">全天休息</div>
+							<div>全天休息</div>
+						</li>
+
+					</ul>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="__TMPL__/public /assets/js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript">
+		$('.course-top ul').on('click','li',function(){
+		$(this).children().addClass('cur');
+		$(this).siblings().children().removeClass('cur');
+		var i=$(this).index();
+		$('.cBox'+i).show().siblings().hide();
+	})
+	</script>
+
+</html>

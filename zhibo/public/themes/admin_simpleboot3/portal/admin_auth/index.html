@@ -1,0 +1,82 @@
+<include file="public@header" />
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('index')}">{:lang('ADMIN_AUTH_INDEX')}</a></li>
+        <li><a href="{:url('addauth')}">{:lang('ADMIN_AUTH_ADDAUTH')}</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('adminAuth/index')}">
+        关键字:
+        <input type="text" class="form-control" name="keyword" style="width: 200px;"
+               value="{$keyword|default=''}" placeholder="支持ID,权限名称,权限描述">
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+        <a class="btn btn-danger" href="{:url('adminAuth/index')}">清空</a>
+    </form>
+    <form class="js-ajax-form" action="" method="post">
+        <div class="table-actions">
+            <button class="btn btn-danger btn-sm js-ajax-submit" type="submit"
+                    data-action="{:url('adminAuth/deleteauth')}" data-subcheck="true" data-msg="您确定删除吗？">
+                {:lang('DELETE')}
+            </button>
+        </div>
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th width="50">
+                    <label>
+                        <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                    </label>
+                </th>
+                <th width="40">ID</th>
+                <th align="left">{:lang('AUTHNAME')}</th>
+                <th align="left">{:lang('AUTH_DESCRIPTION')}</th>
+                <th width="60" align="left">{:lang('STATUS')}</th>
+                <th width="160">{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="auth" item="vo">
+                <tr>
+                    <td>
+                        <input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
+                               value="{$vo.id}" title="ID:{$vo.id}">
+                    </td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.auth_name}</td>
+                    <td>{$vo.remark}</td>
+                    <td>
+                        <if condition="$vo['status'] eq 1">
+                            <font color="red">√</font>
+                            <else />
+                            <font color="red">╳</font>
+                        </if>
+                    </td>
+                    <td>
+                            <a href="{:url('editauth',array('id'=>$vo['id']))}">{:lang('EDIT')}</a>
+                            <a class="js-ajax-delete" href="{:url('deleteauth',array('id'=>$vo['id']))}">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th width="50">
+                    <label>
+                        <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                    </label>
+                </th>
+                <th width="40">ID</th>
+                <th align="left">{:lang('AUTHNAME')}</th>
+                <th align="left">{:lang('AUTH_DESCRIPTION')}</th>
+                <th width="60" align="left">{:lang('STATUS')}</th>
+                <th width="160">{:lang('ACTIONS')}</th>
+            </tr>
+            </tfoot>
+        </table>
+        <ul class="pagination">{$page|default=''}</ul>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

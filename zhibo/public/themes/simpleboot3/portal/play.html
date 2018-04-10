@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="//g.alicdn.com/de/prismplayer/2.5.0/skins/default/aliplayer-min.css" />
+    <script type="text/javascript" src="//g.alicdn.com/de/prismplayer/2.5.0/aliplayer-min.js"></script>
+    <style>
+        /*.prism-player .prism-big-play-btn {
+			width: 90px;
+			height: 90px;
+			background: url("//gw.alicdn.com/tps/TB1YuE3KFXXXXaAXFXXXXXXXXXX-256-512.png") no-repeat -2px -2px;
+		}*/
+        .prism-player .prism-ErrorMessage{
+            display:none !important;
+        }
+        /*.prism-player .prism-cover{
+            background: url("7b5c084d4dc2a4541a7d56c18fb558e5.jpg");
+        }*/
+        .prism-player .prism-stream-selector{
+            display:block;
+        }
+        #J_prismPlayer{width:100% !important;height:100% !important;}
+        .prism-big-play-btn{
+            z-index: 9999;
+        }
+    </style>
+</head>
+
+<!--  验证设备是pc 还是移动端      -->
+
+
+<if condition="$facility eq 'pc'">
+    <switch name="$videoInfo.play_source">
+         <case value="1">                     <!--  yy  -->
+             <embed height="100%" align="middle"  width="100%" autostart="true" type="application/x-shockwave-flash" wmode="transparent" allowfullscreen="true" allowscriptaccess="always" quality="high" src="http://c2.web.yystatic.com/r/rc/main/main/1/60/main.swf?type=yyscene&amp;topSid={$videoInfo.YYcode}&amp;subSid=&amp;newtuna=1&amp;referer=" id="videolive" style="position:absolute !important;" charset="utf-8">
+         </case>
+         <case value="2">                   <!--  阿里云第三方推流  -->
+             <img style="width:100%;height:100%;position:absolute !important;z-index: 999;" class="cover" src="/static/images/TB1-580-430.jpg" alt="">
+             <div  class="prism-player" id="J_prismPlayer" style="position: absolute;left:0%;"></div>
+             <script>
+                 var player = new Aliplayer({
+                             id: "J_prismPlayer",
+                             autoplay:true,                    //是否自动播放
+                             isLive:true,                      //播放内容是否为直播，直播时会禁止用户拖动进度条
+                             playsinline:true,                 //H5是否内置播放，有的Android浏览器不起作用
+                             width:"100%",                     //播放器宽度
+                             height:"auto",                    //播放器高度
+                             controlBarVisibility:"hover",     //控制控制面板的现实，默认为‘click’，可选的值为：‘click’、‘hover’、‘always’
+                             useH5Prism:false,                  //指定使用H5播放器
+                             useFlashPrism:false,                //指定使用flash播放器
+                             source:"{$videoInfo.pc_play_site}",      //视频来源
+                             /*snapshot:false,                     //开启截屏*/
+                             cover:"http://local_svncmf.com/static/images/TB1-580-430.jpg",
+                             waterMark:"/static/images/QQ_img.png|TL|0.2|1",                         //添加水印数据格式：url|pos|size|alpha（目前仅支持flash）示例：waterMark：“logo.jpg|TL|0.15|0.5”url：水印图片（jpg/png）pos：位置（TL/TR/BL/BR）size:logo宽度占播放器比例（0-1，默认0.2）alpha：透明度（0-1，默认1
+                             enableStashBufferForFlv:true,                                       //是否开启播放缓冲
+                             stashInitialSizeForFlv:512,                                        //H5下播放flv的缓冲大小
+                             x5_type:'h5',                                                      //不同层播放
+                             x5_video_position:'top',                                           //同层播放的位置
+                             skinLayout: [
+                                 {name: "bigPlayButton", align: "blabs", x: 30, y: 80},
+                                 /* {name: "errorDisplay", align: "tlabs", x: 0, y: 0},*/               //是否显示错误信息
+                                 {name: "infoDisplay", align: "cc"},
+                                 {
+                                     name: "controlBar", align: "blabs", x: 0, y: 0,
+                                     children: [
+                                         {name:"liveDisplay", align:"tlabs", x: 15, y:16},         //配置appname
+                                         {name:"fullScreenButton", align:"tr", x:10, y: 10},        //配置全屏
+                                         /*{name: "snapshot", align: "tr", x: 10, y: 10},*/            //截图
+                                         {name:"volume", align:"tr",  x: 10, y: 10}                  //播放速率
+                                     ]
+                                 }
+                             ]
+                         },function(player){
+                             console.log("播放器创建了。");
+                         }
+                 );
+
+                 player.on('play',function(){
+                     var cover = document.getElementsByClassName('cover')[0];
+                     setTimeout(function(){
+                         cover.style.display = 'none';
+                     },2000);
+                 });
+                 //m3u8直播流中断后重试事件，每次断流只触发一次。
+                 player.on('onM3u8Retry',function(){
+                     console.log('主播暂时离开，请稍后......');
+                 });
+
+                 //直播断开，重连5次未连接上
+                 player.on('liveStreamStop',function(){
+                     console.log('直播失败或直播已结束');
+                 });
+                 //视频播放完毕
+                 player.on('ended',function(e) {
+                     var video = document.getElementsByTagName('video')[0];
+                     video.style.display = 'none';
+
+                     var cover = document.getElementsByClassName('cover')[0];
+                     setTimeout(function(){
+                         cover.style.display = 'block';
+                     },2000);
+                 });
+             </script>
+         </case>
+    </switch>
+<else/>
+    <switch name="$videoInfo.play_source">
+        <case value="2">                     <!--  阿里云第三方推流  -->
+            <div  class="prism-player" id="J_prismPlayer" style="position: absolute;left:0%;"></div>
+            <script>
+                var player = new Aliplayer({
+                            id: "J_prismPlayer",
+                            autoplay:true,
+                            isLive:false,
+                            playsinline:false,
+                            width:"375px",
+                            height:"230px",
+                            controlBarVisibility:"hover",
+                            useH5Prism:true,
+                            useFlashPrism:false,
+                            source:"{$videoInfo.m_play_site}",
+                            cover:"",
+                            enableStashBufferForFlv:true,                                       //是否开启播放缓冲
+                           // stashInitialSizeForFlv:512,                                        //H5下播放flv的缓冲大小
+                           // x5_type:'h5',                                                      //不同层播放
+                            x5_video_position:'top',                                           //同层播放的位置
+                            skinLayout: [
+                                {name: "bigPlayButton", align: "blabs", x: 30, y: 80},
+                                /* {name: "errorDisplay", align: "tlabs", x: 0, y: 0},*/               //是否显示错误信息
+                                {name: "infoDisplay", align: "cc"},
+                                {
+                                    name: "controlBar", align: "blabs", x: 0, y: 0
+                                }
+                            ]
+                        },function(player){
+                            console.log("播放器创建了。");
+                        }
+                );
+                player.on('onM3u8Retry',function(){
+                    console.log('主播暂时离开，请稍后......');
+                });
+                player.on('liveStreamStop',function(){
+                    console.log('直播失败或直播已结束');
+                });
+            </script>
+        </case>
+        <case value="1">                <!--  yy  -->
+            <php>file_get_contents("http://shuju.meiyin666.com/zhibo/player.php?yid=".$videoInfo['YYfcode']);</php>
+        </case>
+    </switch>
+</if>
+</body>
+</html>

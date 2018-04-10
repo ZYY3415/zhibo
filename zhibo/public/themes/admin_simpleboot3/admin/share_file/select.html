@@ -1,0 +1,74 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <form method="post" class="js-ajax-form" action="">
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="16">
+                    <label>
+                        <input type="radio" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                    </label>
+                </th>
+                <th width="50">ID</th>
+                <th>图标</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="icons" item="vo">
+                <tr>
+                    <td>
+                        <php>$checked = in_array($vo['id'],$selectedIds)?'checked':'';</php>
+                        <input type="radio" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
+                               value="{$vo.icon}" data-name="{:cmf_get_image_preview_url($vo.icon)}" {$checked}>
+                    </td>
+                    <td>{$vo.id}</td>
+                    <td><img src="{:cmf_get_image_preview_url($vo.icon)}"></td>
+                </tr>
+            </foreach>
+
+            </tbody>
+        </table>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    $('.data-item-tr').click(function (e) {
+        var $this = $(this);
+        if ($(e.target).is('input')) {
+            return;
+        }
+
+        var $input = $this.find('input');
+        if ($input.is(':checked')) {
+            $input.prop('checked', false);
+        } else {
+            $input.prop('checked', true);
+        }
+    });
+
+    function confirm() {
+        var selectedIconId   = [];
+        var selectedIconName = [];
+        var selectedIcons     = [];
+        $('.js-check:checked').each(function () {
+            var $this = $(this);
+            selectedIconId.push($this.val());
+            selectedIconName.push($this.data('name'));
+
+            selectedIcons.push({
+                id: $this.val(),
+                name: $this.data('name')
+            });
+        });
+
+        return {
+            selectedIcons: selectedIcons,
+            selectedIconId: selectedIconId,
+            selectedIconName: selectedIconName
+        };
+    }
+</script>
+</body>
+</html>

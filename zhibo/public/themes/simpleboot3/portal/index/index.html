@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>直播间首页</title>
+    <link rel="stylesheet" type="text/css" href="__TMPL__/public/assets/css/home.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__/public/assets/css/app_layer.css"/>
+    <script src="__TMPL__/public /assets/js/jquery-1.10.2.min.js"></script>
+    <script src="__TMPL__/public /assets/js/jquery.cookie.js"></script>
+    <script>var rid = {$rid};
+    var sessionid = "{$sessionId}";</script>
+    <script src="__TMPL__/public /assets/js/init.js"></script>
+	<script>
+			 var FID="{$userInfo['rid']}";                              //房间号
+			 var MID="{$userInfo['id']}";                               //房间号
+			 var USERNAME="{$userInfo['username']}";                    //用户名
+			 var NICKNAME="{$userInfo['nickname']}";                    //昵称
+			 var ADMINID={$userInfo['adminid']};                         //角色id
+			 var TOKEN = '20180112091612';                              //token
+			 var TUIJIANMID={$userInfo['tuijianmid']};                  //推荐人   没有为null
+			 var TUIJIANUSERNAME="{$userInfo['tuijianusername']}";
+			 var TUIJIANADMINID="{$userInfo['tuijianadminid']}";
+			 var LOGIN_COUNT={$userInfo['login_count']};                //登录次数
+			 var TOMID='';
+			 var TOUSERNAME='';
+			 var FAYAN_LIMIT={$roomInfo['speak_intval']};                //发言间隔
+			 var Flower_NUM={$userInfo['flowers']};                      //游客鲜花数
+			 //var VIEWSTATUS='$peizhi[viewstatus]';
+			 //var VIEWTIME='$peizhi[viewtime]';
+			 var LOGIN_SWITCH={$roomInfo['switch_house']};               //房间开关
+			 var SINGLE_LOGIN={$roomInfo['single_login']};               //单点登录
+			 var LOGIN_TIP={$roomInfo['login_hint']};                    //登录提示
+			 var LOGINID = 0;
+			 var CUR_FID = {$rid};
+			 var User_info = {$userInfoStr};
+			 var Room_info = {$roomInfoStr};
+			 var Role_info = {$roleInfo};
+			 var ws = null;
+	</script>
+		<script src="__TMPL__/public /assets/js/function.js"></script>
+		<script src="__STATIC__/js/layer/layer.js"></script>
+		<script src="__TMPL__/public /assets/js/websocket.js"></script>
+		<script src="__TMPL__/public /assets/js/index.js"></script>
+		<script src="__TMPL__/public /assets/js/jquery.nicescroll.js"></script>
+	</head>
+	<body>
+			<div class="live_wrap">
+				<div class="topzone"></div>
+				<div class="live_list">
+					<div class="list_l">
+						<dl>
+							<dt><img src="__TMPL__/public/assets/images/shouye/zhibologo.png" alt="" /></dt>
+							<volist name="leftPage" id="vo">
+								<dd>
+									<a href="javascript:" class="openApp" id="app_{$vo.id}" title="{$vo.title}" url="{$vo.link}?rid={$rid}" w="{$vo.width}" h="{$vo.height}" sort="{$vo.list_order}" open_type="{$vo.open_type}" pid="{$vo.id}" bgcolor="{$vo.background}" rid="{$rid}" >
+										<img src="/upload/{$vo.icon}"/>
+										<p>{$vo.title}</p>
+									</a>
+								</dd>
+							</volist>
+						</dl>
+						<div class="quit_wrap"><a href="{:cmf_url('user/index/logout')}"><span id="quit"></span></a></div>
+					</div>
+					<div class="list_r">
+						<div id="selectbox">
+							<label for="">在线<span></span>人</label>
+							<!--<strong class="managertools">管理工具</strong>-->
+							<div class="toolsbox">
+								<ul>
+									<li>隐藏假人</li>
+									<li>隐藏额外在线人数</li>
+								</ul>
+							</div>
+						</div>
+						<div class="online">
+							<ul id="onlinelist">
+								<!--<li><img class="vipimg" src="__TMPL__/public/assets/images/shouye/vip.png"/><span>张三</span><img class="robotimg" src="__TMPL__/public/assets/images/shouye/robot.png"/></li>-->
+							</ul>
+						</div>
+						<div class="searchbox">
+							<div><input type="text" name="" id="" value="" placeholder="请输入用户名"/><label class="thesearch"></label></div>
+						</div>
+					</div>
+				</div>
+				<div class="live_video">
+					<div class="video_player">
+						<iframe height="100%" width="100%" allowtransparency="true" marginwidth="0" marginheight="0" frameborder="0" scrolling="no" src="{:url('portal/index/play',['rid'=>$rid,'facility'=>'pc'])}"></iframe>
+					</div>
+					<div class="information">
+						<span id="master">当前讲师： <a>
+							<if condition="$roomInfo.teacher eq null">
+								无
+							<else/>
+								{$roomInfo.teacher}
+							</if>
+						</a></span>
+						<strong id="dianzan">1668</strong>
+						<span class="switch <if condition='$roomInfo.teacher eq null'>teachon<else/>teachoff</if>" style="margin-left:30px;cursor:pointer;">
+							<if condition="$userInfo['adminid'] eq 1">
+								<if condition="$roomInfo.teacher eq null">
+									开始讲课
+									<else/>
+									停止讲课
+								</if>
+							</if>
+
+						</span>
+						<span id="collection">收藏</span>
+					</div>
+					<div class="menu_tap">
+						<nav class="clear-float">
+							<volist name="bottomPage" id="vo" key="k">
+								<if condition="$k==1 and $img_carousel eq 1">
+									<a class="checked" data-id="bottom_{$k}">{$vo['title']}</a>
+									<else />
+									<a data-id="bottom_{$k}">{$vo['title']}</a>
+								</if>
+							</volist>
+						</nav>
+						<div class="tap_content">
+							<volist name="bottomPage" id="vo" key="k">
+								<if condition="$k==1 and $roomInfo['img_carousel'] eq 1">
+									<div id="bottom_{$k}" class="box-parent">
+										<ul id="carousel" class="collect-box clear-float">
+											<volist name="carousel" id="v">
+												<li><img src="/upload/{$v}" alt="" style="width: 100%; height: 100%;"></li>
+											</volist>
+										</ul>
+									</div>
+									<div class="prev-arrow"></div><!-- 左移按钮 -->
+
+									<div class="next-arrow"></div><!-- 右移按钮 -->
+									<!-- 切换按钮 -->
+									<ul class="btn-box"></ul>
+									<else />
+									<div id="bottom_{$k}" <if condition="$k neq 1 and $roomInfo['img_carousel'] eq 0">style="display: none"</if> >{$vo['content']}</div>
+								</if>
+							</volist>
+							<div class="carleft"></div>
+							<div class="carright"></div>
+						</div>
+					</div>
+					<div class="securities">
+						<p>上证指数：<span id="1" class="red">3256.02</span><span id="" class="red">0.65%</span></p>
+						<p>深证指数：<span id="2" class="red">13256.36</span><span id="" class="red">0.21%</span></p>
+						<p>创业板指数：<span id="3" class="green">1256.15</span><span id="" class="green">0.65%</span></p>
+					</div>
+				</div>
+				<div class="live_chat">
+					<div class="gitbox">
+						<div class="gitlists">
+							<volist name="historygift" id="vo">             <!--  历史礼物记录  -->
+								<p gid="{$vo.id}">
+									 <span>{:date('H:i',$vo.create_time)}</span>
+									<if condition="empty($roleAttr[$vo.adminid])">
+										<img width="20" height="20" src="\static\images\23-1F5111I049-53.png" class="v_img"/>
+										<else />
+										<img src="{$roleAttr[$vo.adminid]}" class="v_img"/>
+									</if>
+									 <strong id="u_name">{$vo.username}</strong>
+									 <if condition="$userInfo['adminid'] eq 1">
+										 <if condition="$vo.is_true_user eq 0">
+											 <img class="robotimg" src="/themes/simpleboot3/public/assets/images/shouye/robot.png"/>
+										 </if>
+									</if>
+									 <label>送给</label>
+									 <label id="t_name">{$vo.teacher} 1个 {$vo.gift_name}</label>
+									 {:htmlspecialchars_decode($vo.content)}
+									 <label></label>
+							    </p>
+							</volist>
+						</div>
+					</div>
+					<div class="chatbox">
+						<ul id="chatlists">              <!--  历史消息记录  -->
+							<volist name="historymsg" id="vo">
+								<li lid="{$vo.id}" adminid="{$vo.adminid}" iuser="{$vo.is_true_user}" mid='<if condition="$vo.is_true_user eq 0">r_{$vo.mid}<elseif condition="$vo.is_true_user eq 1"/>y_{$vo.mid}<else/>{$vo.mid}</if>'
+								 >
+								<p>
+									<if condition="empty($roleAttr[$vo.adminid])">            <!-- 用户头像 -->
+										<img width="20" height="20" src="\static\images\23-1F5111I049-53.png"/>
+										<else/>
+										<img src="{$roleAttr[$vo.adminid]}"/>
+									</if>
+									<span>{$vo.username}</span>                                <!-- 用户名称 -->
+									<if condition="$userInfo['adminid'] eq 1">
+										<if condition="$vo.is_true_user eq 0">                 <!-- 机器人头像 -->
+											<img class="robotimg" src="/themes/simpleboot3/public/assets/images/shouye/robot.png"/>
+										</if>
+									</if>
+									<if condition="$vo.to_mid != 0 ">
+										对
+										<if condition="empty($roleAttr[$vo.adminid])">            <!-- 头像 -->
+										   <img width="20" height="20" src="\static\images\23-1F5111I049-53.png"/>
+										<else/>
+										   <img src="{$roleAttr[$vo.adminid]}"/>
+										</if>
+										<if condition="$userInfo['adminid'] eq 1">
+											<if condition="$vo.tois_true_user eq 0">                 <!-- 机器人头像 -->
+												<span>{$vo.to_username}</span>
+												<img class="robotimg" src="/themes/simpleboot3/public/assets/images/shouye/robot.png"/>说
+											</if>
+										</if>
+									</if>
+									<span class="sentime">{:date('H:i',$vo.create_time)}</span></p>        <!-- 时间 -->
+								    <div class="sentcontent">{:htmlspecialchars_decode($vo.content)}       <!-- 聊天内容 -->
+									<if condition="$userInfo['adminid'] eq 1">
+									  <span class="delmsg">删除</span>
+									</if>
+								</div>
+								</li>
+							</volist>
+						</ul>
+						<div class="chatbtn">
+							<!--<a class="rootbtn">--></a><a class="clearbtn"></a>
+						</div>
+						<div class="redbox">
+							<!--<a class="pangbtn"></a><a class="hongbtn"></a>--><a class="liwubtn"></a>
+						</div>
+						<div class="redboxdetail">
+							<div class="pangdetail"></div>
+							<div class="hongdetail"></div>
+							<div class="liwudetail">
+								<div class="detail_content"></div>
+								<div class="liwu_lists"></div>
+							</div>
+							
+						</div>
+					</div>
+					<div class="sentbox">
+							<div class="sentgift">
+								<span id="wenzi" data-fsize="14"></span>
+								<span id="biaoqing"></span>
+								<span id="yangshi"></span>
+								<span id="suofang"></span>
+								<div class="yangshibox">
+									<ul>
+										<!--<li>顶一个</li>
+										<li>赞一个</li>
+										<li>掌声</li>
+										<li>鲜花</li>-->
+									</ul>
+								</div>
+								<div class="wenzibox">
+									<ul>
+										<li>12</li>
+										<li class="checked">14</li>
+										<li>16</li>
+										<li>18</li>
+										<li>20</li>
+									</ul>
+								</div>
+							</div>
+							<div class="forname">
+								<select name="role" id="role">
+									<option value="{$userInfo['id']}" adminid="{$userInfo['adminid']}">我</option>
+								</select>
+								<select name="touser" id="touser">
+									<option value="" adminid="">所有人</option>
+								</select>
+							</div>
+							<div class="tangkuang">
+								<ul>
+									
+								</ul>
+							</div>
+					</div>
+					<div class="writebox">
+						<div class="inputbox">
+							<div class="inputext" contenteditable="true"></div>
+						</div>
+						<label id="sentto">发送</label>
+					</div>
+				</div>
+			</div>
+
+			<script src="__TMPL__/public/assets/js/slide_custom.js"></script>
+			<script>
+
+				/* 平台介绍轮播 */
+				var slideQuantity = $(".box-parent li").length;
+                var boxWidth = $(".tap_content").width();
+                $(".collect-box").css({ "left": -boxWidth });
+                $("#carousel li").width(boxWidth);
+                $(".tap_content").slide_custom({
+                    moveStep: 1,//元素移动个数
+                    showIndex: 1, //显示区显示的个数
+                    imgQuantity : slideQuantity,//轮播实际个数
+                    slideStep : boxWidth,//轮播左移步长
+                    slideInterval : 3000,//轮播时间间隔
+                    slideDuration : 500,//动画滑动时间
+					hasArrow: true
+				});
+
+				$('.carright').hover(function(){
+                  $('.next-arrow').show();
+				},function(){
+					$('.next-arrow').hide();
+				});
+
+				$('.carleft').hover(function(){
+					$('.prev-arrow').show();
+				},function(){
+					$('.prev-arrow').hide();
+				});
+
+				$('.next-arrow').hover(function(){
+					$(this).show();
+				},function(){
+					$(this).hide();
+				});
+
+				$('.prev-arrow').hover(function(){
+					$(this).show();
+				},function(){
+					$(this).hide();
+				});
+			</script>
+	</body>
+</html>
+

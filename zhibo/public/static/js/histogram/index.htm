@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script type="text/javascript">
+  window.onload = function () {
+    var chart = new CanvasJS.Chart("chartContainer",
+    {
+      title:{
+        text: "Top Oil Reserves",    
+      },
+      axisY: {
+        title: "Reserves(MMbbl)"
+      },
+      legend: {
+        verticalAlign: "bottom",
+        horizontalAlign: "center"
+      },
+      theme: "theme2",
+      data: [
+
+      {        
+        type: "column",  
+        showInLegend: true, 
+        legendMarkerColor: "grey",
+        legendText: "MMbbl = one million barrels",
+        dataPoints: [      
+        {y: 297571, label: "Venezuela"},
+        {y: 267017,  label: "Saudi" },
+        {y: 175200,  label: "Canada"},
+        {y: 154580,  label: "Iran"},
+        {y: 116000,  label: "Russia"},
+        {y: 97800, label: "UAE"},
+        {y: 20682,  label: "US"},        
+        {y: 20350,  label: "China"},        
+        ]
+      },   
+      ]
+    });
+
+    chart.render();
+  }
+  </script>
+<script type="text/javascript" src="canvasjs.min.js"></script>
+<title>CanvasJS Basic Example</title>
+<style>
+@charset "utf-8";
+/* CSS Document */
+
+#menu {
+position: fixed;
+height: 60px;
+width: 100%;
+top: 0;
+left: 0;
+border-top: 5px solid #a1cb2f;
+background: #fff;
+-moz-box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.16);
+-webkit-box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.16);
+box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.16);
+z-index: 999999;
+line-height: 60px;
+}
+
+.w {
+width: 900px;
+margin: 0 auto;
+margin-bottom: 40px;
+}
+</style>
+</head>
+<body>
+
+<div id="chartContainer" style="height: 300px; width: 100%;"> </div>
+</body>
+<div style="text-align:center; color:#333; font-weight:bold; font-size:24px;">查看更多素材:<a style="color:#2dbdf1;"href="http://www.100sucai.com">100sucai.com</a></div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36251023-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</html>

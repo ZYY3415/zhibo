@@ -1,0 +1,109 @@
+<include file="public@header"/>
+<style>
+    table{
+        text-align: center;
+    }
+    th{
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">普通课程列表</a></li>
+        <li><a href="{:url('AdminCourse/add')}">添加课程</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('AdminCourse/CourseList')}">
+        当前房间:
+        <select id="rname" class="form-control" name="rid" style="width: 140px;">
+            <option value="0">全部房间</option>            
+            <foreach name="rooms" item="vo">
+                <if condition="$vo.rid==$rid">
+                    <option value="{$vo.rid}" selected>{$vo.room}</option>
+                    <else/>
+                    <option value="{$vo.rid}">{$vo.room}</option>
+                </if>
+            </foreach>
+        </select> &nbsp;&nbsp;
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+        <a class="btn btn-danger" href="{:url('AdminCourse/CourseList')}">清空</a>
+    </form>
+    <form class="js-ajax-form" action="" method="post">
+        <div class="table-actions">
+            <button class="btn btn-primary btn-sm js-ajax-submit" type="submit"
+                    data-action="{:url('AdminCourse/listOrder')}">{:lang('SORT')}
+            </button>
+            <button class="btn btn-danger btn-sm js-ajax-submit" type="submit"
+                    data-action="{:url('AdminCourse/delete')}" data-subcheck="true" data-msg="您确定删除吗？">
+                {:lang('DELETE')}
+            </button>
+        </div>
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="15">
+                    <label>
+                        <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                    </label>
+                </th>
+                <th width="50">{:lang('SORT')}</th>
+                <th width="50">ID</th>
+                <th width="150">日期</th>
+                <th width="150">时间</th>
+                <th width="150">教师</th>
+                <th>课程内容</th>
+                <th width="120">操作</th>
+            </tr>
+            </thead>
+            <volist name="course" id="vo">
+                <tr>    
+                    <td>
+                        <input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
+                               value="{$vo.id}" title="ID:{$vo.id}">
+                        <input type="hidden" name="rid" value="{$vo.rid}">
+                    </td>
+                    <td><input name="list_orders[{$vo.id}]" type="text" size="3" value="{$vo.list_order}" class="input-order valid" aria-invalid="false"></td>
+                    <td>{$vo.id}</td>
+                    <th width="150">{$vo.date}</th>
+                    <td>{$vo.starttime}&nbsp;~&nbsp;{$vo.endtime}</td>
+                    <td>{$vo.teacher}</td>
+                    <td>{$vo.course}</td>
+                    <td>
+                        <a href="{:url('AdminCourse/edit',['id'=>$vo.id])}">{:lang('EDIT')}</a>
+                        <a href="{:url('AdminCourse/delete',['id'=>$vo.id])}" class="js-ajax-delete">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+                </volist>
+            <tfoot>
+            <tr>
+                <th width="15">
+                    <label>
+                        <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                    </label>
+                </th>
+                <th width="50">{:lang('SORT')}</th>
+                <th width="50">ID</th>
+                <th width="150">日期</th>
+                <th width="150">时间</th>
+                <th width="150">教师</th>
+                <th>课程内容</th>
+                <th width="120">操作</th>
+            </tr>
+            </tfoot>
+        </table>
+        <div class="table-actions">
+            <button class="btn btn-primary btn-sm js-ajax-submit" type="submit"
+                    data-action="{:url('AdminCourse/listOrder')}">{:lang('SORT')}
+            </button>
+            <button class="btn btn-danger btn-sm js-ajax-submit" type="submit"
+                    data-action="{:url('AdminCourse/delete')}" data-subcheck="true" data-msg="您确定删除吗？">
+                {:lang('DELETE')}
+            </button>
+        </div>
+        <ul class="pagination">{$page|default=''}</ul>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

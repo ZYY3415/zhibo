@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>直播间</title>
+    <script src="./js/rem.min.js"></script>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/loginandregister.css">
+
+</head>
+<body>
+    <header class="myHeader">
+        <div class="backPrev"></div>注册
+    </header>
+    <div class="room-logo"></div>
+    <section class="login-container">
+        <form action="" method="post" class="login-box">
+            <div class="operate-active">
+                用户注册
+                <span class="aside-marks">(已有账户？<a class="register-now" href="javascript:void(0);">请登录</a>)</span>
+            </div>
+            <ul>
+                <li class="login-item">
+                    <span class="register-item reg-phone left"></span>
+                    <input id="userName" name="userName" class="input-text user-name" type="text" placeholder="请输入手机号"/>
+                </li>
+                <li class="login-item get-verify right">获取验证码</li>
+                <li class="login-item verify-box">
+                    <span class="register-item reg-code left"></span>
+                    <input id="verifyCode" name="userName" class="input-text verify-code" type="text" placeholder="请输入验证码"/>
+                </li>
+                <li class="login-item">
+                    <span class="register-item reg-pwd left"></span>
+                    <input id="userPwd" name="userName" class="input-text" type="password" placeholder="请输入密码"/>
+                    <span class="show-pwd right" style="height: 100%;"></span>
+                </li>
+                <li class="login-item btn-box">
+                    <input class="input-submit" type="submit" value="注册"/>
+                </li>
+            </ul>
+        </form>
+    </section>
+
+    <script src="./js/jquery.js"></script>
+    <script>
+        //返回
+        $(".backPrev").click(function(){
+            console.log("返回");
+            history.go(-1);
+        });
+        //显示密码
+        $(".show-pwd").click(function(e){
+            var $tar = $(e.target);
+            if(!$tar.hasClass("hide-pwd")){
+                $tar.addClass("hide-pwd");
+                $tar.prev().prop("type","text");
+            }else{
+                $tar.removeClass("hide-pwd");
+                $tar.prev().prop("type","password");
+            }
+        });
+        //禁止登录输入框为空
+        $(".input-submit").click(function(){
+            var $userName = $("#userName");
+            var $userPwd = $("#userPwd");
+            if($userName.val() == ""){
+                $userName.focus();
+                return false;
+            }
+            if($userPwd.val() == ""){
+                $userPwd.focus();
+                return false;
+            }
+            console.log($userName.val());
+            console.log($userPwd.val());
+        });
+    </script>
+</body>
+</html>

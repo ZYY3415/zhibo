@@ -1,0 +1,124 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <form class="well form-inline margin-top-20" method="post" action="{:url('adminAuth/index')}">
+        房间:
+        <select class="form-control" name="room" style="width:200px;">
+            <option value='0'>全部</option>
+            <volist name="rooms" id="vo">
+                <option value="{$key}"  <if condition="$room eq $key">selected</if> >{$vo}</option>
+            </volist>
+        </select> &nbsp;&nbsp;
+        时间:
+        <input type="text" class="form-control js-bootstrap-datetime" name="start_time"
+               value="{$start_time|default=''}" placeholder="请选择开始时间..."
+               style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-datetime" name="start_time"
+               value="{$end_time|default=''}" placeholder="请选择结束时间..."
+               style="width: 140px;" autocomplete="off">-
+         &nbsp; &nbsp;
+        关键字:
+        <input type="text" class="form-control" name="keyword" style="width: 200px;"
+               value="{$keyword|default=''}" placeholder="支持ID,权限名称,权限描述">
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+        <a class="btn btn-danger" href="{:url('index')}">清空</a>
+    </form>
+    <form class="js-ajax-form" action="" method="post">
+        <div class="table-actions">
+            <button class="btn btn-danger btn-sm js-ajax-submit" type="submit"
+                    data-action="{:url('delete')}" data-subcheck="true" data-msg="您确定删除吗？">
+                {:lang('DELETE')}
+            </button>
+        </div>
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="15">
+                    <label>
+                        <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                    </label>
+                </th>
+                <th width="50">ID</th>
+                <th width="150">房间</th>
+                <th width="210">数量</th>
+                <th width="210">操作</th>
+            </tr>
+            </thead>
+            <volist name="msginfo" id="member">
+                <tr>
+                    <td>
+                        <input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
+                               value="{$member.id}" title="ID:{$member.id}">
+                    </td>
+                    <td>{$member.id}</td>
+                    <td>{$member.nickname}</td>
+                    <td>{$member.room}</td>
+                    <td>{$member.phone}</td>
+                    <td>{$member.qq}</td>
+                    <if condition="$member.tuijianmid == '0'">
+                        <td>无上线</td>
+                        <else/>
+                        <td>{$member.tuijianmid}</td>
+                    </if>
+                    <td>{:date("Y-m-d H:i",$member.reg_time)}</td>
+                    <td>{$member.rolename}</td>
+                    <td>{$member.ip}</td>
+                    <td>{$member.login_count}</td>
+                    <td>{$member.money}</td>
+                    <td>{$member.remark}</td>
+                    <if condition="$member.status == 1">
+                        <td>已激活</td>
+                        <else/>
+                        <td>未激活</td>
+                    </if>
+                    <td>
+                        <a href="{:url('AdminMember/edit',['id'=>$member.id])}">修改资料</a>
+                        <a href="">修改密码</a>
+                        <a href="" class="js-ajax-delete">{:lang('DELETE')}</a>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+        <ul class="pagination">{$page|default=''}</ul>
+    </form>
+</div>
+</body>
+</html>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    /*$.ajax({
+        type:'post',
+        url:'/portal/Apply/ajax_handan',
+        data:{
+            mid:1,                                          //用户id
+            room:1001,                                      //房间
+            is_true_user:1,                                  //是否是假人
+            open_etpt_time:(new Date().getTime()/100),           //开仓时间
+            type: "买入",                                       //类型   买入或者卖出
+            etpt_position:'10%',                                //仓位
+            commodity:"股票",                                 //什么商品
+            open_etpt_value:100,                           //开仓价
+            loss_value:80,                                  //止损价
+            stop_profit_value:130,                         //止盈价
+            flat_etpt_time:(new Date().getTime()/100),         //平仓时间
+            flat_etpt_value:50,                             //平仓价格
+            profit_count:'120%',                           //盈利点数
+            analyst:'小明',                                //分析师
+            remarks:'12121'                                 //备注
+        },
+        dataType:'json',
+        success:function(data){
+           console.log(data);
+        }
+    });*/
+   /* $.ajax({
+        type:"post",
+        url:'/portal/apply/handan_index',
+        data:{pageNo:1,pageSize:10},
+        dataType:'json',
+        success:function(data){
+            console.log(data);
+        }
+    });*/
+</script>

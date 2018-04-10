@@ -1,0 +1,246 @@
+
+
+/*css reset*/
+
+html, body, button, dd, div, dl, dt, fieldset, footer, form, h1, h2, h3, h4, h5, h6, header, html, input, label, legend, li, nav, ol, p, pre, section, table, tbody, td, textarea, th, thead, ul, img {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Microsoft YaHei", "微软雅黑", serif;
+    color: #666;
+    min-width: 1024px;
+    font-size: 16px;
+    background-color: #f3f3f3;
+}
+
+li, ol {
+    list-style: none;
+}
+
+a, a:hover {
+    text-decoration: none;
+    color: #666;
+}
+
+img {
+    vertical-align: middle;
+}
+
+input, button {
+    outline: none;
+}
+
+.clear {
+    zoom: 1;
+}
+
+.clear:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.grey {
+    filter: grayscale(100%);
+    filter: gray;
+    opacity: 0.5;
+}
+
+/*内容样式*/
+
+
+.header_wrap{
+	width: 100%;
+	min-width:1200px;
+	height:32px;
+	background:#0088de;
+	margin: 0 auto;
+	line-height: 32px;
+	box-shadow: 2px 2px 10px #ccc;
+	
+}
+.header_wrap span{
+	padding-left:50px;
+	color:#FFFFFF;
+	font-size:12px;
+	font-weight: bold;
+}
+.tb_style{
+	width: 100%;
+	min-width:1200px;
+	overflow: hidden;
+	margin: 0 auto;
+	box-shadow: 2px 2px 10px #ccc;
+}
+
+#table1 {
+	background: #f4f4f4;
+	padding: 20px 20px;
+	margin:50px auto;
+	max-width: 900px;
+}
+
+.title_h3 {
+	max-width: 1200px;
+	margin: 0 auto;
+	height: 80px;
+	line-height: 100px;
+	color: #41BFFF;
+	padding-left: 150px;
+	border-bottom: 1px solid #CCCCCC;
+	font-size: 30px;
+	background: #f4f4f4;
+}
+.title_h3 a{
+	width:140px;
+	text-align: center;
+	padding:10px 20px;
+	color:#666;
+	text-decoration: none;
+}
+
+.title_h3 a:hover{
+	color:#0088de;
+}
+
+.title_h3 a.checked{
+	background: #fff;
+	padding:11px 20px;
+	border:1px solid rgba(102, 102, 102, 0.18);
+	border-bottom: 0;
+	color:#333;
+}
+
+#table1 tr:not(#paytype) td{
+	color:#333333;
+	font-size:16px;
+	font-weight: bold;
+	padding-top:10px;
+}
+#table1 #paytype td:nth-of-type(1){
+	width:120px;
+	color:#333333;
+	font-size:18px;
+	font-weight: bold;
+	vertical-align: top;
+}
+#table1 #paytype td:nth-of-type(2){
+/*	width:730px;*/
+	
+}
+#table1 #paytype td div:nth-of-type(1){
+	height:60px;
+	
+}
+#table1 #paytype td  div:nth-of-type(2){
+	height:60px;
+	
+}
+#table1 #paytype td div:nth-of-type(3){
+	padding-bottom: 30px;
+	
+}
+#table1 td:nth-child(1) {
+	text-align: right;
+	padding-right: 20px;
+}
+			
+#table1 td> input[type="text"] {
+	height: 30px;
+	padding-left: 10px;
+	width: 290px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	font-size:14px;
+}
+		
+#table1 td> input[type="submit"] {
+	background: #1EA7ED;
+	outline: none;
+	border: 0;
+	color: #fff;
+	width:140px;
+	height: 35px;
+	cursor: pointer;
+	transition: 0.3s;
+	border-radius: 5px;
+	font-size:14px;
+	font-weight: bold;
+}
+		
+#table1 tr td> input[type="submit"]:hover {
+	background: #41BFFF;
+}
+
+.yinlian span,.alipay span,.weixin span{
+	display: inline-block;
+	width:164px;
+	height:38px;
+	border:1px solid #CCCCCC;
+	background-color: #FFFFFF;
+	cursor:pointer;	
+	color:#555555;
+	margin-right:10px;
+}
+.yinlian span.checked,.alipay span.checked,.weixin span.checked{
+	background: url(../images/kuang.png) no-repeat;
+}
+
+.weixin span label{
+	display: inline-block;
+	width:35px;
+	height:32px;
+	background-image: url(../images/000.png);
+	background-size: 150px 69px;
+	background-position: 0px -37px;
+	margin-top:3px;
+	margin-left:10px;
+	vertical-align: middle;
+	
+}
+.alipay span label{
+	display: inline-block;
+	width:35px;
+	height:32px;
+	background-image: url(../images/000.png);
+	background-position: -49px -37px;
+	background-size: 150px 69px;
+	margin-top:3px;
+	margin-left:10px;
+	vertical-align: middle;
+}
+.weixin span.erweima label{	
+	background: url(../images/weixin.png) no-repeat center;
+	
+}
+.alipay span.erweima label{	
+	background: url(../images/zhifubao.png) no-repeat center;
+	
+}
+.weixin span strong,.alipay span strong{
+	display: inline-block;		
+	height:30px;
+	vertical-align: middle;
+	padding-left:10px;
+	font-size: 14px;
+}
+.yinlian  span input,.alipay span input,.weixin span input{
+	display: none;
+}
+.yinlian  span label{
+	display: inline-block;
+	width:140px;
+	height:30px;
+	background: url(../images/bank_logo.png) no-repeat;
+	cursor:pointer;
+	margin-top: 4px;
+	margin-left:10px;
+}
+
+.yinlian  span.checked,.alipay span.checked,.weixin span.checked {
+	border: 1px solid #41BFFF;
+}

@@ -1,0 +1,135 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('rbac/index')}">{:lang('ADMIN_RBAC_INDEX')}</a></li>
+			<li><a href="{:url('rbac/roleadd')}">{:lang('ADMIN_RBAC_ROLEADD')}</a></li>
+			<li class="active"><a>编辑角色</a></li>
+		</ul>
+		<form class="form-horizontal js-ajax-form margin-top-20" action="{:url('rbac/roleeditpost')}" method="post">
+			<div class="form-group">
+				<label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>{:lang('ROLE_NAME')}</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-name" name="name" value="{$data.name}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="rid" class="col-sm-2 control-label"><span class="form-required">*</span>父级角色</label>
+				<div class="col-md-6 col-sm-10">
+					<select name="parent_id" id="parent_id" class="form-control">
+						<volist name="tree_role" id="vo">
+								<option value="{$vo.id}" <if condition="$vo.id eq $data.parent_id">selected<elseif condition="$data.id eq $vo.id"/>disabled="false"</if> >
+								{:str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;",$vo.level-1)}└{$vo.name}
+								</option>
+						</volist>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="rid" class="col-sm-2 control-label"><span class="form-required">*</span>所属房间</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="hidden" name="rid" id="rid" value="{$data.rid}" index="{:url('rbac/ajax_room')}" />
+					<input type="hidden" name="isall" id="isall" value="{$data.isall}" />
+					<input type="text" id="room" class="form-control" value="{$data.room}" readonly>
+				</div>
+				<button class="btn btn-success all">所有房间</button>
+			</div>
+			<div class="form-group">
+				<label for="input-remark" class="col-sm-2 control-label">{:lang('ROLE_DESCRIPTION')}</label>
+				<div class="col-md-6 col-sm-10">
+					<textarea type="text" class="form-control" id="input-remark" name="remark">{$data.remark}</textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">{:lang('STATUS')}</label>
+				<div class="col-md-6 col-sm-10">
+					<label class="radio-inline">
+						<php>$active_true_checked=($data['status']==1)?"checked":"";</php>
+						<input type="radio" name="status" value="1" {$active_true_checked}> {:lang('ENABLED')}
+					</label>
+					<label class="radio-inline">
+						<php>$active_false_checked=($data['status']==0)?"checked":"";</php>
+						<input type="radio" name="status" value="0" {$active_false_checked}> {:lang('DISABLED')}
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<input type="hidden" name="id" value="{$data.id}"/>
+					<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+					<a class="btn btn-default" href="{:url('admin/rbac/index')}">{:lang('BACK')}</a>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+	<script src="__STATIC__/js/layer/layer.js"></script>
+	<script>
+		$('#room').click(function(){
+			var ids= $('#rid').val();
+			var isall= $('#isall').val();
+            var count = "{$count}";
+
+			openIframeLayer("{:url('portal/admin_house/select')}?ids="+ids+"&isall="+isall, '请选择房间', {
+				area: ['700px', '400px'],
+				btn: ['确定', '取消'],
+				yes: function (index, layero) {
+					//do something
+
+					var iframeWin          = window[layero.find('iframe')[0]['name']];
+					var selectedCategories = iframeWin.confirm();
+					console.log(layero);
+					if (selectedCategories.selectedCategoriesId.length == 0) {
+						layer.msg('请选择分类');
+						return;
+					}
+
+					$('#rid').val(selectedCategories.selectedCategoriesId.join(','));
+					$('#room').val(selectedCategories.selectedCategoriesName.join(' '));
+
+					if(count == selectedCategories.selectedCategoriesId.length)
+					{
+						$('#isall').val(1);
+					}else{
+						$('#isall').val(0);
+					}
+					//console.log(layer.getFrameIndex(index));
+					layer.close(index); //如果设定了yes回调，需进行手工关闭
+				}
+			});
+		});
+		$('.all').click(function(){
+			var count = "{$count}";
+			$.ajax({
+				url:$('#rid').attr('index'),
+				type:'post',
+				dateType:'json',
+				success:function(obj)
+				{
+					if(obj.code === 1)
+					{
+						var rid_attr = [];
+						for(var i in obj.data)
+						{
+							rid_attr.push(i);
+						}
+
+						if(count == rid_attr.length)
+						{
+							$('#isall').val(1);
+						}
+
+						$('#rid').val(rid_attr.join(','));
+					}else
+					{
+						layer.msg(obj.msg);
+					}
+				}
+			});
+			$('#room').val('所有房间');
+			return false;
+		});
+	</script>
+</body>
+</html>

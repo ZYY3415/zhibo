@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>错误页面</title>
+	</head>
+	<style type="text/css">
+		*{
+			margin:0;
+			padding:0;
+		}
+		body{
+			background: #f4f4f4;
+		}
+		.afresh_wrap{
+			width:100%;
+			height:100%;		
+		}
+		.afresh_box{
+			width:1000px;
+			height:670px;
+			position: absolute;
+			left:0;
+			right:0;
+			top:0;
+			bottom: 0;
+			margin:auto;
+			padding:100px;
+			background: #f4f4f4;
+		}
+		.afresh_box dl .errorimg{
+			float:left;
+			width:358px;
+			height:408px;
+			margin:135px 70px 0 70px;
+			background: url(/static/images/errorimg.png) no-repeat center ;
+		}
+		.afresh_box dl dd{
+			width:500px;
+			margin:190px 0px 0 0px;
+			float:left;
+			
+		}
+		.afresh_box dl dd h3{
+			color:#3a3a3a;
+			font-size: 30px;
+			font-weight: bold;
+			padding:20px 0;
+		}
+		.afresh_box dl dd h3 span{
+			color:#d48043;
+		}
+		.afresh_box dl dd p{
+			color:#616161;
+			padding-bottom: 35px;
+			font-size: 18px;
+		}
+		.afresh_box dl dd div a{
+			display: block;
+			color:red;
+			padding:5px 0;
+			text-indent: 20px;
+		}
+		.afresh_box dl dd  button{
+			margin-top: 30px;
+			width:270px;
+			height:56px;
+			line-height: 56px;
+			background-color:#0088de;
+			color:#fff;
+			border:0;
+			font-size: 18px;
+			border-radius: 3px;
+			border-radius:4px;
+		}
+	</style>
+	<body>
+		<div class="afresh_wrap">
+			<div class="afresh_box">
+				<dl>
+					<dt class="errorimg"></dt>
+					<dd>
+						<h3>sorry，{:mb_substr($msg,0,-2)}<span>{:mb_substr($msg,-2)}</span>&nbsp;!</h3>
+						<p id="errormes"></p>
+						<div>
+							<a class="dingdan">错误代码：{$code}</a>
+							<a class="jine">错误详情：{$msgInfo}</a>
+							<!--<a class="fujiacode">附加错误信息：</a>-->
+						</div>
+						<!--<button>重新支付</button>-->
+					</dd>
+				</dl>
+			</div>
+		</div>
+	</body>
+
+</html>

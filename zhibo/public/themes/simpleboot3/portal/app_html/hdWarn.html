@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>喊单提醒</title>
+		<style type="text/css">
+			.handanwrap{
+				width:100%;
+				height:100%;
+				margin-top:20px;
+			}
+			.handantitle{
+				width:93%;
+				height:46px;
+				line-height:20px;
+				margin:0 auto;
+			}
+			.handantitle label{
+				display: inline-block;		
+				font-size:24px;
+				font-family:PingFangSC-Semibold;
+				color:rgba(51,53,58,1);
+			}
+			.handandetail{
+				width:93%;
+				height:515px;
+				margin:0 auto;
+			}
+			.handandetail table{
+				width:100%;
+				border-collapse:collapse;
+				table-layout:fixed;
+				
+			}
+			.handandetail table tr{
+				border:1px solid #F4F4F4;
+				
+			}
+			.handandetail table tr th{
+				height:40px;
+				color:#7F7F85;
+				text-align: center;
+				font-size: 11px;
+				background-color:#EFF0F1;
+			}
+			.handandetail table tr td{
+				height:50px;
+				color:#38383D;
+				text-align: center;
+				font-size: 12px;
+			}
+			.handandetail table tr td span{
+				display: block;
+				color:#BF392C;
+			}
+			.handandetail table tr td .buyup{
+				color:#BF392C;
+			}
+			.handandetail table tr td .buydown{
+				color:#4AA778;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="handanwrap">
+			<div class="handantitle"><label>喊单提醒</label></div>
+			<div class="handandetail">
+				<table border="0" cellspacing="0" cellpadding="">
+					<tr>
+						<th>单号</th>
+						<th>开仓时间</th>
+						<th>类型</th>
+						<th>仓位</th>
+						<th>商品</th>
+						<th>开仓价</th>
+						<th>止损价</th>
+						<th>止盈价</th>
+						<th>平仓时间</th>
+						<th>平仓价</th>
+						<th>盈利点数</th>
+						<th>点赞</th>
+						<th>分析师</th>	
+					</tr>
+					<tr>
+						<td>119235</td>
+						<td>2017.12.01 12:00:00</td>
+						<td><span class="buyup">买涨</span></td>
+						<td>40%</td>
+						<td>黄金</td>
+						<td>3120.00</td>
+						<td>3100.00</td>
+						<td>-</td>
+						<td>2017.12.01 12:00:00</td>
+						<td>3100</td>
+						<td>20</td>
+						<td>100</td>
+						<td>杨程</td>
+					</tr>
+					<tr>
+						<td>119235</td>
+						<td>2017.12.01 12:00:00</td>
+						<td><span class="buydown">买跌</span></td>
+						<td>40%</td>
+						<td>黄金</td>
+						<td>3120.00</td>
+						<td>3100.00</td>
+						<td>-</td>
+						<td>2017.12.01 12:00:00</td>
+						<td>3100</td>
+						<td>20</td>
+						<td>100</td>
+						<td>杨程</td>
+					</tr>
+				</table>
+			</div>
+			<div class="pagebtn">
+				
+			</div>
+		</div>
+	</body>
+</html>

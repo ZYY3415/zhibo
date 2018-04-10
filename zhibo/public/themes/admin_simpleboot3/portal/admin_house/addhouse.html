@@ -1,0 +1,449 @@
+<include file="public@header"/>
+<link rel="stylesheet" href="__STATIC__/js/layer/mobile/need/layui.css"/>
+<style>
+    .switch {
+        width: 106px;
+        height: 30px;
+        border: 1px solid #eee !important;
+        position: relative;
+    }
+
+    .switch span {
+        width: 53px;
+        height: 28px;
+        color: #fefefe;
+        display: block;
+        font-size: 16px !important;
+        font-weight: 300 !important;
+        text-align: center;
+        line-height: 28px;
+        position: relative;
+    }
+
+    .switch span.off {
+        background: #ee5f5b;
+        left: 53px;
+    }
+
+    .switch span.on {
+        background: #62c462;
+    }
+
+    .dat {
+        margin-top: 40px;
+    }
+
+    .rado {
+        line-height: 23px;
+        padding-top: 5px;
+    }
+
+    .centent2 {
+        display: none;
+    }
+
+    .btn {
+        display: block;
+        float: left;
+    }
+
+    .icon {
+        display: inline-block;
+        display: none;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li role="presentation"><a href="{:url($index)}"><if condition="$index eq 'hbindex'">房间基本信息管理<else/>房间视频信息管理</if></a></li>
+        <li role="presentation" class="active"><a href="javacript:;">新增房间</a></li>
+    </ul>
+    <ul class="nav nav-tabs dat" role="tablist">
+        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">房间基本信息</a></li>
+        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">直播信息</a></li>
+        <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">图片上传</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <form action="{:url('addhouse')}" class="form-horizontal js-ajax-form margin-top-20" method="post" id="form1">
+        <input type="hidden" name="index" value="{$index}" />
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="home">
+                <div class="form-group">
+                    <label for="rid" class="control-label col-sm-2"><span
+                            class="form-required">*</span>房间号</label>
+
+                    <div class="col-md-6 col-sm-10">
+                        <input type="number" name="rid" min="1001" max="1100" placeholder="请输入房间号1001-1100"
+                               class="form-control" pattern="\d{1,4}" id="rid">
+                    </div>
+            <span class="glyphicon glyphicon-ok col-md-1"
+                  style="height:34px;line-height:24px;color:#18BC9C;display:none;"></span>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="control-label col-sm-2">房间密码</label>
+
+                    <div class="col-md-6 col-sm-10">
+                        <input type="text" class="form-control" name="password" id="password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="room" class="control-label col-sm-2"><span
+                            class="form-required">*</span>房间名称</label>
+
+                    <div class="col-md-6 col-sm-10">
+                        <input type="text" class="form-control" name="room" id="room">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="ftitle" class="control-label col-sm-2">房间标题</label>
+
+                    <div class="col-md-6 col-sm-10">
+                        <input type="text" class="form-control" name="ftitle" id="ftitle">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="shield_field" class="control-label col-sm-2">屏蔽字段</label>
+
+                    <div class="col-md-6 col-sm-10">
+                        <input type="text" class="form-control" name="shield_field" id="shield_field">
+                    </div>如骗|骂|   词之间,用 | 隔开
+                </div>
+                <div class="form-group">
+                    <label for="speak_intval" class="control-label col-sm-2">游客发言间隔</label>
+
+                    <div class="col-md-6 col-sm-10 input-group">
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-apple"></span></div>
+                        <input type="number" class="form-control" name="speak_invtal" id="speak_intval">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="check_speak" class="control-label col-sm-2">发言自动审核</label>
+
+                    <div class="col-md-6 col-sm-10">
+                        <input type="hidden" name="check_speak" id="check_speak" value="1"/>
+
+                        <p class="switch"><span class="on">ON</span></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="login_hint" class="control-label col-sm-2">登录提示</label>
+
+                    <div class="col-md-6 col-sm-10">
+                        <input type="hidden" name="login_hint" id="login_hint" value="1"/>
+
+                        <p class="switch"><span class="on">ON</span></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="switch_house" class="control-label col-sm-2">房间开关</label>
+
+                    <div class="col-md-6 col-sm-10">
+                        <input type="hidden" name="switch_house" id="switch_house" value="1"/>
+
+                        <p class="switch"><span class="on">ON</span></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="single_login" class="control-label col-sm-2">单点登录</label>
+
+                    <div class="col-md-6 col-sm-10">
+                        <input type="hidden" name="single_login" id="single_login" value="1"/>
+
+                        <p class="switch"><span class="on">ON</span></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="sightseer_login" class="control-label col-sm-2">游客进入</label>
+
+                    <div class="col-md-6 col-sm-10">
+                        <input type="hidden" name="sightseer_login" id="sightseer_login" value="1"/>
+
+                        <p class="switch"><span class="on">ON</span></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="img_carousel" class="control-label col-sm-2">是否开启轮播</label>
+
+                    <div class="col-md-6 col-sm-10">
+                        <input type="hidden" name="img_carousel" id="img_carousel" value="1"/>
+
+                        <p class="switch"><span class="on">ON</span></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="astrict_sightseer" class="control-label col-sm-2">游客观看限制</label>
+
+                    <div class="col-md-6 col-sm-10">
+                        <input type="hidden" name="astrict_sightseer" id="astrict_sightseer" value="0"/>
+
+                        <p class="switch"><span class="off">OFF</span></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="iscall" class="control-label col-sm-2">开启招呼</label>
+                    <div class="col-md-6 col-sm-10">
+                        <input type="hidden" name="iscall" id="iscall" value="0"/>
+                        <p class="switch"><span class="off">OFF</span></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-info next-button" index="1">下一页设置</button>
+                 </div>
+
+            </div>
+            <div role="tabpanel" class="tab-pane" id="profile">
+                <div class="form-group">
+                    <label class="control-label col-sm-2"><span class="form-required">*</span>视频来源</label>
+
+                    <div class="col-md-6 col-sm-10 rado">
+                        <input type="radio" class="" name="play_source" checked value="1">虎牙直播&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" class="" name="play_source" value="2">阿里云直播
+                    </div>
+                </div>
+                <div class="centent1">
+                    <div class="form-group">
+                        <label for="YYfcode" class="control-label col-sm-2"><span
+                                class="form-required">*</span>YY房间号</label>
+
+                        <div class="col-md-6 col-sm-10">
+                            <input type="number" class="form-control" name="YYfcode" id="YYfcode">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="YYcode" class="control-label col-sm-2"><span
+                                class="form-required">*</span>YY账号</label>
+
+                        <div class="col-md-6 col-sm-10">
+                            <input type="number" class="form-control" name="YYcode" id="YYcode">
+                        </div>
+                    </div>
+                </div>
+                <div class="centent2">
+                    <div class="form-group">
+                        <input type="hidden" name="pc_play_site" value="{$data.pc_play_site}"/>
+                        <input type="hidden" name="m_play_site" value="{$data.m_play_site}"/>
+                        <input type="hidden" name="pull_video_indate" value="{$data.time}"/>
+                        <input type="hidden" name="m_play_indate" value="{$data.time}"/>
+                        <input type="hidden" name="pc_play_indate" value="{$data.time}"/>
+                        <label for="pull_video_site" class="control-label col-sm-2"><span class="form-required">*</span>推流地址</label>
+
+                        <div class="col-md-6 col-sm-10">
+                            <input type="text" class="form-control" name="pull_video_site" id="pull_video_site"
+                                   value="{$data.c_pull_site}" readonly>
+                        </div>
+                        <button class="btn btn-info btncopy">复制URL</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="pull_video_token" class="control-label col-sm-2"><span
+                                class="form-required">*</span>播放路径/串流码</label>
+
+                        <div class="col-md-6 col-sm-10">
+                            <input type="text" class="form-control" name="pull_video_token" id="pull_video_token"
+                                   value="{$data.token}" readonly>
+                        </div>
+                        <button class="btn btn-info btncopy">复制串流码</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-info next-button" index="2">下一页设置</button>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="messages">
+                <div class="form-group">
+                    <label class="control-label col-sm-2">LOGO上传</label>
+                    <input type="hidden" name="room_log" value=""/>
+
+                    <div class="col-md-2 col-sm-3">
+                        <button type="button" class="layui-btn" id="input-icon1">
+                            <i class="layui-icon"></i>上传图片
+                        </button>
+                    </div>
+                    <div class="icon">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2">小LOGO上传</label>
+                    <input type="hidden" name="room_small_log" value=""/>
+
+                    <div class="col-md-2 col-sm-3">
+                        <button type="button" class="layui-btn" id="input-icon2">
+                            <i class="layui-icon"></i>上传图片
+                        </button>
+                    </div>
+                    <div class="icon">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2">二维码上传</label>
+                    <input type="hidden" name="room_QR_code" value=""/>
+
+                    <div class="col-md-2 col-sm-3">
+                        <button type="button" class="layui-btn" id="input-icon3">
+                            <i class="layui-icon"></i>上传图片
+                        </button>
+                    </div>
+                    <div class="icon">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2">封面上传</label>
+                    <input type="hidden" name="room_cover" value=""/>
+
+                    <div class="col-md-2 col-sm-3">
+                        <button type="button" class="layui-btn" id="input-icon4">
+                            <i class="layui-icon"></i>上传图片
+                        </button>
+                    </div>
+                    <div class="icon">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2">背景上传</label>
+                    <input type="hidden" name="room_bg_img" value=""/>
+
+                    <div class="col-md-2 col-sm-3">
+                        <button type="button" class="layui-btn" id="input-icon5">
+                            <i class="layui-icon"></i>上传图片
+                        </button>
+                    </div>
+                    <div class="icon">
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top:100px;">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit" style="width:100px;" form="form1">
+                            添加
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/layer.js"></script>
+<script src="__STATIC__/js/layer/layui.js"></script>
+<script>
+    //验证房间号
+    $('#rid').blur(function () {
+        var room_code = $(this).val();
+        if (room_code == "" || parseInt(room_code) < 1001 || parseInt(room_code) > 1100) {
+            layer.msg("房间号格式不正确！", {
+                time: 1000,
+                icon: 2
+            });
+        } else {
+            $.post("{:url('check_roomid')}", {rid: room_code}, function (msg) {
+                var obj = eval('(' + msg + ')');
+                if (obj.code != 0) {
+                    layer.msg(obj.msg, {
+                        time: 1000,
+                        icon: 2
+                    });
+                } else {
+                    $('.glyphicon-ok').show();
+                    setTimeout(function () {
+                        $('.glyphicon-ok').hide();
+                    }, 1000);
+                }
+            }, 'json');
+        }
+    });
+
+    //滑动
+    $('.switch').click(function () {
+        var obj = $(this).find('span');
+        if (obj.attr('class') == 'on') {
+            obj.animate({
+                left: '53px'
+            }, 'fast', function () {
+                obj.removeClass('on');
+                obj.addClass('off');
+
+                obj.html('OFF');
+
+                obj.parents('p').siblings('input[type="hidden"]').val(0);
+            });
+        } else {
+            obj.animate({
+                left: '0px'
+            }, 'fast', function () {
+                obj.removeClass('off');
+                obj.addClass('on');
+
+                obj.html('ON');
+                obj.parents('p').siblings('input[type="hidden"]').val(1);
+            });
+        }
+    });
+
+    //切换视频源
+    $('.rado').change(function () {
+        var socule = $(this).find('input:checked').val();
+
+        if (socule == 1) {
+            $('.centent1').show();
+            $('.centent2').hide();
+        } else {
+            $('.centent2').show();
+            $('.centent1').hide();
+        }
+    });
+
+    //复制内容
+    $('.btncopy').click(function () {
+        var Url2 = $(this).siblings('.col-md-6').find('input').get(0);
+        var that = this;
+        Url2.select();               // 选择对象
+        document.execCommand("Copy"); // 执行浏览器复制命令
+        layer.tips("复制成功！", that, {
+            tips: [1, 'green'],
+            time: 1000
+        });
+        return false;
+    });
+
+    //图片上传
+    layui.use('upload', function () {
+        var upload = layui.upload;
+        upload.render({
+            elem: $('.layui-btn')
+            , url: '{:url("image_upload")}'
+            , done: function (res, index, upload) { //上传后的回调
+
+                if (res.code == 0) {
+                    var str = '<img src="' + res.data + '" width="100"/>';
+                    var icon = this.item.parents('.col-md-2').siblings('.icon');
+                    icon.html('');
+                    icon.show().append(str);
+
+                    icon.siblings('input[type="hidden"]').val(res.data);
+                }
+            }
+            , error: function (error) {                  //上传异常回调
+                console.log(error);
+            }
+            , accept: 'images'                  //允许上传的类型
+            , exts: 'jpg|jpeg|png|gif'          //允许上次的图片的类型
+            , size: 100                         //最大允许上传的文件大小
+            , drag: false                       //是否允许拖拽
+        });
+    });
+
+    $('.next-button').click(function(){
+        var index = $(this).attr('index');
+
+         $('.dat li').attr('class','');
+         $('.dat li').eq(index).attr('class','active');
+
+        $('.tab-content').find('.tab-pane').attr('class','tab-pane');
+        $('.tab-content').find('.tab-pane').eq(index).attr('class','tab-pane active');
+
+    });
+
+</script>
+</body>
+</html>

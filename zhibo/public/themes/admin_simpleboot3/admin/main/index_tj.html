@@ -1,0 +1,80 @@
+<include file="public@header"/>
+
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/admin_home.css"/>
+<script src="https://img.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+<script src="https://img.hcharts.cn/highcharts/highcharts.js"></script>
+<script src="https://img.hcharts.cn/highcharts/modules/exporting.js"></script>
+<script src="https://img.hcharts.cn/highcharts/modules/data.js"></script>
+<script src="https://img.hcharts.cn/highcharts/modules/drilldown.js"></script>
+<script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+<script src="__STATIC__/js/run_hole_histogram/index.js"></script>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <div class="header_pagename">
+        <h1>管理中心<span>&nbsp;&nbsp;直播系统聚合统计面板</span></h1>
+    </div>
+    <div class="header_title bgcolor">
+        <span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
+        <h4>平台 > 管理中心</h4>
+    </div>
+    <div class="menu_nav">
+        <dl>
+            <dt>
+                <img src="__STATIC__/images/news.png" alt=""/>
+                <span>{$message_count}</span>
+            <p>消息</p>
+            </dt>
+            <dd>
+                <a href="{:cmf_url('portal/admin_chat/index')}">查看更多</a>
+                <strong></strong>
+            </dd>
+        </dl>
+        <dl>
+            <dt>
+                <img src="__STATIC__/images/number.png" alt=""/>
+                <span>{$member_count}</span>
+            <p>注册会员人数</p>
+            </dt>
+            <dd>
+                <a href="{:cmf_url('portal/admin_member/index')}">查看更多</a>
+                <strong></strong>
+            </dd>
+        </dl>
+        <!--<dl>-->
+        <!--<dt>-->
+        <!--<img src="__STATIC__/images/statistical.png" alt="" />-->
+        <!--<span>151698</span>-->
+        <!--<p>剩余消息数</p>-->
+        <!--</dt>-->
+        <!--<dd>-->
+        <!--<a href="">查看更多</a>-->
+        <!--<strong></strong>-->
+        <!--</dd>-->
+        <!--</dl>-->
+        <dl>
+            <dt>
+                <img src="__STATIC__/images/news.png" alt=""/>
+                <span>158628</span>
+            <p>剩余视频流量</p>
+            </dt>
+            <dd>
+                <a href="">查看更多</a>
+                <strong></strong>
+            </dd>
+        </dl>
+    </div>
+    <div class="header_title">
+        <span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
+        <h4>发送消息统计</h4>
+    </div>
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <div class="header_title" style="margin-top: 2rem">
+        <span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span>
+        <h4>在线人数统计</h4>
+    </div>
+    <div id="container_online" style="min-width: 310px; height: 400px; margin: 0 auto"
+         index="{:url('onlineUserCount')}"></div>
+</div>
+</body>
+</html>

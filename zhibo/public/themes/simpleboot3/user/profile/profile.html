@@ -1,0 +1,122 @@
+<include file="public@profile_header"/>
+
+<div class="rightContent">
+    <section>
+        <div class="secTitle"><i></i>我的资料</div>
+        <div class="changeAvatar">
+            <dl class="clearfix">
+                <dt>
+                    <img src="{$member['avatar']|default='__TMPL__/public/assets/images/avatar.png'}"/>
+                </dt>
+                <dd>*支持jpg，png，GIF格式，文件必须在5M以下</dd>
+                <dd><a href="javascript:;" id="resume" class="file">选择文件</a>
+                </dd>
+                <dd><input type="button" id="upload_avatar" name="save" value="保存"/></dd>
+            </dl>
+        </div>
+        <ul class="memberInforList">
+            <li><label>昵称</label><input type="text" name="name" value="{$member['nickname']}"></li>
+            <li><label>用户身份</label><input type="text" name="member" value="{$role.rolename}" disabled></li>
+            <li><label>电话</label><input type="text" name="phone" value="{$member['phone']}"></li>
+            <li><label>下线</label><input type="text" name="next" value="{$count}" disabled><a href="{:cmf_url('user/profile/promotion')}"
+                                                                                           class="promotionInfor">详情</a>
+            </li>
+            <li><input type="submit" id="save" value="提交"></li>
+        </ul>
+    </section>
+</div>
+<div class="cover">
+    <div class="tips">
+        <span class="status-images"></span>
+        <span class="status"></span>
+    </div>
+</div>
+<include file="public@profile_footer"/>
+<script type="text/javascript" src="__STATIC__/js/plupload/plupload.full.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".listInfor li").eq(0).addClass('active');
+    });
+    //实例化一个plupload上传对象
+    var uploader = new plupload.Uploader({
+        browse_button : 'resume', //触发文件选择对话框的按钮，为那个元素id
+        url : "{:cmf_url('user/profile/uploadAvatar')}", //服务器端的上传页面地址
+        flash_swf_url : '__STATIC__/js/plupload/Moxie.swf', //swf文件，当需要使用swf方式进行上传时需要配置该参数
+        silverlight_xap_url : '__STATIC__/js/plupload/Moxie.xap' //silverlight文件，当需要使用silverlight方式进行上传时需要配置该参数
+    });
+
+    //在实例对象上调用init()方法进行初始化
+    uploader.init();
+
+    //绑定各种事件，并在事件监听函数中做你想做的事
+    uploader.bind('FilesAdded',function(uploader,files){
+        uploader.start(); //调用实例对象的start()方法开始上传文件，当然你也可以在其他地方调用该方法
+    });
+    uploader.bind('UploadProgress',function(uploader,file){
+        //每个事件监听函数都会传入一些很有用的参数，
+        //我们可以利用这些参数提供的信息来做比如更新UI，提示上传进度等操作
+    });
+    
+    uploader.bind('FileUploaded', function (uploader,file,responseObject) {
+       var data = JSON.parse(responseObject.response);
+       if(data.code>0){
+           $('.changeAvatar img').attr('src', data.data.avatar);
+       }else{
+           $(".cover").css("display", "block");
+           $(".status").html(data.msg);
+           var $img = $('<img src="__TMPL__/public/assets/images/fail.png" />');
+           $(".status-images").html($img);
+           $(".status").css("color", "red");
+           $(".tips").css({
+               "top": $(window).height() / 2 - $(".tips").height() / 2 + "px",
+               "left": $(window).width() / 2 - $(".tips").width() / 2 + "px"
+           });
+           setTimeout(function () {
+               $(".cover").css("display", "none");
+           }, 1000);
+       }
+    });
+
+    $("#upload_avatar").click(function () {
+        var avatar = $(".changeAvatar img").attr('src');
+        $.post("{:cmf_url('user/Profile/modifyAvatar')}",{"avatar":avatar},function(data){
+            if(data.code>0){
+                $(".cover").css("display", "block");
+                var $img = $('<img src="__TMPL__/public/assets/images/yes.gif" />');
+                $(".status-images").html($img);
+                $(".status").html(data.msg);
+                $(".status").css("color", "#08C2F0");
+                $(".tips").css({
+                    "top": $(window).height() / 2 - $(".tips").height() / 2 + "px",
+                    "left": $(window).width() / 2 - $(".tips").width() / 2 + "px"
+                });
+                setTimeout(function () {
+                    $(".cover").css("display", "none");
+                    location.reload();
+                }, 2000);
+            }
+        });
+    });
+
+    $("#save").click(function () {
+        var nickname = $("input[name='name']").val();
+        var phone = $("input[name='phone']").val();
+        $.post("{:cmf_url('user/Profile/profilePost')}",{"nickname":nickname,'phone':phone},function(data){
+            if(data.code>0){
+                $(".cover").css("display", "block");
+                var $img = $('<img src="__TMPL__/public/assets/images/yes.gif" />');
+                $(".status-images").html($img);
+                $(".status").html(data.msg);
+                $(".status").css("color", "#08C2F0");
+                $(".tips").css({
+                    "top": $(window).height() / 2 - $(".tips").height() / 2 + "px",
+                    "left": $(window).width() / 2 - $(".tips").width() / 2 + "px"
+                });
+                setTimeout(function () {
+                    $(".cover").css("display", "none");
+                    location.reload();
+                }, 2000);
+            }
+        });
+    });
+</script>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content="">
+    <include file="public@head"/>
+</head>
+
+<body class="body-white">
+<nav class="clearfix">
+    <div class="logo"><img src="__TMPL__/public/assets/images/logo.png" /></div>
+    <ul class="loginInfor">
+        <li><a href="{:cmf_url('user/Register/index')}">注册</a></li>
+        <li><a href="{:cmf_url('/')}">网站首页</a></li>
+    </ul>
+</nav>
+<div class="container tc-main">
+    <div class="row">
+        <div class="col-md-2 col-md-offset-8 inputBoxChange">
+            <form class="js-ajax-form" action="{:url('user/login/doLogin')}" method="post">
+                <input type="hidden" name="rid" value="{$rid}" />
+            <div class="form-group">
+                <input type="text" id="input_username" name="username" placeholder="手机号/邮箱/用户名"
+                       class="form-control" style="border-radius: 4px;">
+            </div>
+
+            <div class="form-group">
+                <input type="password" id="input_password" name="password" placeholder="密码" class="form-control" style="border-radius: 4px;">
+            </div>
+
+            <div class="form-group">
+                <div style="position: relative;">
+                    <input type="text" name="captcha" placeholder="验证码" class="form-control captcha"
+                           style="width: 90px;float: left;margin-right: 10px;border-radius: 4px;">
+                    <captcha height="38" width="120" font-size="16"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" name="redirect" value="">
+                <button class="btn btn-primary btn-block js-ajax-submit" type="submit" style="margin-left: 0px;width:100%;height:40px; background:rgba(241,189,85,1);border-radius: 20px; border: none;">确定
+                </button>
+            </div>
+
+            <div class="form-group" style="text-align: center;margin-bottom: 0;">
+                <ul class="list-inline" style="margin-bottom:0;">
+                    <li><a href="{:cmf_url('user/Register/index')}">现在注册</a></li>
+                    <li><a href="{:cmf_url('user/Login/findPassword')}">忘记密码</a></li>
+                </ul>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<footer>
+    <p>Copyright © 2011-2014 www.jin88.com.cn All Right Resesved 深圳市好付宝科技有限公司版权所有</p>
+    <p>技术支持:深圳市好付宝科技有限公司</p>
+</footer>
+<!-- /container -->
+<script src="__STATIC__/js/layer/layer.js"></script>
+<include file="public@scripts"/>
+<!--<script type="text/javascript">-->
+    <!--$(document).ready(function () {-->
+        <!--$(".js-ajax-submit").click(function () {-->
+            <!--var username = $("#input_username").val();-->
+            <!--if (username == "") {-->
+                <!--layer.msg('请输入用户名！');-->
+                <!--return;-->
+            <!--}-->
+            <!--var password = $("#input_password").val();-->
+            <!--if (password == "") {-->
+                <!--layer.msg("请输入密码！");-->
+                <!--return;-->
+            <!--}-->
+            <!--var captcha = $("input[name='captcha']").val();-->
+            <!--if (captcha == "") {-->
+                <!--layer.msg("请输入验证码！");-->
+                <!--return;-->
+            <!--}-->
+            <!--$.ajax({-->
+                <!--type: "post",-->
+                <!--url: "{:url('user/login/doLogin')}",-->
+                <!--data: {-->
+                    <!--'username': username,-->
+                    <!--'password': password,-->
+                    <!--'captcha': captcha-->
+                <!--},-->
+                <!--success: function (data) {-->
+                    <!--if (data.code == '1') {-->
+<!--//                        window.parent.location.reload(); //刷新父页面-->
+<!--//                        setTimeout(function () {-->
+<!--//                            var index = parent.layer.index;-->
+<!--//                            parent.layer.close(index);-->
+<!--//                        }, 100);-->
+                    <!--} else {-->
+                        <!--layer.msg(data.msg);-->
+                    <!--}-->
+                <!--}-->
+            <!--});-->
+        <!--});-->
+    <!--});-->
+<!--</script>-->
+</body>
+</html>

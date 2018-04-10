@@ -1,0 +1,70 @@
+<include file="public@header"/>
+<style>
+    .bat {
+        margin-top: 30px;
+    }
+</style>
+<link rel="stylesheet" href="__STATIC__/js/layer/css/modules/laydate/default/laydate.css" />
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('AdminBan/banuser')}">黑名单用户列表</a></li>
+        <li class="active"><a href="{:url('AdminBan/addbanuser')}">添加黑名单</a></li>
+    </ul>
+    <form class="form-horizontal js-ajax-form margin-top-20" action="{:url('adminBan/addbanuser')}" method="post">
+        <div class="form-group">
+            <label for="room" class="col-sm-2 control-label">房间<span class="form-required">*</span></label>
+            <div class="col-md-6 col-sm-10">
+                <input type="text" name="room" id="room" readonly class="form-control" />
+                <input type="hidden" name="rid" id="rid" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="mid" class="col-sm-2 control-label">用户名<span class="form-required">*</span></label>
+            <div class="col-md-6 col-sm-10">
+                <input type="text" id="username" name="username" class="form-control" readonly placeholder="点击选择用户" />
+                <input type="hidden" name="mid" id="mid" index="{:url('portal/adminMember/ajax_select_mid')}" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary js-ajax-submit">添加</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__STATIC__/js/layer/css/modules/laydate/laydate.js"></script>
+<script>
+    $('#username').click(function(){
+        var url = $('#mid').attr('index');
+        openIframeLayer(url, '请选择房间', {
+            area: ['1000px', '600px'],
+            btn: ['确定', '取消'],
+            yes: function (index, layero) {
+                //do something
+
+                var iframeWin          = window[layero.find('iframe')[0]['name']];
+                var selectedCategories = iframeWin.confirm();
+
+                if (selectedCategories.selectedCategoriesId.length == 0) {
+                    layer.msg('请选择分类');
+                    return;
+                }
+                $('#rid').val(selectedCategories.selectedCategoriesRid[0]);
+                $('#room').val(selectedCategories.selectedCategoriesRidName[0]);
+                $('#username').val(selectedCategories.selectedCategoriesUserName[0]);
+                $('#mid').val(selectedCategories.selectedCategoriesId[0]);
+                //$('#rid').val(selectedCategories.selectedCategoriesId.join(','));
+               // $('#room').val(selectedCategories.selectedCategoriesName.join(' '));
+
+
+                //console.log(layer.getFrameIndex(index));
+                layer.close(index); //如果设定了yes回调，需进行手工关闭
+            }
+        });
+    });
+</script>

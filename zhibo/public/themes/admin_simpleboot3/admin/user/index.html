@@ -1,0 +1,118 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:url('user/index')}">{:lang('ADMIN_USER_INDEX')}</a></li>
+			<li><a href="{:url('user/add')}">{:lang('ADMIN_USER_ADD')}</a></li>
+		</ul>
+        <form class="well form-inline margin-top-20" method="post" action="{:url('User/index')}">
+
+            用户名:
+            <input type="text" class="form-control" name="user_login" style="width: 120px;" value="{:input('request.user_login/s','')}" placeholder="请输入{:lang('USERNAME')}">
+            邮箱:
+            <input type="text" class="form-control" name="user_email" style="width: 120px;" value="{:input('request.user_email/s','')}" placeholder="请输入{:lang('EMAIL')}">
+            <input type="submit" class="btn btn-primary" value="搜索" />
+            <a class="btn btn-danger" href="{:url('User/index')}">清空</a>
+        </form>
+		<form action="{:url('user/delete')}" method="post" class="form-horizontal js-ajax-form margin-top-20">
+			<div class="table-actions">
+				<button class="btn btn-danger btn-sm js-ajax-submit" type="submit"
+						data-action="{:url('rbac/roleDelete')}" data-subcheck="true" data-msg="您确定删除吗？">
+					{:lang('DELETE')}
+				</button>
+			</div>
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr>
+					<th width="50">
+						<label>
+							<input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+						</label>
+					</th>
+					<th width="50">ID</th>
+					<th>{:lang('USERNAME')}</th>
+					<th>角色</th>
+					<th>所属房间</th>
+					<th>{:lang('LAST_LOGIN_IP')}</th>
+					<th>{:lang('LAST_LOGIN_TIME')}</th>
+					<th>{:lang('EMAIL')}</th>
+					<th>{:lang('STATUS')}</th>
+					<th width="130">{:lang('ACTIONS')}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<php>$user_statuses=array("0"=>lang('USER_STATUS_BLOCKED'),"1"=>lang('USER_STATUS_ACTIVATED'),"2"=>lang('USER_STATUS_UNVERIFIED'));</php>
+				<foreach name="users" item="vo">
+				<tr>
+					<td>
+						<input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
+							   value="{$vo.mid}" title="ID:{$vo.mid}">
+					</td>
+					<td>{$vo.mid}</td>
+					<td>{$vo.username}</td>
+					<td>{$vo.name}</td>
+					<td>{$vo.fidname}</td>
+					<td>{$vo.ip}</td>
+					<td>
+						<if condition="empty($vo.update_time)">
+							暂未登陆
+							<else />
+							{$vo.update_time|date='Y-m-d H:i:s',###}
+						</if>
+
+					</td>
+					<td>{$vo.email}</td>
+					<td>{:switch_user_status($vo.user_status)}</td>
+					<td>
+						<if condition="$vo['mid'] eq 1 || $vo['mid'] eq cmf_get_current_admin_id()">
+						<font color="#cccccc">{:lang('EDIT')}</font>  <font color="#cccccc">{:lang('DELETE')}</font>
+
+							<font color="#cccccc">{:lang('BLOCK_USER')}</font>
+						<else />
+							<a href='{:url("user/edit",array("id"=>$vo["mid"]))}'>{:lang('EDIT')}</a>
+							<a class="js-ajax-delete" href="{:url('user/delete',array('id'=>$vo['mid']))}">{:lang('DELETE')}</a>
+
+							<if condition="$vo.user_status eq 1">
+								<a href="{:url('user/ban',array('id'=>$vo['mid']))}" class="js-ajax-dialog-btn" data-msg="{:lang('BLOCK_USER_CONFIRM_MESSAGE')}">{:lang('BLOCK_USER')}</a>
+							<elseif condition="$vo.user_status eq 2">
+								<a href="{:url('user/cancelban',array('id'=>$vo['mid']))}" class="js-ajax-dialog-btn" data-msg="{:lang('ACTIVATE_USER_CONFIRM_MESSAGE')}">{:lang('ACTIVATE_USER')}</a>
+							<else/>
+								<a href="{:url('user/cancelBan',array('id'=>$vo['mid']))}" class="js-ajax-dialog-btn" data-msg="{:lang('ACTIVATE_USER_CONFIRM_MESSAGE')}">{:lang('ACTIVATE_USER')}</a>
+							</if>
+						</if>
+					</td>
+				</tr>
+				</foreach>
+			</tbody>
+			<tfoot>
+			<tr>
+				<th width="50">
+					<label>
+						<input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+					</label>
+				</th>
+				<th width="50">ID</th>
+				<th>{:lang('USERNAME')}</th>
+				<th>角色</th>
+				<th>所属房间</th>
+				<th>{:lang('LAST_LOGIN_IP')}</th>
+				<th>{:lang('LAST_LOGIN_TIME')}</th>
+				<th>{:lang('EMAIL')}</th>
+				<th>{:lang('STATUS')}</th>
+				<th width="130">{:lang('ACTIONS')}</th>
+			</tr>
+			</tfoot>
+		</table>
+			<div class="table-actions">
+				<button class="btn btn-danger btn-sm js-ajax-submit" type="submit"
+						data-action="{:url('rbac/roleDelete')}" data-subcheck="true" data-msg="您确定删除吗？">
+					{:lang('DELETE')}
+				</button>
+			</div>
+			</form>
+		<div class="pagination">{$page}</div>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

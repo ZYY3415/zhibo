@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>在线答疑</title>
+		<style type="text/css">
+			.putsolvebox{
+				width:100%;
+				overflow: hidden;
+				margin-top: 30px;
+			}
+			.putsolvebox table,.showsolvebox table{
+				width:100%;
+				border-collapse: collapse;
+			}
+			#solvetable{
+				display: none;
+			}
+			.putsolvebox table tr .ntline{
+				width:12%;
+				text-align: center;
+				font-size: 14px;;
+			}
+			.putsolvebox table tr td textarea{
+				height:40px;
+				width:95%;
+				margin:5px auto;
+				margin-left:2%;
+				border:1px solid #D4D4D4;
+			}
+			.putsolvebox table tr td{
+				border:1px solid #F4F4F4;
+				color:#38383D;
+			}
+			.putbtn{
+				display: inline-block;
+				vertical-align: middle;
+				width:70px;
+				height:24px;
+				line-height: 24px;
+				text-align: center;
+				font-size: 14px;
+				background-color:#09F;
+				color:#fff;
+				background:rgba(240,188,85,1);
+				border-radius: 100px ;
+				margin:1% 2%;
+			}
+			.tichubtn{
+				margin:1% 2%;
+			}
+			.tichubtn span{
+				display: inline-block;
+				vertical-align: middle;
+				width:70px;
+				height:24px;
+				line-height: 24px;
+				text-align: center;
+				font-size: 14px;
+				background-color:#09F;
+				color:#fff;
+				border-radius: 4px;
+				margin-left:20px;
+				background:rgba(240,188,85,1);
+				border-radius: 100px ;
+
+			}
+			.tichubtn label{
+				display: inline-block;
+				vertical-align: middle;
+				font-size: 24px;
+				color:#33353A;
+			}
+			.showsolvebox table tr{
+				border:1px solid #F4F4F4;
+			}
+			.showsolvebox table tr .numline{
+				width:10%;	
+				text-align: center;
+			}
+			.showsolvebox table tr td{
+				color:#38383D;
+				font-size: 14px;
+				padding:10px 0px;
+			}
+			.showsolvebox table .askline{
+				background: #F7F7F7;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="solvewrap">
+			<div class="putsolvebox">
+				<div class="tichubtn"><label>在线答疑</label><span id="">提出问题</span></div>
+				<table border="" cellspacing="0" cellpadding="" id="solvetable">
+					<tr><td class="ntline">问题：</td><td><textarea name="" rows="" cols=""></textarea></td></tr>
+					<tr><td class="ntline"></td><td><div class="putbtn">发布问题</div></td></tr>
+				</table>
+			</div>
+			<div class="showsolvebox">
+				<table border="0" cellspacing="0" cellpadding="">
+					<tbody>
+						<tr class="askline"><td class="numline">01</td>
+							<td>
+								<div class="quesition">问题：门前大桥下游过一群鸭，大家快来数一数？（zyy 2018-03-26 20:15）</div>
+							</td>
+						</tr>
+						<tr class="ansline"><td></td>
+							<td>
+								<div class="answer">答案：（）</div>
+							</td>
+						</tr>
+					</tbody>
+					<tbody>
+						<tr class="askline"><td class="numline">02</td>
+							<td>
+								<div class="quesition">问题：门前大桥下游过一群鸭，大家快来数一数？（zyy 2018-03-26 20:15）</div>
+							</td>
+						</tr>
+						<tr class="ansline"><td></td>
+							<td>
+								<div class="answer">答案：（）</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div id="pagebtns"></div>
+			</div>
+		</div>
+	</body>
+	<script src="__TMPL__/public /assets/js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript">
+		$('.tichubtn').on('click',function(){
+			$('#solvetable').show();
+		})
+		$('.putbtn').on('click',function(){
+			$('#solvetable').hide();
+		})
+	</script>
+</html>

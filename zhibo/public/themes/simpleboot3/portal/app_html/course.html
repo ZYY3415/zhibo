@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>课程安排</title>
+		<style type="text/css">
+			*{
+				margin:0;
+				padding:0;
+			}
+			.course_title{
+				height:30px;
+				margin: 30px 0;
+			}
+			.course_title label{
+				display: inline-block;
+				vertical-align: middle;
+				font-size: 24px;
+				color:#33353A;
+			}
+			.course_title strong{
+				display: inline-block;
+				vertical-align: middle;
+				font-family:PingFangSC-Light;
+				font-size: 20px;
+				color:#33353A;
+				margin-left:10px;
+			}
+			.course_title span{
+				display: inline-block;
+				vertical-align: middle;
+				overflow: hidden;
+				font-size: 12px;
+				color:#979797;
+				margin-left:20px;
+			}
+			.course_title span a{
+				float:left ;
+				width:72px;
+				height:24px;
+				line-height: 24px;
+				text-align: center;
+				background:rgba(255,255,255,1);
+				border-radius: 100px ;
+				border:1px solid #979797;
+				margin-left: 10px;;
+			}
+			.course_title span .odisabled{
+				border:1px solid #D4D3D3;
+				color:#D4D3D3;
+			}
+			.course_title span a:hover{
+				border:1px solid #F0BC55;
+				color:#F0BC55;
+			}
+			
+			.courseBox {
+				width: 800px;
+				height: 425px;
+				margin: 0 auto;
+				
+			}
+			.course-top{
+				width:100%;
+				overflow: hidden;
+			}			
+			.course-top ul li {
+				float:left;
+				width:114px;
+				height:60px;
+				color:#979797;
+				list-style:none;
+			}
+			.course-top ul li.cur{
+				background:#F0BC55;
+				color:#FFFFFF;
+			}
+			.course-top ul li:hover {
+				color:#F0BC55;
+			}
+			.course-top ul li.cur:hover {
+				color:#FFFFFF;
+			}
+			.course-top ul li span{
+				display: block;
+				height:40px;
+				line-height: 45px;;
+				text-align: center;
+			}
+			.course-top ul li strong{
+				display: block;
+				font-size: 12px;
+				color:#F0BC55;
+				text-align: center;
+			}
+			.course-top ul .cur strong{
+				color:#FFFFFF;
+			}
+			.course-top ul li span a.oday{
+				font-size: 24px;			
+			}
+			.course-top ul li span a.oweek{
+				font-size: 12px;
+			}
+			.course-bottom{
+				width:798px;
+				height:305px;
+				border:1px solid #F4F4F4;
+			}
+			.course-bottom table{
+				width:100%;
+				border-collapse:collapse;
+			}
+			.course-bottom table tr{
+				border:1px solid #f4f4f4;
+			}
+			.course-bottom table tr td{
+				height:50px;
+				font-size: 14px;
+				color:#38383D;
+				text-align: center;
+			}
+			.course-bottom table tr:nth-child(even){
+				background:#FBFCFD;
+			}
+			.course-bottom table tr:nth-child(odd){
+				background:#ffffff;
+			}
+			.course-bottom table tr .c_time{
+				width: 15%;
+			}
+			.course-bottom table tr .c_name{
+				width: 13%;
+				color:#8499B8;
+			}
+			.course-bottom table tr .c_title{
+				width: 22%;
+				text-align: left;
+			}
+			.course-bottom table tr .c_status{
+				width: 50%;
+				text-align: right;
+				padding-right: 20px;
+			}
+			.course-bottom table tr .c_status span{	
+				display: inline-block;
+				width:98px;
+				height:30px;
+				background:rgba(74,167,120,1);
+				text-align: center;
+				line-height: 30px;
+				color:#FFFFFF;
+			}
+			#weekse{
+				width:798px;
+				height:305px;
+				line-height: 305px;
+				text-align: center;
+				color:#9E9E9E;
+				font-size: 20px;
+				display: none;
+			}
+			.nothingtips{
+				width:798px;
+				height:360px;
+				border:1px solid #F4F4F4;
+				background:url('__TMPL__/public/assets/images/shouye/nothingbg.png') no-repeat center;
+				line-height: 430px;
+				text-align: center;
+				color:#9E9E9E;
+				font-size: 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="courseBox">
+			<div class="course_title">
+				<label>课程安排</label><strong>{$date}</strong>
+				<!--<span id="weekbtn">
+					<a>上一周</a><a class="odisabled">下一周</a>
+				</span>-->
+			</div>
+			<div class="course-top">
+				<ul>
+					<li class="cur" index="0">
+						<span><a class="oweek">周一</a><a class="oday">01</a></span>
+					<!--	<strong>今天</strong>-->
+					</li>
+					<li class="" index="1">
+						<span><a class="oweek">周二</a><a class="oday">02</a></span>
+					</li>
+					<li class="" index="2">
+						<span><a class="oweek">周三</a><a class="oday">03</a></span>
+					</li>
+					<li class="" index="3">
+						<span><a class="oweek">周四</a><a class="oday">04</a></span>
+					</li>
+					<li class="" index="4">
+						<span><a class="oweek">周五</a><a class="oday">05</a></span>
+					</li>
+					<li class="" index="5">
+						<span><a class="oweek">周六</a><a class="oday">06</a></span>
+					</li>
+					<li class="" index="6">
+						<span><a class="oweek">周七</a><a class="oday">07</a></span>
+					</li>
+
+				</ul>
+			</div>
+			<div class="course-bottom">
+			<table border="0" cellspacing="" cellpadding="" class="week0">
+				<if condition="!empty($course.monday)">
+				<volist name="$course.monday" id="vo">
+					<tr><td class="c_time">{$vo.date}   {$vo.starttime}--{$vo.endtime}</td><td class="c_name">{$vo.teacher}</td><td class="c_title">{$vo.course}</td></tr>
+				</volist>
+				</if>
+			</table>
+			<table border="0" cellspacing="" cellpadding="" class="week1" style="display: none;">
+				<if condition="!empty($course.tuesday)">
+					<volist name="$course.tuesday" id="vo">
+						<tr><td class="c_time">{$vo.date}   {$vo.starttime}--{$vo.endtime}</td><td class="c_name">{$vo.teacher}</td><td class="c_title">{$vo.course}</td></tr>
+					</volist>
+				</if>
+			</table>
+			<table border="0" cellspacing="" cellpadding="" class="week2" style="display: none;">
+				<if condition="!empty($course.wednesday)">
+					<volist name="$course.wednesday" id="vo">
+						<tr><td class="c_time">{$vo.date}   {$vo.starttime}--{$vo.endtime}</td><td class="c_name">{$vo.teacher}</td><td class="c_title">{$vo.course}</td></tr>
+					</volist>
+				</if>
+			</table>
+			<table border="0" cellspacing="" cellpadding="" class="week3" style="display: none;">
+				<if condition="!empty($course.thursday)">
+					<volist name="$course.thursday" id="vo">
+						<tr><td class="c_time">{$vo.date}   {$vo.starttime}--{$vo.endtime}</td><td class="c_name">{$vo.teacher}</td><td class="c_title">{$vo.course}</td></tr>
+					</volist>
+				</if>
+			</table>
+			<table border="0" cellspacing="" cellpadding="" class="week4"  style="display: none;">
+				<if condition="!empty($course.friday)">
+					<volist name="$course.friday" id="vo">
+						<tr><td class="c_time">{$vo.date}   {$vo.starttime}--{$vo.endtime}</td><td class="c_name">{$vo.teacher}</td><td class="c_title">{$vo.course}</td></tr>
+					</volist>
+				</if>
+			</table>
+			<table border="0" cellspacing="" cellpadding="" class="week5" style="display: none;">
+				<if condition="!empty($course.saturday)">
+					<volist name="$course.saturday" id="vo">
+						<tr><td class="c_time">{$vo.date}   {$vo.starttime}--{$vo.endtime}</td><td class="c_name">{$vo.teacher}</td><td class="c_title">{$vo.course}</td></tr>
+					</volist>
+				</if>
+			</table>
+			<div id="weekse" class="week6">
+				星期日全天休息！
+			</div>
+			
+			<!--<div class="nothingtips">
+				暂无课程安排~
+			</div>-->
+			</div>
+		</div>
+	</body>
+	<script src="__TMPL__/public/assets/js/jquery-1.10.2.min.js"></script>
+	<script src="__TMPL__/public/assets/js/jquery.nicescroll.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+            var day = (new Date()).getDay();
+            $(".course-top ul li").eq(day-1).attr('class','cur').siblings().attr('class', '');
+
+            $(".scroll_c").niceScroll({
+                styler:"fb",
+                cursorcolor:"#65cea7",
+                cursorwidth: '3',
+                cursorborderradius: '0px',
+                background: '#424f63',
+                spacebarenabled:false,
+                cursorborder: '0'
+            });
+            $('.course-top ul').on('click','li',function(){
+                var idx=$(this).attr('index');
+                $(this).addClass('cur').siblings().removeClass('cur');
+                $('.week'+idx).show().siblings().hide();
+            })
+        });
+	</script>
+
+</html>

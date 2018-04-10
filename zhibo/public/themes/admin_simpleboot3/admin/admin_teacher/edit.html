@@ -1,0 +1,78 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('AdminTeacher/TeacherList')}">讲师管理</a></li>
+        <li class="active"><a href="{:url('AdminTeacher/editTeacher')}">讲师修改</a></li>
+    </ul>
+    <form method="post" class="form-horizontal js-ajax-form margin-top-20 js-ajax-form" action="">
+        <div class="form-group">
+            <label class="col-sm-2 control-label"><span class="form-required">*</span>专家名称:</label>
+            <div class="col-md-6 col-sm-10">
+            <select name="post[jid]" id="jid" class="col-sm-2 control-label form-control" style="width:200px;"> 
+                <option value="{$teacher.jid}" selected>{$teacher.jname}</option>
+                <volist name="teac" id="teac">
+                    <option value="{$teac.jid}">{$teac.jname}</option>
+                </volist>
+            </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label"><span class="form-required">*</span>头像:</label>
+            <div class="col-md-6 col-sm-10">
+                <input type="hidden" name="post[icon]" id="icon" value="{$teacher.icon}">
+                <input type="hidden" name="post[id]" id="icon" value="{$teacher.id}">
+                <a href="javascript:uploadOneImage('图片上传','#icon');">
+                    <if condition="empty($teacher.icon)">
+                        <img src="__TMPL__/public/assets/images/default-thumbnail.png"
+                             id="icon-preview"
+                             width="50" style="cursor: pointer"/>
+                        <else />
+                        <img src="{:cmf_get_image_preview_url($teacher.icon)}"
+                             id="icon-preview"
+                             width="50" style="cursor: pointer;background-color: #999"/>
+                    </if>
+                </a>
+                <input type="button" class="btn btn-sm btn-cancel-thumbnail" value="取消图片">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label"><span class="form-required">*</span>内容:</label>
+            <div class="col-md-6 col-sm-10">
+                <script type="text/plain" id="content" name="post[content]" style="height:320px;">{$teacher.content}</script>
+            </div>
+        </div>
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary js-ajax-submit" data-action="{:url('AdminTeacher/addPost')}">&emsp;{:lang("SAVE")}&emsp;</button>
+            <a class="btn btn-default" href="{:cmf_url('AdminTeacher/TeacherList')}">&emsp;返回&emsp;</a>
+        </div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script type="text/javascript">
+    //编辑器路径定义
+    var editorURL = GV.WEB_ROOT;
+</script>
+<script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__STATIC__/js/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        editorcontent = new baidu.editor.ui.Editor();
+        editorcontent.render('content');
+
+        try {
+            editorcontent.sync();
+        } catch (err) {
+        }
+
+        $('.btn-cancel-thumbnail').click(function () {
+            $('#icon-preview').attr('src', '__TMPL__/public/assets/images/default-thumbnail.png');
+            $('#icon').val('');
+        });
+
+    });
+</script>
+</body>
+</html>

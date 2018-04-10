@@ -1,0 +1,51 @@
+<include file="public@header"/>
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('AdminMember/index')}">会员列表</a></li>
+        <li class="active"><a href="javascript:;">修改密码</a></li>
+    </ul>
+    <form action="{:url('AdminMember/ModifyPost')}" method="post" class="form-horizontal js-ajax-form margin-top-20">
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table table-bordered">
+                    <tr>
+                        <th width="100">昵称:</th>
+                        <td>
+                            <input class="form-control" type="text" name="nickname" id="nickname" value="{$member.nickname}"
+                                   readonly="readonly" style="width: 200px;">
+                            <input type="hidden" value="{$member.id}"" name="id">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>新密码:<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="password" name="password" id="password" value="" placeholder="6-16位密码" style="width: 700px;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>确认密码:<span class="form-required">*</span></th>
+                        <td>
+                            <input class="form-control" type="password" name="cfpassword" id="cfpassword" value="" placeholder="6-16位密码" style="width: 700px;">
+                        </td>
+                    </tr>
+                </table>
+                <div class="form-group">
+                    <div class="col-sm-offset-0 col-sm-10">
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                        <a class="btn btn-default" href="{:url('AdminMember/index')}">{:lang('BACK')}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

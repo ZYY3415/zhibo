@@ -1,0 +1,139 @@
+<include file="public@header"/>
+<style>
+    table{
+        text-align: center;
+    }
+    th{
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">会员列表</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('AdminMember/ajax_select_mid')}">
+        当前房间:
+        <select id="rname" class="form-control" name="rid" style="width: 140px;">
+            <option value="" selected>全部</option>
+            <foreach name="rooms" item="vo">
+                <if condition="$key==$rid">
+                    <option value="{$key}" selected>{$vo}</option>
+                    <else/>
+                    <option value="{$key}">{$vo}</option>
+                </if>
+            </foreach>
+        </select> &nbsp;&nbsp;
+        用户组:
+        <select class="form-control" name="roleid" style="width: 140px;">
+            <option value="" selected>全部</option>
+            <foreach name="roles" item="role">
+                <if condition="$key==$roleid">
+                    <option value="{$key}" selected>{$role}</option>
+                    <else/>
+                    <option value="{$key}">{$role}</option>
+                </if>
+            </foreach>
+        </select> &nbsp;&nbsp;
+        关键字:
+        <input type="text" class="form-control" name="keyword" style="width: 200px;"
+               value="{$keyword|default=''}" placeholder="支持昵称搜索...">
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+        <a class="btn btn-danger" href="{:url('AdminMember/ajax_select_mid')}">清空</a>
+    </form>
+    <form class="js-ajax-form" action="" method="post">
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="15">
+                </th>
+                <th width="50">ID</th>
+                <th width="150">昵称</th>
+                <th width="150">房间</th>
+                <th width="120">用户组</th>
+            </tr>
+            </thead>
+            <volist name="data" id="member">
+                <tr>
+                    <td>
+                        <input type="radio" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
+                               value="{$member.id}" title="ID:{$member.id}" username="{$member.nickname}" rid="{$member.rid}" ridname="{$member.ridname}">
+                    </td>
+                    <td>{$member.id}</td>
+                    <td>{$member.nickname}</td>
+                    <td>{$member.ridname}</td>
+                    <td>{$member.rolename}</td>
+                </tr>
+            </volist>
+            <tfoot>
+            <tr>
+                <th width="15">
+                    <label>
+                    </label>
+                </th>
+                <th width="50">ID</th>
+                <th width="150">昵称</th>
+                <th width="150">房间</th>
+                <th width="120">用户组</th>
+            </tr>
+            </tfoot>
+        </table>
+        <ul class="pagination">{$page|default=''}</ul>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+    $('.data-item-tr').click(function (e) {
+
+        console.log(e);
+        var $this = $(this);
+        if ($(e.target).is('input')) {
+            return;
+        }
+
+        var $input = $this.find('input');
+        if ($input.is(':checked')) {
+            $input.prop('checked', false);
+        } else {
+            $input.prop('checked', true);
+        }
+    });
+
+    function confirm() {
+        var selectedCategoriesId   = [];
+        var selectedCategoriesName = [];
+        var selectedCategories     = [];
+        var selectedCategoriesUserName = [];
+        var selectedCategoriesRid = [];
+        var selectedCategoriesRidName = [];
+
+        $('.js-check:checked').each(function () {
+            var $this = $(this);
+            selectedCategoriesId.push($this.val());
+            selectedCategoriesName.push($this.data('name'));
+            selectedCategoriesUserName.push($this.attr('username'));
+            selectedCategoriesRid.push($this.attr('rid'));
+            selectedCategoriesRidName.push($this.attr('ridname'));
+
+            selectedCategories.push({
+                id: $this.val(),
+                name: $this.data('name'),
+                username: $this.attr('username'),
+                rid: $this.attr('rid'),
+                ridname:$this.attr('ridname')
+            });
+        });
+
+        return {
+            selectedCategories: selectedCategories,
+            selectedCategoriesId: selectedCategoriesId,
+            selectedCategoriesName: selectedCategoriesName,
+            selectedCategoriesUserName: selectedCategoriesUserName,
+            selectedCategoriesRid: selectedCategoriesRid,
+            selectedCategoriesRidName: selectedCategoriesRidName
+        };
+    }
+</script>
+</body>
+</html>

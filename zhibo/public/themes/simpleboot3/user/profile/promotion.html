@@ -1,0 +1,107 @@
+<include file="public@profile_header"/>
+<div class="rightContent">
+    <section>
+        <div class="secTitle"><i></i>我的资料 > 我的推广</div>
+
+        <div class="promotionSearch">
+            <label for="search">检索</label><input type="text" name="search" placeholder="请输入关键词"/><input type="button"
+                                                                                                        value="搜索"/>
+        </div>
+        <table class="promotionTable">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>姓名</th>
+                <th>用户组</th>
+                <th>QQ</th>
+                <th>手机</th>
+                <th>下线个数</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <!--<tr>-->
+                <!--<td>01</td>-->
+                <!--<td>张三</td>-->
+                <!--<td>VIP组</td>-->
+                <!--<td>8888888888</td>-->
+                <!--<td>13700000000</td>-->
+                <!--<td>11</td>-->
+            <!--</tr>-->
+        </table>
+        <div class="prompt"><span>上一页</span><span>下一页</span>当前第<i class="pegeNo"></i>页  共<i class="pegeTotle"></i>页</div>
+        <div class="nothing"><img src="__TMPL__/public/assets/images/recording.png"/></div>
+
+    </section>
+</div>
+<include file="public@profile_footer"/>
+<script type="text/javascript">
+    var page = {
+        pageNo: 1,
+        pageSize: 10,
+        pageTotle: 1
+    };
+
+
+    $(document).ready(function () {
+
+        pageData(1,10);
+
+        //分页
+        $(".prompt span").on("click",function () {
+            if( $(this).index() == 0 ) {
+                if( page.pageNo !== 1) {
+                    page.pageNo--;
+                    pageData(page.pageNo,page.pageSize);
+                }
+            }
+            if( $(this).index() == 1 ) {
+                if( page.pageNo !== page.pageTotle ) {
+                    page.pageNo++;
+                    pageData(page.pageNo,page.pageSize);
+                }
+            }
+        });
+
+        function pageData(pageNo,pageSize) {
+            $.ajax({
+                type:"post",
+                url:"{:cmf_url('user/profile/recommendList')}",
+                async:true,
+                data:{'pageNo':page.pageNo,'pageSize':page.pageSize, 'keyword':''},
+                timeout: 10000,
+                success:function(data){
+                    var borInfor;
+                    for(var i in data.data.rows) {
+                        borInfor += '<tr><td>' +data.data.rows[i].id+ '' + '</td><td>' + data.data.rows[i].nickname + '</td><td>' + data.data.rows[i].rolename + '</td><td>' + data.data.rows[i].qq + '</td><td>' + data.data.rows[i].phone + '</td><td>' + data.data.rows[i].count + '</td></tr>'
+                    }
+
+                    var promotionTableTbody = $(".promotionTable tbody");
+                    promotionTableTbody.empty();
+                    promotionTableTbody.append(borInfor);
+
+                    //总页数
+                    page.pageTotle = Math.ceil(data.data.total / pageSize);
+
+                    var prompt = $(".prompt");
+                    $(".pegeTotle").html(page.pageTotle);
+                    $(".pegeNo").html(page.pageNo);
+
+                    //页面无信息时显示图像
+                    if($(".promotionTable tr").length ==1 ) {
+                        prompt.hide();
+                        $(".nothing").show();
+                    }
+                    else {
+                        prompt.show();
+                        $(".nothing").hide();
+                    }
+                },
+                error:function (XMLHttpRequest,textStatus,errorThrown) {
+                    alert( textStatus+ "：错误码" + XMLHttpRequest.status + " 状态码：" + XMLHttpRequest.readyState);
+                }
+            })
+        }
+
+    });
+</script>

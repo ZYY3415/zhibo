@@ -1,0 +1,216 @@
+<include file="public@header" />
+<include file="public@header" />
+<style>
+    table
+    {
+        margin-top:20px;
+    }
+    .dat
+    {
+        margin-top:30px;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javacript:;">房间管理</a></li>
+        <li><a href="{:url('addHouse')}">新增房间</a></li>
+        <li><a href="{:url('addHvinfo')}">新增房间视频信息</a></li>
+    </ul>
+    <ul class="nav nav-tabs dat" role="tablist">
+        <li role="presentation" <if condition="$active eq 0">class="active"</if> ><a href="#home" aria-controls="home" role="tab" data-toggle="tab">房间基本信息{$active}</a></li>
+        <li role="presentation" <if condition="$active eq 1">class="active"</if> ><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">房间视频信息{$active}</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane fade <if condition='$active eq 0'>in active</if> >" id="home">
+            <form class="well form-inline margin-top-20" method="post" action="{:url('adminHouse/index')}">
+                房间:
+                <select class="form-control" name="rid" style="width:200px;">
+                    <option value='0'>全部</option>
+                    <volist name="room" id="vo">
+                        <option value="{$key}" <if condition="$rid eq $key">selected</if>  >{$vo}</option>
+                    </volist>
+                </select> &nbsp;&nbsp;
+                关键字:
+                <input type="text" class="form-control" name="keyword" style="width: 200px;"
+                       value="{$keyword|default=''}" placeholder="支持房间号,房间名">
+                <input type="submit" class="btn btn-primary" value="搜索"/>
+                <a class="btn btn-danger" href="{:url('adminHouse/index')}">清空</a>
+            </form>
+            <form class="js-ajax-form" action="" method="post">
+                <div class="table-actions">
+                    <button class="btn btn-danger btn-sm js-ajax-submit" type="submit"
+                            data-action="{:url('adminHouse/hbasic_delete')}" data-subcheck="true" data-msg="您确定删除吗？">
+                        {:lang('DELETE')}
+                    </button>
+                </div>
+            <table class="table table-bordered .table-hover">
+                <theader>
+                    <tr>
+                        <th width="50">
+                            <label>
+                                <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                            </label>
+                        </th>
+                        <th width="100">id</th>
+                        <th>房间号</th>
+                        <th>房间名</th>
+                        <th width="260">密码</th>
+                        <th width="200">房间状态</th>
+                        <th width="200">操作</th>
+                    </tr>
+                </theader>
+                <tbody>
+                <volist name="room_basic" id="vo">
+                    <tr>
+                        <td>
+                            <input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
+                                   value="{$vo.id}" title="ID:{$vo.id}">
+                        </td>
+                        <td>{$i}</td>
+                        <td>{$vo.rid}</td>
+                        <td>{$vo.room}</td>
+                        <td>{$vo.password}</td>
+                        <td>
+                            <eq name="$vo.switch_house" value="1">
+                                <font color="red">√</font>
+                                <else />
+                                <font color="red">╳</font>
+                            </eq>
+                        </td>
+                        <td><a href="{:url('hv_copyhouse',array('id'=>$vo['id']))}" class="js-ajax-submit">复制房间配置</a>&nbsp;&nbsp;&nbsp; <a href="{:url('hbasic_edit',array('id'=>$vo['id']))}" >编辑</a>&nbsp;&nbsp;&nbsp; <a class="js-ajax-delete" href="{:url('hbasic_delete',array('id'=>$vo['id']))}" >删除</a></td>
+                    </tr>
+                </volist>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th width="50">
+                            <label>
+                                <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                            </label>
+                        </th>
+                        <th>id</th>
+                        <th>房间号</th>
+                        <th>房间名</th>
+                        <th>密码</th>
+                        <th>房间状态</th>
+                        <th width="160">操作</th>
+                    </tr>
+                </tfoot>
+            </table>
+                <div class="table-actions">
+                    <button class="btn btn-danger btn-sm js-ajax-submit" type="submit"
+                            data-action="{:url('adminHouse/hbasic_delete')}" data-subcheck="true" data-msg="您确定删除吗？">
+                        {:lang('DELETE')}
+                    </button>
+                </div>
+                <ul class="pagination">{$page|default=''}</ul>
+            </form>
+        </div>
+        <div role="tabpanel" class="tab-pane fade <if condition='$active eq 1'>in active</if> " id="profile">
+            <form class="well form-inline margin-top-20" method="post" action="{:url('adminHouse/index')}">
+                房间:
+                <select class="form-control" name="ridv" style="width:200px;">
+                    <option value='0'>全部</option>
+                    <volist name="room" id="vo">
+                        <option value="{$key}" <if condition="$ridv eq $key">selected</if>  >{$vo}</option>
+                    </volist>
+                </select> &nbsp;&nbsp;
+                关键字:
+                <input type="text" class="form-control" name="keywordv" style="width: 200px;"
+                       value="{$keywordv|default=''}" placeholder="支持房间号,房间名">
+                <input type="submit" class="btn btn-primary" value="搜索"/>
+                <a class="btn btn-danger" href="{:url('adminHouse/index')}">清空</a>
+            </form>
+            <form class="js-ajax-form" action="" method="post">
+                <div class="table-actions">
+                    <button class="btn btn-danger btn-sm js-ajax-submit" type="submit"
+                            data-action="{:url('adminHouse/hv_delete',['active'=>1])}" data-subcheck="true" data-msg="您确定删除吗？">
+                        {:lang('DELETE')}
+                    </button>
+                </div>
+            <table class="table table-bordered .table-hover">
+                <theader>
+                    <tr>
+                        <th width="50">
+                            <label>
+                                <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                            </label>
+                        </th>
+                        <th>id</th>
+                        <th>房间号</th>
+                        <th>房间名</th>
+                        <th>YY号/推流地址</th>
+                        <th>YY房间号/token</th>
+                        <th>有效期</th>
+                        <th>操作</th>
+                    </tr>
+                </theader>
+                <tbody>
+                   <volist name="room_video" id="vo">
+                       <tr>
+                           <td>
+                               <input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
+                                      value="{$vo.id}" title="ID:{$vo.id}">
+                           </td>
+                           <td>{$i}</td>
+                           <td>{$vo.rid}</td>
+                           <td>{$vo.room}</td>
+                           <td>
+                               <if condition="$vo.play_source eq 1">
+                                   {$vo.YYcode}
+                               <else/>
+                                   {$vo.pull_video_site}
+                                </if>
+                           </td>
+                           <td>
+                               <if condition="$vo.play_source eq 1">
+                                   {$vo.YYfcode}
+                                   <else/>
+                                   {$vo.pull_video_token}
+                               </if>
+                           </td>
+                           <td>
+                               <if condition="$vo.play_source eq 1">
+                                   永久
+                                   <else/>
+                                   {$vo.pull_video_indate}
+                               </if>
+                           </td>
+                           <td><a href="{:url('hv_edit',array('id'=>$vo['id']))}" >编辑</a>&nbsp;&nbsp;&nbsp; <a href="{:url('hv_delete',array('id'=>$vo['id'],'active'=>1))}" class="js-ajax-delete" >删除</a></td>
+                       </tr>
+                   </volist>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th width="50">
+                            <label>
+                                <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                            </label>
+                        </th>
+                        <th>id</th>
+                        <th>房间号</th>
+                        <th>房间名</th>
+                        <th>YY号/推流地址</th>
+                        <th>YY房间号/token</th>
+                        <th>有效期</th>
+                        <th>操作</th>
+                    </tr>
+                </tfoot>
+            </table>
+                <div class="table-actions">
+                    <button class="btn btn-danger btn-sm js-ajax-submit" type="submit"
+                            data-action="{:url('adminHouse/hv_delete',['active'=>1])}" data-subcheck="true" data-msg="您确定删除吗？">
+                        {:lang('DELETE')}
+                    </button>
+                </div>
+                <ul class="pagination">{$page2|default=''}</ul>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script src="__STATIC__/js/admin.js"></script>

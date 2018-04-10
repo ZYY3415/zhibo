@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>直播间</title>
+    <script src="__TMPL__/portal/mobile/js/rem.min.js"></script>
+    <link rel="stylesheet" href="__TMPL__/portal/mobile/css/reset.css">
+    <link rel="stylesheet" href="__TMPL__/portal/mobile/css/index.css">
+    <script>
+        var rid = {$rid};
+        var FID="{$userInfo['rid']}";                              //房间号
+        var MID="{$userInfo['id']}";                               //房间号
+        var USERNAME="{$userInfo['username']}";                    //用户名
+        var NICKNAME="{$userInfo['nickname']}";                    //昵称
+        var ADMINID={$userInfo['adminid']};                         //角色id
+        var TOKEN = '20180112091612';                              //token
+        var TUIJIANMID={$userInfo['tuijianmid']};                  //推荐人   没有为null
+        var TUIJIANUSERNAME="{$userInfo['tuijianusername']}";
+        var TUIJIANADMINID="{$userInfo['tuijianadminid']}";
+        var LOGIN_COUNT={$userInfo['login_count']};                //登录次数
+        var TOMID='';
+        var TOUSERNAME='';
+        var FAYAN_LIMIT={$roomInfo['speak_intval']};                //发言间隔
+        var Flower_NUM={$userInfo['flowers']};                      //游客鲜花数
+        //var VIEWSTATUS='$peizhi[viewstatus]';
+        //var VIEWTIME='$peizhi[viewtime]';
+        var LOGIN_SWITCH={$roomInfo['switch_house']};               //房间开关
+        var SINGLE_LOGIN={$roomInfo['single_login']};               //单点登录
+        var LOGIN_TIP={$roomInfo['login_hint']};                    //登录提示
+        var LOGINID = 0;
+        var CUR_FID = {$rid};
+        var User_info = {$userInfoStr};
+        var Room_info = {$roomInfoStr};
+        var Role_info = {$roleInfo};
+        var ws = null;
+
+    </script>
+    <script src="__TMPL__/portal/mobile/js/jquery.js"></script>
+    <script src="__STATIC__/js/layer/layer.js"></script>
+    <script src="__TMPL__/portal/mobile/js/function.js"></script>
+    <script src="__TMPL__/portal/mobile/js/websocket.js"></script>
+</head>
+<body>
+    <article class="broadcasting-container">
+        <div class="broadcasting-logo"><img src="" alt="直播LOGO"></div>
+        <div class="video-box">
+            <div class="please-refresh">
+                <iframe height="100%" width="100%" allowtransparency="true" marginwidth="0" marginheight="0" frameborder="0" scrolling="no" src="{:url('portal/index/play',['rid'=>$rid,'facility'=>'mobile'])}"></iframe>
+               <div class="break_video" style="display:none;">
+                   <div class="broadcasting-refresh" onclick="location.reload()"></div>
+                   讲师还未开讲，请稍后刷新尝试
+               </div>
+            </div>
+        </div>
+        <nav class="video-nav clear-float">
+            <div class="nav-title left">聊天</div>
+            <!--<div class="nav-btn right"><a href="{:url('/portal/index/mobileLogin')}" class="btn-item">会员</a >&lt;!&ndash;/ <a href="javascript:void(0);" class="btn-item">注册</a>&ndash;&gt;</div>-->
+            <div class="exit-operate right"></div>
+            <div class="member right"><if condition="$Think.session.member eq ''"><a href="{:url('user/Login/index',['rid'=>$rid])}">会员登录</a><else/><a href="{:url('user/index/logout',['rid'=>$rid])}">退出</a></if></div>
+        </nav>
+    </article>
+    <div class="chat-container">
+        <div class="chat-box">
+            <div class="load-more">查看更多信息</div>
+             <volist name="historymsg" id="vo">
+                           <if condition="$vo.type eq 1">            <!-- 普通消息  -->
+                               <ul class="chat-item" lid="{$vo.id}">
+                                   <li class="item-img">
+                                       <if condition="empty($roleAttr[$vo.adminid])">
+                                           <img width="20" height="20" src="\static\images\23-1F5111I049-53.png"/>
+                                       <else/>
+                                           <img src="{$roleAttr[$vo.adminid]}" alt="游客图像">
+                                        </if>
+                                   </li>
+                                   <li class="item-main">
+                                       <div class="chat-info">
+                                           <span class="item-nick">{$vo.username}</span>
+                                           <if condition="$userInfo['adminid'] eq 1">
+                                               <if condition="$vo.is_true_user eq 0">                 <!-- 机器人头像 -->
+                                                   <img class="robotimg" src="/themes/simpleboot3/public/assets/images/shouye/robot.png"/>
+                                               </if>
+                                           </if>
+                                           <if condition="$vo.to_mid neq 0">
+                                               <span class="item-nick">对{$vo.to_username}
+                                                   <if condition="$userInfo['adminid'] eq 1">
+                                                       <if condition="$vo.tois_true_user eq 0">                 <!-- 机器人头像 -->
+                                                           <img class="robotimg" src="/themes/simpleboot3/public/assets/images/shouye/robot.png"/>
+                                                       </if>
+                                                   </if>
+                                                说</span>
+                                           </if>
+                                           <span class="item-time">{:date('h:i',$vo.create_time)}</span>
+                                       </div>
+                                       <div class="item-content">{:htmlspecialchars_decode($vo.content)}</div>
+                                   </li>
+                               </ul>
+                           <else/>                 <!-- 礼物消息  -->
+                               <ul class="chat-item" lid="{$vo.id}">
+                                   <li class="item-img">
+                                       <if condition="empty($roleAttr[$vo.adminid])">
+                                           <img width="20" height="20" src="\static\images\23-1F5111I049-53.png"/>
+                                           <else/>
+                                           <img src="{$roleAttr[$vo.adminid]}" alt="游客图像">
+                                       </if>
+                                   </li>
+                                   <li class="item-main">
+                                       <div class="chat-info">
+                                           <span class="item-nick">{$vo.username}</span>
+                                           <if condition="$userInfo['adminid'] eq 1">
+                                               <if condition="$vo.is_true_user eq 0">                 <!-- 机器人头像 -->
+                                                   <img class="robotimg" src="/themes/simpleboot3/public/assets/images/shouye/robot.png"/>
+                                               </if>
+                                           </if>
+                                          <span class="item-nick">送给讲师{$vo.teacher} 1个 {$vo.gift_name}</span>
+                                           <span class="item-time">{:date('h:i',$vo.create_time)}</span>
+                                       </div>
+                                       <div class="item-content">{:htmlspecialchars_decode($vo.content)}</div>
+                                   </li>
+                               </ul>
+                           </if>
+             </volist>
+        </div>
+    </div>
+    <footer class="chat-footer">
+        <div class="share-btn"></div>
+        <div class="emoji-btn"></div>
+        <ul class="emoji-container"></ul>
+        <div class="input-box">
+            <input type="text" class="text-input"/>
+        </div>
+        <div class="send-btn">发送</div>
+    </footer>
+    <div class="popup-mask">
+        <div class="popup-box">
+            <div class="popup-close"></div>
+            <div class="popup-title">分享到：</div>
+            <ul class="share-lists">
+                <li class="share-item">99999</li>
+                <li class="share-item">99999</li>
+                <li class="share-item">99999</li>
+                <li class="share-item">99999</li>
+            </ul>
+        </div>
+    </div>
+    <script src="__TMPL__/portal/mobile/js/index.js"></script>
+</body>
+</html>

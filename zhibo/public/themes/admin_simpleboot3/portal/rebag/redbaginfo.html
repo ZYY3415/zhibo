@@ -1,0 +1,148 @@
+<include file="public@header"/>
+<style>
+    .table-hover
+    {
+        margin-top:30px !important;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('Rebag/index')}">红包统计</a></li>
+        <li class="active"><a href="javascript:;">红包详细信息</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('Rebag/redbagInfo')}">
+        <input type="hidden" name="id" value="{$id}" />
+        时间:
+        <input type="text" class="form-control js-bootstrap-datetime" name="start_time"
+               value="{$start_time|default=''}"
+               style="width: 140px;" autocomplete="off">-
+        <input type="text" class="form-control js-bootstrap-datetime" name="end_time"
+               value="{$end_time|default=''}"
+               style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+        关键字:
+        <input type="text" class="form-control" name="keyword" style="width: 200px;"
+               value="{$keyword|default=''}" placeholder="支持ID,用户名,房间，角色...">
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+        <a class="btn btn-danger" href="{:url('Rebag/redbagInfo',['id'=>$id])}">清空</a>
+    </form>
+
+    <table class="table table-bordered table-hover">
+        <theader>
+            <tr>
+                <th>房间</th>
+                <th>发红包用户</th>
+                <th>红包数量</th>
+                <th>总金额</th>
+                <th>已领取数量</th>
+                <th>剩余数量</th>
+                <th>剩余金额</th>
+                <th>内容</th>
+                <th>发红包时间</th>
+                <th>状态</th>
+            </tr>
+        </theader>
+        <tbody>
+        <volist name="redbag" id="vo">
+            <tr>
+                <td>{$vo.room}</td>
+                <td>{$vo.nickname}</td>
+                <td>{$vo.num}</td>
+                <td><font color="red">{$vo.total}</font></td>
+                <td><font color="#18BC9C">{$vo.num - $vo.num_balance}</font></td>
+                <td><font color="red">{$vo.num_balance}</font></td>
+                <td><font color="red">{$vo.total_balance}</font></td>
+                <td>{$vo.content}</td>
+                <td>{:date('Y-m-d H:i:s',$vo.create_time)}</td>
+                <php>$status=['未抢完','已抢完'];</php>
+                <td>
+                    <if condition="$vo.status eq 0">
+                        <font color="#18BC9C">{$status[$vo.status]}</font>
+                    <else/>
+                        <font color="red">{$status[$vo.status]}</font>
+                    </if>
+                </td>
+            </tr>
+        </volist>
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>房间</th>
+            <th>发红包用户</th>
+            <th>红包数量</th>
+            <th>总金额</th>
+            <th>已领取数量</th>
+            <th>剩余数量</th>
+            <th>剩余金额</th>
+            <th>内容</th>
+            <th>发红包时间</th>
+            <th>状态</th>
+        </tr>
+        </tfoot>
+    </table>
+
+    <form class="form-horizontal js-ajax-form margin-top-20" action="" method="post">
+        <div class="table-actions">
+            <button class="btn btn-danger btn-sm js-ajax-submit" type="submit"
+                    data-action="{:url('Rebag/deleteRebagInfo')}" data-subcheck="true" data-msg="您确定删除吗？">
+                {:lang('DELETE')}
+            </button>
+        </div>
+        <table class="table table-bordered table-hover">
+            <theader>
+                <tr>
+                    <th width="50">
+                        <label>
+                            <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                        </label>
+                    </th>
+                    <th width="50">ID</th>
+                    <th>用户名</th>
+                    <th>金额</th>
+                    <th>时间</th>
+                    <th>操作</th>
+                </tr>
+            </theader>
+            <tbody>
+            <volist name="redbagInfo" id="vo">
+                <tr>
+                    <td>
+                        <input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
+                               value="{$vo.id}" title="ID:{$vo.id}">
+                    </td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.nickname}</td>
+                    <td>{$vo.money}</td>
+                    <td>{:date('Y-m-d H:i:s',$vo.time)}</td>
+                    <td><a href="{:url('deleteRedbagInfo',['id'=>$vo.id])}" class="js-ajax-delete">删除</a></td>
+                </tr>
+            </volist>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th width="50">
+                    <label>
+                        <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                    </label>
+                </th>
+                <th width="50">ID</th>
+                <th>用户名</th>
+                <th>金额</th>
+                <th>时间</th>
+                <th>操作</th>
+            </tr>
+            </tfoot>
+        </table>
+        <div class="table-actions">
+            <button class="btn btn-danger btn-sm js-ajax-submit" type="submit"
+                    data-action="{:url('Rebag/deleteredbagInfo')}" data-subcheck="true" data-msg="您确定删除吗？">
+                {:lang('DELETE')}
+            </button>
+        </div>
+        <ul class="pagination">{$page|default=''}</ul>
+    </form>
+</div>
+</body>
+</html>
+<script src="__STATIC__/js/admin.js"></script>

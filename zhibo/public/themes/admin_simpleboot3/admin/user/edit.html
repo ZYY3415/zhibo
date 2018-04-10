@@ -1,0 +1,44 @@
+<include file="public@header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('user/index')}">{:lang('ADMIN_USER_INDEX')}</a></li>
+			<li><a href="{:url('user/add')}">{:lang('ADMIN_USER_ADD')}</a></li>
+			<li class="active"><a>编辑管理员</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('User/editPost')}">
+			<div class="form-group">
+				<label for="input-user_login" class="col-sm-2 control-label"><span class="form-required">*</span>{:lang('USERNAME')}</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-user_login" name="username" value="{$data.username}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-user_email" class="col-sm-2 control-label">{:lang('EMAIL')}</label>
+				<div class="col-md-6 col-sm-10">
+					<input type="text" class="form-control" id="input-user_email" name="email" value="{$data.email}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-user_email" class="col-sm-2 control-label"><span class="form-required">*</span>{:lang('ROLE')}</label>
+				<div class="col-md-6 col-sm-10">
+					<foreach name="roles" item="vo">
+						<label class="checkbox-inline">
+							<input value="{$key}" type="radio" name="role_id" <if condition="cmf_get_current_admin_id() neq 1 && $key eq 1">disabled="true"</if>  <if condition="$key eq $data.role_id">checked</if>   >{$vo}
+						</label>
+					</foreach>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<input type="hidden" name="mid" value="{$data.mid}" />
+					<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+					<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

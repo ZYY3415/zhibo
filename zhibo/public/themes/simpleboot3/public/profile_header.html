@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{$title}</title>
+    <link rel="stylesheet" type="text/css" href="__TMPL__/public/assets/css/memberCenter.css" />
+</head>
+<body>
+<php>$member=cmf_get_current_user();</php>
+<nav class="clearfix">
+    <div class="logo"><img src="__TMPL__/public/assets/images/logo.png" /></div>
+    <ul class="loginInfor">
+        <li><a href="{:cmf_url('/')}">网站首页</a></li>
+        <li class="click"><i><img src="{$member['avatar']|default='__TMPL__/public/assets/images/avatar.png'}" /></i>{$member['nickname']}<i></i>
+            <ul class="navList">
+                <li><a href="{:cmf_url('user/Index/logout',['rid'=>$rid])}">退出登录</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+<div class="contentBox">
+    <div class="leftMenu">
+        <div class="avatar">
+            <img src="{$member['avatar']|default='__TMPL__/public/assets/images/avatar.png'}" />
+            <p>您好，{$member['nickname']}</p>
+        </div>
+        <ul class="listInfor">
+            <li><a href="{:cmf_url('user/Profile/profile')}"><i></i>我的资料</a></li>
+            <li><a href="{:cmf_url('user/Profile/password')}"><i></i>修改密码</a></li>
+            <li><a href="{:cmf_url('user/Profile/consumption')}"><i></i>我的消费</a></li>
+        </ul>
+    </div>

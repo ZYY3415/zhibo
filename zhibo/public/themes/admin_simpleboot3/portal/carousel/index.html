@@ -1,0 +1,95 @@
+<include file="public@header"/>
+<style>
+    .table-hover
+    {
+        margin-top:30px !important;
+    }
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('Carousel/index')}">轮播图显示</a></li>
+        <li><a href="{:url('Carousel/carouselAdd')}">添加轮播图</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="post" action="{:url('Carousel/index')}">
+        房间:
+        <select class="form-control" name="room" style="width:200px;">
+            <option value='0'>全部</option>
+            <volist name="rooms" id="vo">
+                <option value="{$key}"  <if condition="$room eq $key">selected</if> >{$vo}</option>
+            </volist>
+        </select> &nbsp;&nbsp;
+        关键字:
+        <input type="text" class="form-control" name="keyword" style="width: 200px;"
+               value="{$keyword|default=''}" placeholder="支持ID,用户名,房间，角色...">
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+        <a class="btn btn-danger" href="{:url('Carousel/index')}">清空</a>
+    </form>
+    <form class="form-horizontal js-ajax-form margin-top-20" action="" method="post">
+        <div class="table-actions">
+            <button class="btn btn-danger btn-sm js-ajax-submit" type="submit"
+                    data-action="{:url('Carousel/carouseDelete')}" data-subcheck="true" data-msg="您确定删除吗？">
+                {:lang('DELETE')}
+            </button>
+        </div>
+        <table class="table table-bordered table-hover">
+            <theader>
+                <tr>
+                    <th width="50">
+                        <label>
+                            <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                        </label>
+                    </th>
+                    <th width="50">ID</th>
+                    <th>房间</th>
+                    <th>图片</th>
+                    <th>操作</th>
+                </tr>
+            </theader>
+            <tbody>
+            <volist name="data" id="vo">
+                <tr>
+                    <td>
+                        <input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
+                               value="{$vo.id}" title="ID:{$vo.id}">
+                    </td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.room}</td>
+                    <td>
+                       <ul style="list-style-type: decimal;">
+                           <volist name="vo.child_carous" id="v">
+                              <li><img src="/upload/{$v}" alt="" width="200" height="30"></li>
+                           </volist>
+                       </ul>
+                    </td>
+                    <td><a href="{:url('Carousel/carouseEdit',['id'=>$vo.id])}">编辑</a>&nbsp;&nbsp;&nbsp;<a href="{:url('Carousel/carouseDelete',['id'=>$vo.id])}" class="js-ajax-delete">删除</a></td>
+                </tr>
+            </volist>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th width="50">
+                    <label>
+                        <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+                    </label>
+                </th>
+                <th width="50">ID</th>
+                <th>房间</th>
+                <th>图片</th>
+                <th>操作</th>
+            </tr>
+            </tfoot>
+        </table>
+        <div class="table-actions">
+            <button class="btn btn-danger btn-sm js-ajax-submit" type="submit"
+                    data-action="{:url('Carousel/carouseDelete')}" data-subcheck="true" data-msg="您确定删除吗？">
+                {:lang('DELETE')}
+            </button>
+        </div>
+        <ul class="pagination">{$page|default=''}</ul>
+    </form>
+</div>
+</body>
+</html>
+<script src="__STATIC__/js/admin.js"></script>
